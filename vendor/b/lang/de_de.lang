@@ -1,0 +1,74 @@
+navigation_developer = Developer
+
+b_install_redaxo_version_problem = Die REDAXO Version reicht nicht aus. Es wird mindestens Version {0} gebraucht. Sie nutzen aktuell die Version {1}.
+
+
+b_cheatsheet = Cheatsheet
+b_cheatsheet_title = Cheatsheet
+b_sherlock = Sherlock
+b_sherlock_title = Sherlock
+
+
+b_add = hinzufügen
+b_article = Artikel
+b_articles = Artikel
+
+b_blocks = Blöcke
+
+b_cache_file_was_written = Cache Datei "{0}" wurde geschrieben.
+b_cache_file_was_not_written = Cache Datei "{0}" konnte nicht geschrieben werden.
+b_color = Color
+b_color_notice = Bspl. #f90 oder #ff9900
+b_column = Spalte
+b_columns = Spalten
+b_column_amount = {0} Spalte
+b_columns_amount = {0} Spalten
+
+b_description = Beschreibung
+
+b_edit = editieren
+b_edit_blocks = Blöcke bearbeiten
+b_edit_contents = Inhalte bearbeiten
+b_extension_point = Extension Point
+b_extension_points = Extension Points
+
+b_file = Datei
+b_found_extension_points = gefundene Extension Points: {0}
+b_function = Funktion
+
+b_image = Image
+
+b_layout = Layout
+b_lists = Auflistung
+
+b_media = Media
+b_module = Modul
+b_modules = Module
+
+b_name = Name
+b_no_cheatsheets = keine Cheatsheets vorhanden
+b_no_blocks = keine Blöcke vorhanden
+b_no_contents = keine Inhalte vorhanden
+b_no_results = keine Ergebnisse
+b_note = Notiz
+
+b_offline = offline
+b_online = online
+
+b_param = Parameter
+b_params = Parameter
+b_parse_files = Dateien analysieren
+b_parsed_files = Dateien analysiert: {0}
+b_plain = Plain
+b_prior = Prior
+
+b_readonly = Readonly
+b_rex_vars = REX Variablen
+
+b_status = Status
+b_subject = Subject
+
+b_template = Template
+b_templates = Templates
+b_text = Text
+b_textile = Textile
