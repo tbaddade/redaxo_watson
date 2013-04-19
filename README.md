@@ -18,6 +18,7 @@ Gibt man ein Keyword und nachfolgend ein **+** ein, gelangt man in den Add-Modus
 ### Hotkey
 
 **ctrl + space**
+**Hinweis:** Um im Firefox das Contextmenü zu vermeiden, einfach **ctrl + alt + space** drücken
 
 
 
