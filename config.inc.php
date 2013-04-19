@@ -37,10 +37,11 @@ $REX['ADDON']['perm'][$myaddon]        = 'admin[]';
 // Check AddOns und Versionen --------------------------------------------------
 if (OOAddon::isActivated($myaddon)) {
 
+    require_once($basedir . '/lib/watson.php');
+    require_once($basedir . '/lib/watson_extensions.php');
     require_once($basedir . '/lib/watson_load.php');
-    require_once($basedir . '/vendor/init.php');
 
-    if (rex::getUser()) {
+    if ($REX['USER']) {
 
         watson_load::init();
 
@@ -52,11 +53,10 @@ if (OOAddon::isActivated($myaddon)) {
             rex_register_extension('ADDONS_INCLUDED', $myaddon . '::result', array('q' => $watson), REX_EXTENSION_LATE);
         }
 
-        rex_view::addCssFile(rex_url::addonAssets($myaddon, 'watson.css'));
-
-        rex_view::addJsFile(rex_url::addonAssets($myaddon, 'hogan.min.js'));
-        rex_view::addJsFile(rex_url::addonAssets($myaddon, 'typeahead.js'));
-        rex_view::addJsFile(rex_url::addonAssets($myaddon, 'watson.js'));
+        $files = array();
+        $files['css']['screen'] = array('watson.css');
+        $files['js']            = array('hogan.min.js', 'typeahead.js', 'watson.js');
+        rex_register_extension('PAGE_HEADER', $myaddon . '_extensions::page_header', $files);
 
     }
 }
