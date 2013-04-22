@@ -35,11 +35,14 @@ b_extension_points = Extension Points
 b_file = Datei
 b_found_extension_points = gefundene Extension Points: {0}
 b_function = Funktion
+b_go_to_backend_startarticle = Gehe zum Startartikel im Backend
+b_go_to_frontend = Gehe zum Frontend/Website
 
 b_image = Image
 
 b_layout = Layout
 b_lists = Auflistung
+b_logout_from_backend = vom Backend abmelden.
 
 b_media = Media
 b_module = Modul
@@ -54,6 +57,9 @@ b_note = Notiz
 
 b_offline = offline
 b_online = online
+b_open_article_in_backend = Öffnet den Artikel im Backend
+b_open_module = Modul öffnen
+b_open_template = Template öffnen
 
 b_param = Parameter
 b_params = Parameter
