@@ -22,8 +22,8 @@ Gibt man ein Keyword und nachfolgend ein **+** ein, gelangt man in den Add-Modus
 
 ### Hotkey
 
-**ctrl + space**
-**Hinweis:** Um im Firefox das Contextmenü zu vermeiden, einfach **ctrl + alt + space** drücken
+Watson öffnen: **ctrl + space** (um im Firefox das Contextmenü zu vermeiden, einfach **ctrl + alt + space** drücken)
+Quick look: **rechter Cursor**
 
 
 
@@ -50,4 +50,9 @@ Plugins
 
 Screenshot
 --------------------------------------------
+
+### Watson
 ![Watson](http://blumbeet.com/screens/github/watson/watson.png)
+
+### Quick look
+![Watson](http://blumbeet.com/screens/github/watson/quick_look.png)
