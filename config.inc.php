@@ -29,7 +29,7 @@ $REX['ADDON']['rxid'][$myaddon] = '';
 $REX['ADDON']['version'][$myaddon]     = '0.0';
 $REX['ADDON']['author'][$myaddon]      = 'blumbeet - web.studio';
 $REX['ADDON']['supportpage'][$myaddon] = '';
-$REX['ADDON']['perm'][$myaddon]        = 'admin[]';
+$REX['ADDON']['perm'][$myaddon]        = 'admin[]';
 //$REX['ADDON']['navigation'][$myaddon]  = array('block' => 'developer');
 
 
