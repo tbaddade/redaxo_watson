@@ -17,14 +17,15 @@ jQuery(function($){
             checkWatson();
         }
     });
+    var c = 0;
     $(document).keyup(function(e) {
         // Escape
         if (e.keyCode == 27) {
             hideWatson();
             hideQuicklook();
         }
-        if(e.type === "rightKeyed") {
-            checkQuicklook();
+        if (e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 40) {
+            hideQuicklook();
         }
     });
 
@@ -60,20 +61,20 @@ jQuery(function($){
         });
 
         $('.typeahead').on('typeahead:autocompleted', function(evt, item) {
-                if (item.quick_look_url !== undefined) {
-                    checkQuicklook(item.quick_look_url);
-                }
-            });
+            hideQuicklook();
+            if (item.quick_look_url !== undefined) {
+                showQuicklook(item.quick_look_url);
+            }
+        });
         $('.typeahead').on('typeahead:selected', function(evt, item) {
-                checkQuicklook();
-                if (item.url !== undefined) {
-                    if (item.url_open_window) {
-                        window.open(item.url, '_newtab');
-                    } else {
-                        window.location.href = item.url;
-                    }
+            if (item.url !== undefined) {
+                if (item.url_open_window) {
+                    window.open(item.url, '_newtab');
+                } else {
+                    window.location.href = item.url;
                 }
-            });
+            }
+        });
 
         $watson.fadeIn('fast').addClass('watson-active');
         $watson.find('input').focus();
@@ -93,13 +94,6 @@ jQuery(function($){
     $.facebox.settings.closeImage = '';
     $.facebox.settings.loadingImage = '';
 
-    function checkQuicklook(url) {
-        if ($('#facebox_overlay').length > 0) {
-            hideQuicklook();
-        } else {
-            showQuicklook(url);
-        }
-    }
 
     function showQuicklook(link) {
         $.facebox({ iframe: link });
