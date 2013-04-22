@@ -7,6 +7,11 @@ stellt eine globale Suche bereit an der sich andere AddOns andocken können.
 Zum Bspl. dockt sich das **[watson_core](https://github.com/tbaddade/redaxo_watson/blob/master/README.md#watson_core)** Plugin mit einer Artikel-, Modul- und Templatesuche an.
 
 
+Voraussetzungen
+-----------------
+**REDAXO** 4.5
+**PHP:** 5.3
+
 Keywords
 -----------------
 
