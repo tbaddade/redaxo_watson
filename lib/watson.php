@@ -2,53 +2,41 @@
 
 class watson
 {
-    /**
-     * Settings array
-     *
-     * @var self[]
-     */
-    private static $settings = array();
+    private static $features = array();
+    private static $feature_add_sign = '+';
     private static $commands = array();
 
 
+
     /**
-     * Registers a setting
+     * Registers a feature
      *
-     * @param self $setting
+     * @param watson_feature $feature
      */
-    public static function register(array $setting)
+    public static function registerFeature(watson_feature $feature)
     {
-        self::$settings[] = $setting;
+        self::$features[] = $feature;
+    }
+
+    /**
+     * Returns all registered features
+     *
+     * @return self[]
+     */
+    public static function getRegisteredFeatures()
+    {
+        return self::$features;
     }
 
 
     /**
      * Registers a command
      *
-     * @param self $command
+     * @param watson_command $command
      */
-    public static function registerCommand(array $command)
+    public static function registerCommand(watson_command $command)
     {
-        if (!isset($command['keyword'])) {
-            return false;
-            //throw new rex_exception('Fehler: Keyword nicht gesetzt!');
-        }
-        if (!isset($command['url'])) {
-            return false;
-            //throw new rex_exception('Fehler: Url nicht gesetzt!');
-        }
-
         self::$commands[] = $command;
-    }
-
-    /**
-     * Returns all registered classes
-     *
-     * @return self[]
-     */
-    public static function getRegistered()
-    {
-        return self::$settings;
     }
 
     /**
@@ -61,6 +49,136 @@ class watson
         return self::$commands;
     }
 
+
+    private static function getKeyword($query)
+    {
+        if (strpos($query, ' ') !== false) {
+            $explode = explode(' ', $query);
+            return $explode[0];
+        }
+        return null;
+    }
+
+    private static function hasRegisteredKeyword($keyword, $features)
+    {
+        $keyword = rtrim($keyword, self::$feature_add_sign);
+
+        foreach ($features as $feature) {
+            if ($feature->hasKeyword()) {
+                if ($feature->getKeyword() == $keyword) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private static function isAddMode($keyword)
+    {
+        return (substr($keyword, -1) == '+');
+    }
+
+    private static function replaceUrl($url, $result_set = array())
+    {
+        if (count($result_set) > 0) {
+            $search  = array();
+            $replace = array();
+
+            foreach ($result_set as $key => $val) {
+                $search[] = urlencode('{{'.$key.'}}');
+                $search[] = '{{'.$key.'}}';
+
+                $replace[] = $val;
+                $replace[] = $val;
+            }
+            $url = str_replace($search, $replace, $url);
+        }
+
+        return htmlspecialchars_decode($url);
+    }
+
+    private static function buildNoResultDataset($value)
+    {
+        $return = array();
+        $token  = $value;
+
+        $return['value']  = $value;
+        $return['tokens'] = array($token);
+
+        return $return;
+    }
+
+    private static function buildCommandDataset($command)
+    {
+        global $I18N;
+
+        $return = array();
+        $value  = $command->getCommand();
+        $token  = $value;
+
+        $classes = array();
+
+        $description = '';
+        if ($command->hasDescription()) {
+            $classes[] = 'watson-description';
+            $description .= $command->getDescription();
+        }
+
+        $class = count($classes) > 0 ? ' ' . implode(' ', $classes) : '';
+
+        $return['value']            = $value;
+        $return['tokens']           = array($token);
+        $return['description']      = $description;
+        $return['class']            = $class;
+        $return['url']              = self::replaceUrl($command->getUrl());
+        $return['url_open_window']  = $command->getUrlOpenWindow();
+
+        return $return;
+    }
+
+    private static function buildFeatureDataset($value, $feature = null, array $result_set = array())
+    {
+        $return  = array();
+        $token   = $value;
+
+        $classes = array();
+        $styles  = array();
+
+        $description = '';
+        if ($feature) {
+            if ($feature->hasIcon()) {
+                $classes[] = 'watson-icon';
+                $styles[]  = 'background-image: url(' . $feature->getIcon() . ');';
+            }
+
+            if ($feature->hasDescription()) {
+                $classes[] = 'watson-description';
+                $description = $feature->getDescription();
+            }
+
+            if ($feature->hasUrl()) {
+                $return['url']             = self::replaceUrl($feature->getUrl(), $result_set);
+                $return['url_open_window'] = $feature->getUrlOpenWindow();
+            }
+
+            if ($feature->hasQuickLookUrl()) {
+                $return['quick_look_url'] = self::replaceUrl($feature->getQuickLookUrl(), $result_set);
+            }
+        }
+
+        $class = count($classes) > 0 ? ' ' . implode(' ', $classes) : '';
+        $style = count($styles) > 0 ? ' ' . implode(' ', $styles) : '';
+
+        $return['value']        = $value;
+        $return['tokens']       = array($token);
+        $return['description']  = $description;
+        $return['class']        = $class;
+        $return['style']        = $style;
+
+        return $return;
+    }
+
     public static function result($params)
     {
         global $I18N;
@@ -71,70 +189,61 @@ class watson
 
             $json = array();
 
-            $settings = self::getRegistered();
+            $features = self::getRegisteredFeatures();
             $commands = self::getRegisteredCommands();
 
             if (count($commands) > 0) {
                 foreach ($commands as $command) {
-                    if ($q == $command['keyword']) {
-
-                        $json[] = array(
-                            'url'       => htmlspecialchars_decode($command['url']),
-                            'value'     => $command['keyword'],
-                            'tokens'    => array($command['keyword'])
-                        );
+                    if ($q == $command->getCommand()) {
+                        $json[] = self::buildCommandDataset($command);
                     }
                 }
             }
 
-            if (count($settings) > 0) {
+            if (count($features) > 0) {
 
-                $add_flag = false;
-                if (strpos($q, ' ') !== false) {
-                    $explode  = explode(' ', $q);
-                    $keyword  = $explode[0];
-                    unset($explode[0]);
-                    $q_save   = $q;
-                    $q        = implode(' ', $explode);
+                $keyword = self::getKeyword($q);
 
-                    if (substr($keyword, -1) == '+') {
-                        $keyword = substr($keyword, 0, -1);
-                        $add_flag = true;
+                if (self::hasRegisteredKeyword($keyword, $features)) {
+                    $q_save = $q;
+                    $q      = str_replace($keyword . ' ', '', $q);
+
+                    $keyword_check = $keyword;
+                    if (self::isAddMode($keyword)) {
+                        $keyword_check = substr($keyword, 0, -1);
                     }
 
-                    $settings_save = array();
-                    foreach ($settings as $setting) {
-                        if (isset($setting['keyword']) && $setting['keyword'] != '' && $setting['keyword'] == $keyword) {
+                    $features_save = array();
+                    foreach ($features as $feature) {
+                        if ($feature->hasKeyword() && $feature->getKeyword() == $keyword_check) {
 
-                            if ($add_flag && isset($setting['add_url']) && $setting['add_url'] != '') {
-                                $url = $setting['add_url'];
+                            if (self::isAddMode($keyword) && $feature->hasKeywordAddUrl()) {
 
-                                if (isset($setting['add_id']) && $setting['add_id'] != '') {
+                                $url = $feature->getKeywordAddUrl();
+
+                                if ($feature->hasKeywordAddDomId()) {
                                     $dividier = (strpos($url, '?') === false) ? '?' : '&';
-                                    $url = $url . $dividier . 'watson_id=' . $setting['add_id'] . '&watson_text=' . $q;
+                                    $url = $url . $dividier . 'watson_id=' . $feature->getKeywordAddDomId() . '&watson_text=' . $q;
                                 }
 
+                                $feature->setUrl($url, $feature->getKeywordAddUrlOpenWindow());
 
-                                $json[] = array(
-                                    'name'      => $q_save,
-                                    'url'       => htmlspecialchars_decode($url),
-                                    'value'     => $q_save,
-                                    'tokens'    => array($q_save)
-                                );
+                                $json[] = self::buildFeatureDataset($q_save, $feature);
+
                             }
 
-                            $settings_save[] = $setting;
+                            $features_save[] = $feature;
                         }
                     }
-                    $settings = $settings_save;
+                    $features = $features_save;
                 }
 
-                if (!$add_flag) {
-                    foreach ($settings as $setting) {
+                if (!self::isAddMode($keyword)) {
+                    foreach ($features as $feature) {
 
-                        if (is_array($setting) && isset($setting['query'])) {
+                        if ($feature->hasSqlQuery()) {
 
-                            $query = str_replace('{{q}}', '"%' . mysql_real_escape_string($q) . '%"', $setting['query']);
+                            $query = str_replace('{{q}}', '"%' . mysql_real_escape_string($q) . '%"', $feature->getSqlQuery());
 
                             $sql = rex_sql::factory();
                             $sql->debugsql = true;
@@ -143,57 +252,30 @@ class watson
                             if ($sql->getRows() > 0) {
                                 $results = $sql->getArray();
 
-                                foreach ($results as $r) {
+                                foreach ($results as $result) {
 
                                     // Ergebnissanzeige Field = name verwenden
                                     // ansonsten den ersten Wert des Results
-                                    if (isset($r['name'])) {
-                                        $value = $r['name'];
+                                    if (isset($result['value'])) {
+                                        $value = $result['value'];
+                                    } elseif (isset($result['name'])) {
+                                        $value = $result['name'];
                                     } else {
-                                        $values = array_values($r);
+                                        $values = array_values($result);
                                         $value  = $values[0];
                                     }
 
-
-                                    // übergebene Urls ersetzen
-                                    $url = '';
-                                    if (isset($setting['url'])) {
-                                        $search  = array();
-                                        $replace = array();
-
-                                        foreach ($r as $key => $val) {
-                                            $search[] = urlencode('{{'.$key.'}}');
-                                            $search[] = '{{'.$key.'}}';
-
-                                            $replace[] = $val;
-                                            $replace[] = $val;
-                                        }
-
-                                        $url = str_replace($search, $replace, $setting['url']);
-                                    }
-
-                                    $json[] = array(
-                                        'name'      => $value,
-                                        'url'       => htmlspecialchars_decode($url),
-                                        'value'     => $value,
-                                        'tokens'    => array($value),
-                                    );
+                                    $json[] = self::buildFeatureDataset($value, $feature, $result);
                                 }
                             }
+
                         }
                     }
                 }
             }
 
-
             if (count($json) == 0) {
-                $json[] = array(
-                    'value'     => $I18N->msg('b_no_results'),
-                    'tokens'    => array($I18N->msg('b_no_results'))
-
-                    // 'value'     => rex_i18n::msg('b_no_results'),
-                    // 'tokens'    => array(rex_i18n::msg('b_no_results'))
-                );
+                $json[] = self::buildNoResultDataset($I18N->msg('b_no_results'));
             }
 
             ob_clean();
