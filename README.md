@@ -52,7 +52,7 @@ Screenshot
 --------------------------------------------
 
 ### Watson
-![Watson](http://blumbeet.com/screens/github/watson/watson.png)
+![Watson](http://blumbeet.com/screens/github/watson/2013-04-22-14-01-49.png)
 
 ### Quick look
-![Watson](http://blumbeet.com/screens/github/watson/quick_look.png)
+![Watson](http://blumbeet.com/screens/github/watson/2013-04-22-14-03-23.png)
