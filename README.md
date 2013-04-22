@@ -9,8 +9,8 @@ Zum Bspl. dockt sich das **[watson_core](https://github.com/tbaddade/redaxo_wats
 
 Voraussetzungen
 -----------------
-**REDAXO** 4.5
-**PHP:** 5.3
+* **REDAXO** 4.5
+* **PHP:** 5.3
 
 Keywords
 -----------------
@@ -22,8 +22,8 @@ Gibt man ein Keyword und nachfolgend ein **+** ein, gelangt man in den Add-Modus
 
 ### Hotkey
 
-Watson öffnen: **ctrl + space** (um im Firefox das Contextmenü zu vermeiden, einfach **ctrl + alt + space** drücken)
-Quick look: **rechter Cursor**
+* Watson öffnen: **ctrl + space** (um im Firefox das Contextmenü zu vermeiden, einfach **ctrl + alt + space** drücken)
+* Quick look: **rechter Cursor**
 
 
 
