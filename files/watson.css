@@ -23,6 +23,31 @@
     background-image: url(logo.png);
 }
 
+.watson-value {
+    display: block;
+    /*margin-left: -600px; */
+    padding: 5px;
+    font-size: 18px;
+    line-height: 1;
+}
+.watson-value em {
+    display: none;
+    padding-top: 2px;
+    color: #a0a0a0;
+    font-size: 13px;
+    font-style: normal;
+}
+.watson-value.watson-description em {
+    display: block;
+}
+.watson-value.watson-icon {
+    padding-left: 40px;
+    background-position: 0 50%;
+}
+.watson-value.watson-no-results {
+    background-color: #F0F0F0;
+}
+
 
 
 #watson {
@@ -88,22 +113,17 @@
 
 .tt-suggestion {
     display: block;
-    padding: 8px 50px 8px 10px;
+    padding: 0 50px 0 10px;
     border-bottom: 1px solid #E0E0E0;
-    font-size: 18px;
+    vertical-align: middle;
+    overflow: hidden;
 }
 .tt-suggestion.tt-is-under-cursor {
     background-color: #E0E0E0;
     background-image: url(enter.png);
-    background-position: 520px 2px;
+    background-position: 520px 50%;
     background-size: 32px 32px;
     color: #000;
-}
-.tt-suggestion.tt-is-under-cursor .watson-no-results {
-    display: block;
-    margin: -8px -50px -8px -10px;
-    padding: 8px 50px 8px 10px;
-    background-color: #F0F0F0;
 }
 
 .tt-suggestion.tt-is-under-cursor a {
@@ -111,5 +131,15 @@
 }
 
 .tt-suggestion p {
-    margin: 0;
+    margin: 0 0 0 600px;
+    font-size: 0;
+    line-height: 0;
+}
+
+
+#facebox {
+    z-index: 1200;
+}
+.facebox_overlayBG {
+    z-index: 1100;
 }

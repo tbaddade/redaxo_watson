@@ -18,10 +18,16 @@ jQuery(function($){
         }
     });
     $(document).keyup(function(e) {
+        // Escape
         if (e.keyCode == 27) {
             hideWatson();
+            hideQuicklook();
+        }
+        if(e.type === "rightKeyed") {
+            checkQuicklook();
         }
     });
+
 
     function onAutocompleted(evt, datum) {
         console.log('autocompleted');
@@ -44,15 +50,28 @@ jQuery(function($){
             remote: rex.backendUrl + '?watson=%QUERY',
             //prefetch: rex.backendUrl + '?watson.json',
             limit: 10,
-            /*
-             template: [
-             '{{template}}'
+            template: [
+                '<div class="watson-result">',
+                '<span class="watson-value{{class}}" style="{{style}}">{{value}}<em>{{description}}</em></span>',
+                '</div>'
              ].join(''),
-             */
+
             engine: Hogan
-        }).on('typeahead:selected', function(evt, item) {
+        });
+
+        $('.typeahead').on('typeahead:autocompleted', function(evt, item) {
+                if (item.quick_look_url !== undefined) {
+                    checkQuicklook(item.quick_look_url);
+                }
+            });
+        $('.typeahead').on('typeahead:selected', function(evt, item) {
+                checkQuicklook();
                 if (item.url !== undefined) {
-                    window.location.href = item.url;
+                    if (item.url_open_window) {
+                        window.open(item.url, '_newtab');
+                    } else {
+                        window.location.href = item.url;
+                    }
                 }
             });
 
@@ -69,5 +88,24 @@ jQuery(function($){
         return decodeURI(
             (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
         );
+    }
+
+    $.facebox.settings.closeImage = '';
+    $.facebox.settings.loadingImage = '';
+
+    function checkQuicklook(url) {
+        if ($('#facebox_overlay').length > 0) {
+            hideQuicklook();
+        } else {
+            showQuicklook(url);
+        }
+    }
+
+    function showQuicklook(link) {
+        $.facebox({ iframe: link });
+    }
+
+    function hideQuicklook() {
+        $.facebox.close();
     }
 });

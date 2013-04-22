@@ -38,7 +38,9 @@ $REX['ADDON']['perm'][$myaddon]        = 'admin[]';
 if (OOAddon::isActivated($myaddon)) {
 
     require_once($basedir . '/lib/watson.php');
+    require_once($basedir . '/lib/watson_command.php');
     require_once($basedir . '/lib/watson_extensions.php');
+    require_once($basedir . '/lib/watson_feature.php');
     require_once($basedir . '/lib/watson_load.php');
 
     if ($REX['USER']) {
@@ -54,8 +56,8 @@ if (OOAddon::isActivated($myaddon)) {
         }
 
         $files = array();
-        $files['css']['screen'] = array('watson.css');
-        $files['js']            = array('hogan.min.js', 'typeahead.js', 'watson.js');
+        $files['css']['screen'] = array('facebox.css', 'watson.css');
+        $files['js']            = array('hogan.min.js', 'typeahead.js', 'facebox.js', 'watson.js');
         rex_register_extension('PAGE_HEADER', $myaddon . '_extensions::page_header', $files);
 
     }
