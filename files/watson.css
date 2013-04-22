@@ -140,6 +140,9 @@
 #facebox {
     z-index: 1200;
 }
+#facebox .close {
+    display: none !important;
+}
 .facebox_overlayBG {
     z-index: 1100;
 }
