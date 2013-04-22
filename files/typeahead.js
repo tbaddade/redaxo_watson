@@ -9,6 +9,11 @@
  * https://github.com/twitter/typeahead
  * Copyright 2013 Twitter, Inc. and other contributors; Licensed MIT
  */
+/*!
+ * typeahead.js 0.9.2
+ * https://github.com/twitter/typeahead
+ * Copyright 2013 Twitter, Inc. and other contributors; Licensed MIT
+ */
 
 (function($) {
     var VERSION = "0.9.2";
@@ -577,7 +582,6 @@
                 38: "up",
                 40: "down"
             };
-            this.$hint = $(o.hint);
             this.$input = $(o.input).on("blur.tt", this._handleBlur).on("focus.tt", this._handleFocus).on("keydown.tt", this._handleSpecialKeyEvent);
             if (!utils.isMsie()) {
                 this.$input.on("input.tt", this._compareQueryToInputValue);
@@ -616,9 +620,8 @@
                 }
             },
             destroy: function() {
-                this.$hint.off(".tt");
                 this.$input.off(".tt");
-                this.$hint = this.$input = this.$overflowHelper = null;
+                this.$input = this.$overflowHelper = null;
             },
             focus: function() {
                 this.$input.focus();
@@ -638,12 +641,7 @@
             setInputValue: function(value, silent) {
                 this.$input.val(value);
                 !silent && this._compareQueryToInputValue();
-            },
-            getHintValue: function() {
-                return this.$hint.val();
-            },
-            setHintValue: function(value) {
-                this.$hint.val(value);
+                return this.$input;
             },
             getLanguageDirection: function() {
                 return (this.$input.css("direction") || "ltr").toLowerCase();
@@ -855,7 +853,7 @@
         var html = {
             wrapper: '<span class="twitter-typeahead"></span>',
             hint: '<input class="tt-hint" type="text" autocomplete="off" spellcheck="off" disabled>',
-            dropdown: '<span class="tt-dropdown-menu"></span>'
+            dropdown: '<span class="tt-dropdown-menu dropdown-menu input-xlarge"></span>'
         }, css = {
             wrapper: {
                 position: "relative",
@@ -896,7 +894,7 @@
             });
         }
         function TypeaheadView(o) {
-            var $menu, $input, $hint;
+            var $menu, $input;
             utils.bindAll(this);
             this.$node = buildDomStructure(o.input);
             this.datasets = o.datasets;
@@ -904,25 +902,17 @@
             this.eventBus = o.eventBus;
             $menu = this.$node.find(".tt-dropdown-menu");
             $input = this.$node.find(".tt-query");
-            $hint = this.$node.find(".tt-hint");
             this.dropdownView = new DropdownView({
                 menu: $menu
-            }).on("suggestionSelected", this._handleSelection).on("cursorMoved", this._clearHint).on("cursorRemoved", this._updateHint).on("suggestionsRendered", this._updateHint).on("opened", this._updateHint).on("closed", this._clearHint).on("opened closed", this._propagateEvent);
+            }).on("suggestionSelected", this._handleSelection).on("cursorRemoved", this._updateHint).on("suggestionsRendered", this._updateHint).on("opened", this._updateHint).on("closed", this._clearHint).on("opened closed", this._propagateEvent);
             this.inputView = new InputView({
-                input: $input,
-                hint: $hint
-            }).on("focused", this._openDropdown).on("blured", this._closeDropdown).on("blured", this._setInputValueToQuery).on("enterKeyed", this._handleSelection).on("queryChanged", this._clearHint).on("queryChanged", this._clearSuggestions).on("queryChanged", this._getSuggestions).on("whitespaceChanged", this._updateHint).on("queryChanged whitespaceChanged", this._openDropdown).on("queryChanged whitespaceChanged", this._setLanguageDirection).on("escKeyed", this._closeDropdown).on("escKeyed", this._setInputValueToQuery).on("tabKeyed upKeyed downKeyed", this._managePreventDefault).on("upKeyed downKeyed", this._moveDropdownCursor).on("upKeyed downKeyed", this._openDropdown).on("tabKeyed leftKeyed rightKeyed", this._autocomplete);
+                input: $input
+            }).on("focused", this._openDropdown).on("blured", this._closeDropdown).on("blured", this._setInputValueToQuery).on("enterKeyed", this._handleSelection).on("queryChanged", this._clearSuggestions).on("queryChanged", this._getSuggestions).on("whitespaceChanged", this._updateHint).on("queryChanged whitespaceChanged", this._openDropdown).on("queryChanged whitespaceChanged", this._setLanguageDirection).on("escKeyed", this._closeDropdown).on("escKeyed", this._setInputValueToQuery).on("tabKeyed upKeyed downKeyed", this._managePreventDefault).on("upKeyed downKeyed", this._moveDropdownCursor).on("upKeyed downKeyed", this._openDropdown).on("tabKeyed leftKeyed rightKeyed", this._autocomplete);
         }
         utils.mixin(TypeaheadView.prototype, EventTarget, {
             _managePreventDefault: function(e) {
                 var $e = e.data, hint, inputValue, preventDefault = false;
                 switch (e.type) {
-                    case "tabKeyed":
-                        hint = this.inputView.getHintValue();
-                        inputValue = this.inputView.getInputValue();
-                        preventDefault = hint && hint !== inputValue;
-                        break;
-
                     case "upKeyed":
                     case "downKeyed":
                         preventDefault = !$e.shiftKey && !$e.ctrlKey && !$e.metaKey;
@@ -939,13 +929,10 @@
                 }
             },
             _updateHint: function() {
-                var $suggestion = this.dropdownView._getSuggestions().first(), suggestion = $suggestion.length > 0 ? this.dropdownView.extractSuggestion($suggestion) : null, hint = suggestion ? suggestion.value : null, dropdownIsVisible = this.dropdownView.isVisible(), inputHasOverflow = this.inputView.isOverflow(), inputValue, query, escapedQuery, beginsWithQuery, match;
+                var dropdownIsVisible = this.dropdownView.isVisible();
                 if (dropdownIsVisible) {
                     this.dropdownView._highlight(0);
                 }
-            },
-            _clearHint: function() {
-                this.inputView.setHintValue("");
             },
             _clearSuggestions: function() {
                 this.dropdownView.clearSuggestions();
@@ -970,11 +957,10 @@
                 }
             },
             _handleSelection: function(e) {
-                var byClick = e.type === "suggestionSelected", suggestion = byClick ? e.data : this.dropdownView.getSuggestionUnderCursor();
+                var suggestion = this.dropdownView.getSuggestionUnderCursor();
                 if (suggestion) {
-                    this.inputView.setInputValue(suggestion.value);
-                    byClick ? this.inputView.focus() : e.data.preventDefault();
-                    byClick && utils.isMsie() ? utils.defer(this.dropdownView.close) : this.dropdownView.close();
+                    //Parse.history.navigate(suggestion.datum.url, true);
+                    this.inputView.setInputValue("").blur();
                     this.eventBus.trigger("selected", suggestion.datum);
                 }
             },
@@ -990,7 +976,6 @@
                         }
                     });
                 });
-                that.dropdownView.moveCursorDown();
             },
             _autocomplete: function(e) {
                 var isCursorAtEnd, ignoreEvent, query, hint, suggestion;
@@ -1001,6 +986,11 @@
                         return;
                     }
                 }
+                var suggestion = this.dropdownView.getSuggestionUnderCursor();
+                if (suggestion) {
+                    this.eventBus.trigger("autocompleted", suggestion.datum);
+                }
+                /*
                 query = this.inputView.getQuery();
                 hint = this.inputView.getHintValue();
                 if (hint !== "" && query !== hint) {
@@ -1008,6 +998,7 @@
                     this.inputView.setInputValue(suggestion.value);
                     this.eventBus.trigger("autocompleted", suggestion.datum);
                 }
+                */
             },
             _propagateEvent: function(e) {
                 this.eventBus.trigger(e.type);
@@ -1021,26 +1012,15 @@
             setQuery: function(query) {
                 this.inputView.setQuery(query);
                 this.inputView.setInputValue(query);
-                this._clearHint();
                 this._clearSuggestions();
                 this._getSuggestions();
             }
         });
         return TypeaheadView;
         function buildDomStructure(input) {
-            var $wrapper = $(html.wrapper), $dropdown = $(html.dropdown), $input = $(input), $hint = $(html.hint);
+            var $wrapper = $(html.wrapper), $dropdown = $(html.dropdown), $input = $(input);
             $wrapper = $wrapper.css(css.wrapper);
             $dropdown = $dropdown.css(css.dropdown);
-            $hint.css(css.hint).css({
-                backgroundAttachment: $input.css("background-attachment"),
-                backgroundClip: $input.css("background-clip"),
-                backgroundColor: $input.css("background-color"),
-                backgroundImage: $input.css("background-image"),
-                backgroundOrigin: $input.css("background-origin"),
-                backgroundPosition: $input.css("background-position"),
-                backgroundRepeat: $input.css("background-repeat"),
-                backgroundSize: $input.css("background-size")
-            });
             $input.data("ttAttrs", {
                 dir: $input.attr("dir"),
                 autocomplete: $input.attr("autocomplete"),
@@ -1050,11 +1030,11 @@
             $input.addClass("tt-query").attr({
                 autocomplete: "off",
                 spellcheck: false
-            }).css(css.query);
+            });
             try {
                 !$input.attr("dir") && $input.attr("dir", "auto");
             } catch (e) {}
-            return $input.wrap($wrapper).parent().prepend($hint).append($dropdown);
+            return $input.wrap($wrapper).parent().append($dropdown);
         }
         function destroyDomStructure($node) {
             var $input = $node.find(".tt-query");
