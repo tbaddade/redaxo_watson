@@ -50,9 +50,9 @@ Plugins
 
 #### Kommandos
 
-* home :: zur Startseite im Backend
+* start :: zur Startseite im Backend
+* home :: zur Startseite im Frontend
 * logout :: REDAXO logout
-* web :: zur Startseite im Frontend
 
 
 
