@@ -28,7 +28,31 @@ if (OOPlugin::isActivated('watson', $myaddon)) {
 
     if ($REX['USER']) {
         require_once($basedir . '/lib/' . $myaddon . '.php');
-        rex_register_extension('ADDONS_INCLUDED', $myaddon . '::registerAll');
+
+        // rechte werden in der class geprüft
+        $object = new watson_core_articles();
+        rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
+
+        $object = new watson_core_logout();
+        rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
+
+        $object = new watson_core_start();
+        rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
+
+        $object = new watson_core_home();
+        rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
+
+
+        if ($REX['USER']->isAdmin()) {
+            $object = new watson_core_modules();
+            rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
+
+            $object = new watson_core_templates();
+            rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
+
+            $object = new watson_core_users();
+            rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
+        }
 
     }
 }

@@ -38,27 +38,23 @@ $REX['ADDON']['perm'][$myaddon]        = 'admin[]';
 if (OOAddon::isActivated($myaddon)) {
 
     require_once($basedir . '/lib/watson.php');
-    require_once($basedir . '/lib/watson_command.php');
+    require_once($basedir . '/lib/watson_searcher.php');
+    require_once($basedir . '/lib/watson_search_entry.php');
+    require_once($basedir . '/lib/watson_search_term.php');
+    require_once($basedir . '/lib/watson_search_result.php');
+
     require_once($basedir . '/lib/watson_extensions.php');
-    require_once($basedir . '/lib/watson_feature.php');
-    require_once($basedir . '/lib/watson_load.php');
 
     if ($REX['USER']) {
-
-        watson_load::init();
-
-        rex_register_extension('PAGE_TITLE', $myaddon . '_load::check_install');
-        rex_register_extension('OUTPUT_FILTER', $myaddon . '_extensions::watson');
-
-        $watson = rex_request('watson', 'string');
-        if ($watson) {
-            rex_register_extension('ADDONS_INCLUDED', $myaddon . '::result', array('q' => $watson), REX_EXTENSION_LATE);
-        }
 
         $files = array();
         $files['css']['screen'] = array('facebox.css', 'watson.css');
         $files['js']            = array('hogan.min.js', 'typeahead.js', 'facebox.js', 'watson.js');
-        rex_register_extension('PAGE_HEADER', $myaddon . '_extensions::page_header', $files);
+
+        rex_register_extension('PAGE_HEADER'    , 'watson_extensions::page_header', $files);
+        rex_register_extension('OUTPUT_FILTER'  , 'watson_extensions::agent');
+
+        rex_register_extension('ADDONS_INCLUDED', 'watson_extensions::searcher', array(), REX_EXTENSION_LATE);
 
     }
 }

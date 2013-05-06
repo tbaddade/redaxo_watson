@@ -1,150 +1,52 @@
 <?php
 
-class watson_feature
+
+class watson_search_entry
 {
-    private $keyword;
-    private $keyword_add_url;
-    private $keyword_add_url_open_window;
-    private $keyword_add_dom_id;
+    private $value;
     private $icon;
     private $description;
     private $quick_look_url;
     private $url;
     private $url_open_window;
-    private $sql_query;
 
 
 
     public function __construct()
     {
+
     }
 
 
 
     /**
-     * Sets a keyword
-     *
-     * @param string $keyword
-     * @param string $url
-     * @param string $dom_id
-     */
-    public function setKeyword($keyword, $url = null, $dom_id = null, $open_window = false)
-    {
-        $this->keyword = $keyword;
-
-        if ($url) {
-            $this->keyword_add_url              = $url;
-            $this->keyword_add_url_open_window  = $open_window;
-        }
-
-        if ($dom_id) {
-            $this->keyword_add_dom_id = $dom_id;
-        }
-    }
-
-    /**
-     * Returns the keyword
-     *
-     * @return string
-     */
-    public function getKeyword()
-    {
-        return $this->keyword;
-    }
-
-    /**
-     * Returns whether a keyword is set
-     *
-     * @return bool
-     */
-    public function hasKeyword()
-    {
-        return !empty($this->keyword);
-    }
-
-
-    /**
-     * Returns the keyword add url
-     *
-     * @return string
-     */
-    public function getKeywordAddUrl()
-    {
-        return $this->keyword_add_url;
-    }
-
-    /**
-     * Returns whether a keyword add url is set
-     *
-     * @return bool
-     */
-    public function hasKeywordAddUrl()
-    {
-        return !empty($this->keyword_add_url);
-    }
-
-
-    /**
-     * Returns the keyword dom id
-     *
-     * @return string
-     */
-    public function getKeywordAddDomId()
-    {
-        return $this->keyword_add_dom_id;
-    }
-
-    /**
-     * Returns whether a keyword dom id is set
-     *
-     * @return bool
-     */
-    public function hasKeywordAddDomId()
-    {
-        return !empty($this->keyword_add_dom_id);
-    }
-
-
-    /**
-     * Returns the keyword add url open window
-     *
-     * @return bool
-     */
-    public function getKeywordAddUrlOpenWindow()
-    {
-        return $this->keyword_add_url_open_window;
-    }
-
-
-
-    /**
-     * Sets a sql query
+     * Sets a value
      *
      * @param string $value
      */
-    public function setSqlQuery($value)
+    public function setValue($value)
     {
-        $this->sql_query = $value;
+        $this->value = $value;
     }
 
     /**
-     * Returns the Sql Query
+     * Returns the icon
      *
      * @return string
      */
-    public function getSqlQuery()
+    public function getValue()
     {
-        return $this->sql_query;
+        return $this->value;
     }
 
     /**
-     * Returns whether a sql query is set
+     * Returns whether a icon is set
      *
      * @return bool
      */
-    public function hasSqlQuery()
+    public function hasValue()
     {
-        return !empty($this->sql_query);
+        return !empty($this->value);
     }
 
 
@@ -221,7 +123,7 @@ class watson_feature
      */
     public function setUrl($url, $open_window = false)
     {
-        $this->url             = $url;
+        $this->url             = htmlspecialchars_decode($url);
         $this->url_open_window = $open_window;
     }
 
