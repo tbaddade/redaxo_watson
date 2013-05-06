@@ -1,6 +1,7 @@
 jQuery(function($){
 
-    var $watson = $('#watson');
+    var $watson         = $('#watson');
+    var $watson_overlay = $('#watson-overlay');
 
     $(document).ready( function() {
 
@@ -10,6 +11,9 @@ jQuery(function($){
             $('#' + watson_id).val(watson_text).focus();
         }
 
+        $watson_overlay.click(function(){
+            hideWatson();
+        });
     });
 
     $(document).keydown(function(e) {
@@ -17,24 +21,18 @@ jQuery(function($){
             checkWatson();
         }
     });
-    var c = 0;
+
     $(document).keyup(function(e) {
         // Escape
         if (e.keyCode == 27) {
-            hideWatson();
             hideQuicklook();
+            hideWatson();
         }
         if (e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 40) {
             hideQuicklook();
         }
     });
 
-
-    function onAutocompleted(evt, datum) {
-        console.log('autocompleted');
-        console.log(evt);
-        console.log(datum);
-    }
 
     function checkWatson() {
         if ($watson.hasClass('watson-active')) {
@@ -61,7 +59,6 @@ jQuery(function($){
         });
 
         $('.typeahead').on('typeahead:autocompleted', function(evt, item) {
-            hideQuicklook();
             if (item.quick_look_url !== undefined) {
                 showQuicklook(item.quick_look_url);
             }
@@ -76,11 +73,13 @@ jQuery(function($){
             }
         });
 
+        $watson_overlay.fadeIn('fast');
         $watson.fadeIn('fast').addClass('watson-active');
         $watson.find('input').focus();
     }
 
     function hideWatson() {
+        $watson_overlay.fadeOut('fast');
         $watson.fadeOut('fast').removeClass('watson-active');
         $('.typeahead').typeahead('destroy');
     }
@@ -91,15 +90,33 @@ jQuery(function($){
         );
     }
 
-    $.facebox.settings.closeImage = '';
+    // Facebox -----------------------------------------------------------------
+    $.facebox.settings.closeImage   = '';
     $.facebox.settings.loadingImage = '';
+    $.facebox.settings.opacity      = 0.5;
+    
+    var iframe_min_width  = 800;
+    var iframe_min_height = 600;
+    
+    var width  = $(window).width()  - 200;
+    var height = $(window).height() - 200;
 
+    if (width < iframe_min_width) {
+        width = iframe_min_width;
+    }
+    if (height < iframe_min_height) {
+        height = iframe_min_height;
+    }
+    $.facebox.settings.iframe_width  = width;
+    $.facebox.settings.iframe_height = height;
+    
 
     function showQuicklook(link) {
         $.facebox({ iframe: link });
     }
 
     function hideQuicklook() {
-        $.facebox.close();
+        if ($('#facebox_overlay').length > 0)
+            $.facebox.close();
     }
 });
