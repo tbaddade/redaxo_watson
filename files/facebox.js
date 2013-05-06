@@ -72,7 +72,9 @@
         if (data.ajax) fillFaceboxFromAjax(data.ajax, klass)
         else if (data.image) fillFaceboxFromImage(data.image, klass)
         else if (data.div) fillFaceboxFromHref(data.div, klass)
+        // tab :: iframe Funktion aufrufen
         else if (data.iframe) fillFaceboxFromIframe(data.iframe, klass)
+        // tab :: Ende
         else if ($.isFunction(data)) data.call($)
         else $.facebox.reveal(data, klass)
     }
@@ -293,7 +295,12 @@
         return false
     }
 
-    function fillFaceboxFromIframe(href, klass, width, height) {
+
+    // tab :: Funktion für iframe hinzugefügt
+    function fillFaceboxFromIframe(href, klass) {
+        var width  = $.facebox.settings.iframe_width;
+        var height = $.facebox.settings.iframe_height;
+
         if (width === undefined) {
             width = 800;
         }
@@ -302,6 +309,7 @@
         }
         $.facebox.reveal('<iframe marginwidth="0" width="' + width + '" height="' + height + '" frameborder="0" src="' + href + '" marginheight="0"></iframe>', klass)
     }
+    // tab :: Ende
 
     /*
      * Bindings
