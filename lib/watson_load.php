@@ -14,7 +14,7 @@ class watson_load
         }
     }
 
-    static function check_install()
+    static function install()
     {
         global $REX;
 
