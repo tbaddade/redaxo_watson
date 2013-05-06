@@ -23,6 +23,9 @@ b_column = Spalte
 b_columns = Spalten
 b_column_amount = {0} Spalte
 b_columns_amount = {0} Spalten
+b_create_module = Modul "{0}" anlegen
+b_create_template = Template "{0}" anlegen
+b_create_user = Benutzer "{0}" anlegen
 
 b_description = Beschreibung
 
