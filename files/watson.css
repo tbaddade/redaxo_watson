@@ -24,8 +24,8 @@
 }
 
 .watson-value {
+    position: relative;
     display: block;
-    /*margin-left: -600px; */
     padding: 5px;
     font-size: 18px;
     line-height: 1;
@@ -46,6 +46,22 @@
 }
 .watson-value.watson-no-results {
     background-color: #F0F0F0;
+}
+.watson-value.watson-quick-look:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -30px;
+    display: none;
+    width: 32px;
+    height: 32px;
+    margin-top: -14px;
+    background: url(quick_look.png);
+    background-size: 100% 100%;
+}
+
+.tt-suggestion.tt-is-under-cursor .watson-value.watson-quick-look:after {
+    display: block;
 }
 
 
@@ -70,6 +86,16 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     z-index: 1000;
+}
+#watson-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 900;
 }
 #watson form {
     margin-right: 60px;
@@ -113,7 +139,7 @@
 
 .tt-suggestion {
     display: block;
-    padding: 0 50px 0 10px;
+    padding: 0 70px 0 10px;
     border-bottom: 1px solid #E0E0E0;
     vertical-align: middle;
     overflow: hidden;
