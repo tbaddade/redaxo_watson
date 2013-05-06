@@ -12,6 +12,14 @@ Voraussetzungen
 * **REDAXO** 4.5
 * **PHP:** 5.3
 
+
+Installation
+-----------------
+* Ordner **redaxo_watson** in **watson** umbennen
+* AddOn installieren und aktivieren
+* Plugins installieren und aktivieren
+
+
 Keywords
 -----------------
 
