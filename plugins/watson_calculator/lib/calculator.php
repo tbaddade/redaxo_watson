@@ -40,7 +40,7 @@ class watson_calculator extends watson_searcher
 
             // Ergebnis anzeigen, wenn keine Wörter vorhanden sind
             // Eingabe "name" -> 0
-            if (!preg_match('@[a-zA-Z]+@', $terms)) {
+            if (!preg_match('@[a-zA-DF-Z]+@', $terms)) {
                 $result = $calc->calculate($terms);
                 $result = str_replace('.', ',', $result);
 
