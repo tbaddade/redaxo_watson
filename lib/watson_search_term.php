@@ -60,6 +60,11 @@ class watson_search_term
         return $this->terms;
     }
 
+    public function getTermsAsString()
+    {
+        return implode(' ', $this->getTerms());
+    }
+
     public function getSqlWhere($fields)
     {
         $where = array();
