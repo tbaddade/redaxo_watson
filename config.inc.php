@@ -10,7 +10,7 @@
 
 
 $basedir = __DIR__;
-$myaddon = ltrim(substr($basedir, strrpos($basedir, '/')), DIRECTORY_SEPARATOR);
+$myaddon = 'watson';
 
 
 

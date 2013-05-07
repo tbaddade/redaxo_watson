@@ -12,7 +12,7 @@
 
 // Einstellungen ---------------------------------------------------------------
 $basedir = __DIR__;
-$myaddon = ltrim(substr($basedir, strrpos($basedir, '/')), DIRECTORY_SEPARATOR);
+$myaddon = 'watson';
 
 // Check AddOns und Versionen --------------------------------------------------
 require_once($basedir . '/lib/' . $myaddon . '_load.php');

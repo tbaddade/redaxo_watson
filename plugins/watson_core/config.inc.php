@@ -9,8 +9,8 @@
  */
 
 
-$basedir  = __DIR__;
-$myaddon  = ltrim(substr($basedir, strrpos($basedir, '/')), DIRECTORY_SEPARATOR);
+$basedir = __DIR__;
+$myaddon = 'watson_core';
 
 
 $REX['ADDON']['rxid'][$myaddon] = '';
