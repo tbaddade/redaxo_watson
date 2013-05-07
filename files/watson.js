@@ -17,7 +17,7 @@ jQuery(function($){
     });
 
     $(document).keydown(function(e) {
-        if ((e.keyCode == 32 && e.ctrlKey)) {
+        if ((e.keyCode == 32 && e.ctrlKey) || (e.keyCode == 32 && e.ctrlKey && e.altKey) || (e.keyCode == 32 && e.ctrlKey && e.metaKey)) {
             checkWatson();
         }
     });
