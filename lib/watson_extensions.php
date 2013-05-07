@@ -4,6 +4,7 @@ class watson_extensions
 {
     public static function agent($params)
     {
+        global $REX, $I18N;
         $panel = '
             <div id="watson">
                 <form action="">
@@ -13,6 +14,9 @@ class watson_extensions
                 </form>
             </div><div id="watson-overlay"></div>';
 
+
+        watson::setPageParams();
+
         $params['subject'] = str_replace('</body>', $panel . '</body>', $params['subject']);
         return $params['subject'];
     }
@@ -20,7 +24,7 @@ class watson_extensions
 
     public static function searcher()
     {
-        global $I18N;
+        global $REX, $I18N;
 
         // Phase 1
         /** @var $searcher watson_searcher[] */

@@ -2,6 +2,20 @@
 
 class watson
 {
+    public static function setPageParams()
+    {
+        parse_str(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY), $query);
+
+        $_SESSION['WATSON']['PAGE_PARAMS'] = $query;
+    }
+
+    public static function getPageParam($param, $default = null)
+    {
+        if (isset($_SESSION['WATSON']['PAGE_PARAMS'][$param])) {
+            return $_SESSION['WATSON']['PAGE_PARAMS'][$param];
+        }
+        return $default;
+    }
 
 
     public static function debug($value) {
