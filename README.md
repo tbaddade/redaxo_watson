@@ -73,6 +73,27 @@ Plugins
 
 
 
+### watson_calculator
+
+Ein einfacher Rechner (Keyword: =)
+
+#### Konstanten
+
+* Pi (Kreiszahl π), 3.141592653589793
+* G (Gravitationskonstante), 6.67384E-11
+
+#### Beispiele
+
+| Eingabe                   | Ergebnis      |
+|:--------------------------|--------------:|
+| 2+4                       | 6             |
+| 2+4*6                     | 26            |
+| 2+4*6/8                   | 5             |
+| 19% von 238               | 38            |
+| Pi*2                      | 6,28318530718 |
+| G*5.9736E+24/6.371E+6^2   | 9,82192737896 |
+
+
 Screenshots
 --------------------------------------------------------------------------------
 
