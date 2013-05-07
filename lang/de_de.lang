@@ -70,6 +70,7 @@ b_param = Parameter
 b_params = Parameter
 b_parse_files = Dateien analysieren
 b_parsed_files = Dateien analysiert: {0}
+b_percent_of = von
 b_plain = Plain
 b_prior = Prior
 
