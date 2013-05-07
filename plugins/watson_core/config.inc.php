@@ -39,7 +39,7 @@ if (OOPlugin::isActivated('watson', $myaddon)) {
 
         $object = new watson_core_commands();
         rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
-        
+
 
         if ($REX['USER']->isAdmin()) {
             $object = new watson_core_modules();
