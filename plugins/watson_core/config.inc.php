@@ -27,21 +27,19 @@ $REX['ADDON']['perm'][$myaddon]        = 'admin[]';
 if (OOPlugin::isActivated('watson', $myaddon)) {
 
     if ($REX['USER']) {
-        require_once($basedir . '/lib/' . $myaddon . '.php');
+        require_once($basedir . '/lib/articles.php');
+        require_once($basedir . '/lib/commands.php');
+        require_once($basedir . '/lib/modules.php');
+        require_once($basedir . '/lib/templates.php');
+        require_once($basedir . '/lib/users.php');
 
         // rechte werden in der class geprüft
         $object = new watson_core_articles();
         rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
 
-        $object = new watson_core_logout();
+        $object = new watson_core_commands();
         rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
-
-        $object = new watson_core_start();
-        rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
-
-        $object = new watson_core_home();
-        rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
-
+        
 
         if ($REX['USER']->isAdmin()) {
             $object = new watson_core_modules();
