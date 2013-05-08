@@ -40,8 +40,10 @@ b_extension_points = Extension Points
 b_file = Datei
 b_found_extension_points = gefundene Extension Points: {0}
 b_function = Funktion
+
 b_go_to_backend_startarticle = Gehe zum Startartikel im Backend
 b_go_to_frontend = Gehe zum Frontend/Website
+b_gross = Brutto
 
 b_image = Image
 
@@ -54,6 +56,7 @@ b_module = Modul
 b_modules = Module
 
 b_name = Name
+b_net = Netto
 b_no_cheatsheets = keine Cheatsheets vorhanden
 b_no_blocks = keine Blöcke vorhanden
 b_no_contents = keine Inhalte vorhanden
@@ -77,6 +80,7 @@ b_prior = Prior
 b_readonly = Readonly
 b_rex_vars = REX Variablen
 
+b_standard_tax = 19
 b_status = Status
 b_subject = Subject
 
@@ -84,3 +88,6 @@ b_template = Template
 b_templates = Templates
 b_text = Text
 b_textile = Textile
+
+b_vat = Umsatzsteuer
+b_vat_calculator = Ust
