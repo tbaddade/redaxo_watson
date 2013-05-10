@@ -29,6 +29,7 @@ if (OOPlugin::isActivated('watson', $myaddon)) {
     if ($REX['USER']) {
         require_once($basedir . '/lib/articles.php');
         require_once($basedir . '/lib/commands.php');
+        require_once($basedir . '/lib/media.php');
         require_once($basedir . '/lib/modules.php');
         require_once($basedir . '/lib/templates.php');
         require_once($basedir . '/lib/users.php');
@@ -42,7 +43,11 @@ if (OOPlugin::isActivated('watson', $myaddon)) {
 
 
         if ($REX['USER']->isAdmin()) {
+
             $object = new watson_core_modules();
+            rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
+
+            $object = new watson_core_media();
             rex_register_extension('WATSON_SEARCHER', array('watson_searcher', 'registerExtension'), array('searcher' => $object));
 
             $object = new watson_core_templates();

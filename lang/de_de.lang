@@ -25,6 +25,7 @@ b_column_amount = {0} Spalte
 b_columns_amount = {0} Spalten
 b_create_article = Artikel "{0}" anlegen
 b_create_category = Kategorie "{0}" anlegen
+b_create_media = Medium"{0}" anlegen
 b_create_module = Modul "{0}" anlegen
 b_create_template = Template "{0}" anlegen
 b_create_user = Benutzer "{0}" anlegen
@@ -45,6 +46,7 @@ b_go_to_backend_startarticle = Gehe zum Startartikel im Backend
 b_go_to_frontend = Gehe zum Frontend/Website
 b_gross = Brutto
 
+b_id = Id
 b_image = Image
 
 b_layout = Layout
@@ -66,6 +68,8 @@ b_note = Notiz
 b_offline = offline
 b_online = online
 b_open_article_in_backend = Öffnet den Artikel im Backend
+b_open_media = Medium öffnen
+b_open_media_in_mediapool = Medium im Medienpool öffnen
 b_open_module = Modul öffnen
 b_open_template = Template öffnen
 
@@ -88,6 +92,7 @@ b_template = Template
 b_templates = Templates
 b_text = Text
 b_textile = Textile
+b_title = Titel
 
 b_vat = Umsatzsteuer
 b_vat_calculator = Ust
