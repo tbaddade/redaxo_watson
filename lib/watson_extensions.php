@@ -92,7 +92,7 @@ class watson_extensions
 
         $css_files      = $params['css'];
         $js_files       = $params['js'];
-        $js_properties  = json_encode(array('backend' => true, 'backendUrl' => parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)));
+        $js_properties  = json_encode(array('resultLimit' => watson::getResultLimit(), 'backend' => true, 'backendUrl' => parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)));
 
         $addon_assets = '../' . $REX['MEDIA_ADDON_DIR'] . '/' . $myaddon . '/';
 
@@ -107,8 +107,8 @@ class watson_extensions
 
                     <script type="text/javascript">
                         <!--
-                        if (typeof(rex) == "undefined") {
-                            var rex = ' . $js_properties . ';
+                        if (typeof(watson) == "undefined") {
+                            var watson = ' . $js_properties . ';
                         }
                         //-->
                     </script>';

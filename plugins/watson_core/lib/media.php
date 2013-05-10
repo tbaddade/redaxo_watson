@@ -36,7 +36,7 @@ class watson_core_media extends watson_searcher
                 );
 
                 $s = rex_sql::factory();
-                $s->setQuery('SELECT * FROM ' . watson::getTable('file') .' LIMIT 1');
+                $s->setQuery('SELECT * FROM ' . watson::getTable('file') .' LIMIT 0');
                 $fieldnames = $s->getFieldnames();
 
                 foreach ($fieldnames as $fieldname) {
@@ -49,7 +49,8 @@ class watson_core_media extends watson_searcher
                                             title
                                 FROM        ' . watson::getTable('file') . '
                                 WHERE       ' . $watson_search_term->getSqlWhere($fields) . '
-                                ORDER BY    filename';
+                                ORDER BY    filename
+                                LIMIT       ' . watson::getResultLimit();
 
                 $s = rex_sql::factory();
                 $s->debugsql = true;

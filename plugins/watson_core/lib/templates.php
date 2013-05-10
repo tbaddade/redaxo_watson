@@ -38,7 +38,8 @@ class watson_core_templates extends watson_searcher
                                             name
                                 FROM        ' . watson::getTable('template') . '
                                 WHERE       ' . $watson_search_term->getSqlWhere($fields) . '
-                                ORDER BY    name';
+                                ORDER BY    name
+                                LIMIT       ' . watson::getResultLimit();
 
                 $s = rex_sql::factory();
                 $s->debugsql = true;

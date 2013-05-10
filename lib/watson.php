@@ -18,8 +18,14 @@ class watson
     }
 
 
-    public static function debug($value) {
+    public static function getResultLimit()
+    {
+        return 10;
+    }
 
+
+    public static function debug($value)
+    {
         echo '<pre style="text-align: left">';
         print_r($value);
         echo '</pre>';

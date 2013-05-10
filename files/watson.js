@@ -46,9 +46,9 @@ jQuery(function($){
 
         $('.typeahead').typeahead({
             name: 'watson-result',
-            remote: rex.backendUrl + '?watson=%QUERY',
-            //prefetch: rex.backendUrl + '?watson.json',
-            limit: 10,
+            remote: watson.backendUrl + '?watson=%QUERY',
+            //prefetch: watson.backendUrl + '?watson.json',
+            limit: watson.resultLimit,
             template: [
                 '<div class="watson-result">',
                 '<span class="watson-value{{class}}" style="{{style}}">{{value_name}}<em class="watson-value-suffix">{{value_suffix}}</em><em class="watson-description">{{description}}</em></span>',

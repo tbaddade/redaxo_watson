@@ -39,7 +39,8 @@ class watson_core_modules extends watson_searcher
                                             name
                                 FROM        ' . watson::getTable('module') . '
                                 WHERE       ' . $watson_search_term->getSqlWhere($fields) . '
-                                ORDER BY    name';
+                                ORDER BY    name
+                                LIMIT       ' . watson::getResultLimit();
 
                 $s = rex_sql::factory();
                 $s->debugsql = true;

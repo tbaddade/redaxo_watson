@@ -80,6 +80,7 @@ class watson_core_articles extends watson_searcher
                             FROM        ' . watson::getTable('article') . ' AS a
                             WHERE       ' . $status . '(' . $where .')
                             GROUP BY    bulldog
+                            LIMIT       ' . watson::getResultLimit() . '
                             ';
             $s = rex_sql::factory();
             $s->debugsql = true;
@@ -119,6 +120,7 @@ class watson_core_articles extends watson_searcher
                                     ON  (s.article_id = a.id AND s.clang = a.clang)
                             WHERE       ' . $status . '(' . $watson_search_term->getSqlWhere($fields) . ')
                             GROUP BY    bulldog
+                            LIMIT       ' . watson::getResultLimit() . '
                             ';
             $s = rex_sql::factory();
             $s->debugsql = true;
@@ -139,6 +141,7 @@ class watson_core_articles extends watson_searcher
                     $clang       = $result['clang'];
                     $article     = OOArticle::getArticleById($result['id'], $clang);
                     $category_id = $article->getCategoryId();
+
 
                     // Rechte prüfen
                     if (in_array($clang, $REX['USER']->getClangPerm()) && $REX['USER']->hasCategoryPerm($category_id)) {
