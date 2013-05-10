@@ -59,7 +59,8 @@ Plugins
 
 #### Suchen
 
-* Artikel (Keywords: a, c); um eine(n) Kategorie/Arikel anzulegen, muss man sich in der Struktur befinden
+* Artikel (Keywords: a, c, on, off); um eine(n) Kategorie/Arikel anzulegen, muss man sich in der Struktur befinden
+* Medien (Keyword: m, f)
 * Module (Keyword: m)
 * Templates (Keyword: t)
 * Benutzer (Keyword: u)
