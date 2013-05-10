@@ -9,6 +9,10 @@ class watson_core_articles extends watson_searcher
         return array('a', 'c', 'on', 'off');
     }
 
+    public function legend()
+    {
+    }
+
     public function search(watson_search_term $watson_search_term)
     {
         global $REX, $I18N;

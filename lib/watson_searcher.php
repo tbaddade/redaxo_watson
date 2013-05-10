@@ -4,9 +4,14 @@
 abstract class watson_searcher
 {
     /**
-    * @return string[] an array of supported keywords
-    */
+     * @return string[] an array of supported keywords
+     */
     abstract function keywords();
+
+    /**
+     * @return watson_legend
+     */
+    abstract function legend();
 
     /**
      * Search for the given SearchTerm
