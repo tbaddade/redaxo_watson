@@ -36,7 +36,7 @@ class watson_core_media extends watson_searcher
                 );
 
                 $s = rex_sql::factory();
-                $s->setQuery('SELECT * FROM ' . watson::getTable('file'));
+                $s->setQuery('SELECT * FROM ' . watson::getTable('file') .' LIMIT 1');
                 $fieldnames = $s->getFieldnames();
 
                 foreach ($fieldnames as $fieldname) {
