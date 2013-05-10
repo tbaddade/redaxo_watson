@@ -28,17 +28,18 @@ class watson_core_modules extends watson_searcher
 
                 $watson_search_result->addEntry($entry);
 
-            } else {$fields = array(
-                'name',
-                'eingabe',
-                'ausgabe',
-            );
+            } else {
+                $fields = array(
+                    'name',
+                    'eingabe',
+                    'ausgabe',
+                );
 
                 $sql_query  = ' SELECT      id,
-                                        name
-                            FROM        ' . watson::getTable('module') . '
-                            WHERE       ' . $watson_search_term->getSqlWhere($fields) . '
-                            ORDER BY    name';
+                                            name
+                                FROM        ' . watson::getTable('module') . '
+                                WHERE       ' . $watson_search_term->getSqlWhere($fields) . '
+                                ORDER BY    name';
 
                 $s = rex_sql::factory();
                 $s->debugsql = true;
