@@ -6,7 +6,7 @@ class watson_core_articles extends watson_searcher
 
     public function keywords()
     {
-        return array('a', 'c');
+        return array('a', 'c', 'on', 'off');
     }
 
     public function search(watson_search_term $watson_search_term)
@@ -53,8 +53,49 @@ class watson_core_articles extends watson_searcher
 
         } elseif ($watson_search_term->getTerms()) {
 
+            $terms = $watson_search_term->getTerms();
+            $results = array();
+
+            $status = '';
+            if ($watson_search_term->getKeyword() == 'on') {
+                $status = 'a.status = "1" AND ';
+            } elseif ($watson_search_term->getKeyword() == 'off') {
+                $status = 'a.status = "0" AND ';
+            }
+
+            // Artikelnamen in der Struktur durchsuchen
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
             $fields = array(
-                'a.name'      => '',
+                'a.name',
+            );
+
+            $where = $watson_search_term->getSqlWhere($fields);
+            if (count($terms) == 1 && (int)$terms[0] >= 1) {
+                $where = 'a.id = "' . (int)$terms[0] .'"';
+            }
+
+            $sql_query  = ' SELECT      a.id,
+                                        a.clang,
+                                        CONCAT(a.id, "|", a.clang) as bulldog
+                            FROM        ' . watson::getTable('article') . ' AS a
+                            WHERE       ' . $status . '(' . $where .')
+                            GROUP BY    bulldog
+                            ';
+            $s = rex_sql::factory();
+            $s->debugsql = true;
+            $s->setQuery($sql_query);
+            $rows = $s->getArray();
+            if ($s->getRows() >= 1) {
+                foreach ($rows as $row) {
+                    $results[ $row['bulldog'] ] = $row;
+                }
+            }
+
+
+            // Slices der Artikel durchsuchen
+            // Werden Slices gefunden, dann die Strukturartikel überschreiben
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            $fields = array(
                 's.value'     => range('1', '20'),
                 's.file'      => range('1', '10'),
                 's.filelist'  => range('1', '10'),
@@ -62,45 +103,49 @@ class watson_core_articles extends watson_searcher
 
             $search_fields = array();
             foreach ($fields as $field => $numbers) {
-                if (is_array($numbers)) {
-                    foreach ($numbers as $number) {
-                        $search_fields[] = $field . $number;
-                    }
-                } else {
-                    $search_fields[] = $field;
+                foreach ($numbers as $number) {
+                    $search_fields[] = $field . $number;
                 }
             }
             $fields = $search_fields;
 
-            $sql_query  = ' SELECT      a.id,
-                                        a.name,
-                                        a.clang,
-                                        s.ctype
-                            FROM            ' . watson::getTable('article') . '         AS a
-                                LEFT JOIN   ' . watson::getTable('article_slice') . '   AS s
-                                    ON      a.id = s.article_id
-                            WHERE       ' . $watson_search_term->getSqlWhere($fields) . '
-                            GROUP BY    a.id
-                            ORDER BY    a.name
-                ';
-
+            $sql_query  = ' SELECT      s.article_id AS id,
+                                        s.clang,
+                                        s.ctype,
+                                        CONCAT(s.article_id, "|", s.clang) as bulldog
+                            FROM        ' . watson::getTable('article_slice') . ' AS s
+                                LEFT JOIN
+                                        ' . watson::getTable('article') . ' AS a
+                                    ON  (s.article_id = a.id AND s.clang = a.clang)
+                            WHERE       ' . $status . '(' . $watson_search_term->getSqlWhere($fields) . ')
+                            GROUP BY    bulldog
+                            ';
             $s = rex_sql::factory();
             $s->debugsql = true;
             $s->setQuery($sql_query);
-            $results = $s->getArray();
-
+            $rows = $s->getArray();
             if ($s->getRows() >= 1) {
+                foreach ($rows as $row) {
+                    $results[ $row['bulldog'] ] = $row;
+                }
+            }
+
+            // Ergebnisse auf Rechte prüfen und bereitstellen
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            if (count($results) >= 1) {
 
                 foreach ($results as $result) {
 
-                    $article = OOArticle::getArticleById($result['id']);
+                    $clang       = $result['clang'];
+                    $article     = OOArticle::getArticleById($result['id'], $clang);
+                    $category_id = $article->getCategoryId();
 
                     // Rechte prüfen
-                    if ($REX['USER']->isAdmin() || $REX['USER']->hasPerm('article[' . $article->getId() . ']')) {
-
-                        $tree = $article->getParentTree();
+                    if (in_array($clang, $REX['USER']->getClangPerm()) && $REX['USER']->hasCategoryPerm($category_id)) {
 
                         $path = array();
+
+                        $tree        = $article->getParentTree();
                         foreach ($tree as $o) {
                             $path[] = $o->getName();
                         }
@@ -110,12 +155,29 @@ class watson_core_articles extends watson_searcher
 
                         $path = '/' . implode('/', $path);
 
+                        $url = watson::url(array('page' => 'structure', 'category_id' => $article->getCategoryId(), 'clang' => $clang));
+                        if (isset($result['ctype'])) {
+                            $url = watson::url(array('page' => 'content', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang, 'ctype' => $result['ctype']));
+                        }
+
+
+                        $suffix = array();
+                        if ($REX['USER']->hasPerm('advancedMode[]')) {
+                            $suffix[] = $article->getId();
+                        }
+                        if (count($REX['CLANG']) > 1) {
+                            $suffix[] = $REX['CLANG'][$clang];
+                        }
+                        $suffix = implode(', ', $suffix);
+                        $suffix = $suffix != '' ? '(' . $suffix . ')' : '';
+
+
                         $entry = new watson_search_entry();
-                        $entry->setValue($article->getName());
+                        $entry->setValue($article->getName(), $suffix);
                         $entry->setDescription($path);
                         $entry->setIcon('../' . $REX['MEDIA_ADDON_DIR'] . '/watson/icon_article.png');
-                        $entry->setUrl(watson::url(array('page' => 'content', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $result['clang'], 'ctype' => $result['ctype'])));
-                        $entry->setQuickLookUrl('../index.php?article_id=' . $article->getId());
+                        $entry->setUrl($url);
+                        $entry->setQuickLookUrl('../index.php?article_id=' . $article->getId() . '&clang=' . $clang);
 
                         $watson_search_result->addEntry($entry);
                     }
