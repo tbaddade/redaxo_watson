@@ -2,7 +2,7 @@
 Watson
 ================================================================================
 
-stellt eine globale Suche bereit an der sich andere AddOns andocken können.
+Stellt eine globale Suche bereit, an der sich andere AddOns andocken können.
 
 Zum Bspl. dockt sich das **[watson_core](https://github.com/tbaddade/redaxo_watson/blob/master/README.md#watson_core)** Plugin mit einer Artikel-, Modul- und Templatesuche an.
 
@@ -19,7 +19,7 @@ Voraussetzungen
 Installation
 --------------------------------------------------------------------------------
 
-* Ordner **redaxo_watson** in **watson** umbennen
+* Ordner **redaxo_watson** in **watson** umbenennen
 * AddOn installieren und aktivieren
 * Plugins installieren und aktivieren
 
@@ -59,11 +59,11 @@ Plugins
 
 #### Suchen
 
-* Artikel (Keywords: a, c, on, off); um eine(n) Kategorie/Arikel anzulegen, muss man sich in der Struktur befinden
-* Medien (Keyword: m, f)
-* Module (Keyword: m)
-* Templates (Keyword: t)
-* Benutzer (Keyword: u)
+* Artikel (Keywords: a+; c+; on; off); um eine(n) Kategorie/Arikel anzulegen, muss man sich in der Struktur befinden
+* Medien (Keywords: m, m+; f, f+)
+* Module (Keyword: m, m+)
+* Templates (Keyword: t, t+)
+* Benutzer (Keyword: u+)
 
 
 #### Kommandos
