@@ -74,7 +74,7 @@ class watson_extensions
 
 
             if (count($json) == 0) {
-                $json[] = array('value' => $I18N->msg('b_no_results'), 'tokens' => array($I18N->msg('b_no_results')));
+                $json[] = array('value_name' => $I18N->msg('b_no_results'), 'value' => $I18N->msg('b_no_results'), 'tokens' => array($I18N->msg('b_no_results')));
             }
 
             ob_clean();

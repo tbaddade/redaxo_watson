@@ -4,6 +4,7 @@
 class watson_search_entry
 {
     private $value;
+    private $value_suffix;
     private $icon;
     private $description;
     private $quick_look_url;
@@ -24,13 +25,17 @@ class watson_search_entry
      *
      * @param string $value
      */
-    public function setValue($value)
+    public function setValue($value, $suffix = null)
     {
         $this->value = $value;
+
+        if ($suffix) {
+            $this->setValueSuffix($suffix);
+        }
     }
 
     /**
-     * Returns the icon
+     * Returns the value
      *
      * @return string
      */
@@ -40,13 +45,45 @@ class watson_search_entry
     }
 
     /**
-     * Returns whether a icon is set
+     * Returns whether a value is set
      *
      * @return bool
      */
     public function hasValue()
     {
         return !empty($this->value);
+    }
+
+
+
+    /**
+     * Sets a value_suffix
+     *
+     * @param string $value
+     */
+    public function setValueSuffix($value)
+    {
+        $this->value_suffix = $value;
+    }
+
+    /**
+     * Returns the value_suffix
+     *
+     * @return string
+     */
+    public function getValueSuffix()
+    {
+        return $this->value_suffix;
+    }
+
+    /**
+     * Returns whether a value_suffix is set
+     *
+     * @return bool
+     */
+    public function hasValueSuffix()
+    {
+        return !empty($this->value_suffix);
     }
 
 

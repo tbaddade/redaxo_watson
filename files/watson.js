@@ -51,7 +51,7 @@ jQuery(function($){
             limit: 10,
             template: [
                 '<div class="watson-result">',
-                '<span class="watson-value{{class}}" style="{{style}}">{{value}}<em>{{description}}</em></span>',
+                '<span class="watson-value{{class}}" style="{{style}}">{{value_name}}<em class="watson-value-suffix">{{value_suffix}}</em><em class="watson-description">{{description}}</em></span>',
                 '</div>'
              ].join(''),
 

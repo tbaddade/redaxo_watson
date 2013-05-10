@@ -43,17 +43,27 @@ class watson_search_result
                 $classes = array();
                 $styles  = array();
 
-                $return['value']        = $entry->getValue();
-                $return['tokens']       = array($entry->getValue());
+                $value = $entry->getValue();
+
+                $return['value_name']   = $entry->getValue();
                 $return['description']  = '';
 
+                if ($entry->hasValueSuffix()) {
+                    // Suffix anhängen, da sonst nur ein Ergebnis erscheint
+                    // Bspl. gleicher Artikelname in 2 Sprachen
+                    $value .= ' ' . $entry->getValueSuffix();
+
+                    $classes[]                  = 'watson-has-value-suffix';
+                    $return['value_suffix']     = $entry->getValueSuffix();
+                }
+
                 if ($entry->hasIcon()) {
-                    $classes[]                  = 'watson-icon';
+                    $classes[]                  = 'watson-has-icon';
                     $styles[]                   = 'background-image: url(' . $entry->getIcon() . ');';
                 }
 
                 if ($entry->hasDescription()) {
-                    $classes[]                  = 'watson-description';
+                    $classes[]                  = 'watson-has-description';
                     $return['description']      = $entry->getDescription();
                 }
 
@@ -63,9 +73,12 @@ class watson_search_result
                 }
 
                 if ($entry->hasQuickLookUrl()) {
-                    $classes[]                  = 'watson-quick-look';
+                    $classes[]                  = 'watson-has-quick-look';
                     $return['quick_look_url']   = $entry->getQuickLookUrl();
                 }
+
+                $return['value']        = $value;
+                $return['tokens']       = array($value);
 
 
                 $class = count($classes) > 0 ? ' ' . implode(' ', $classes) : '';

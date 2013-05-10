@@ -26,28 +26,40 @@
 .watson-value {
     position: relative;
     display: block;
-    padding: 5px;
+    padding: 13px 5px 12px 5px;
     font-size: 18px;
     line-height: 1;
 }
 .watson-value em {
     display: none;
-    padding-top: 2px;
-    color: #a0a0a0;
     font-size: 13px;
     font-style: normal;
 }
-.watson-value.watson-description em {
+.watson-value em.watson-value-suffix {
+    margin-left: 5px;
+}
+.watson-value em.watson-description {
+    padding-top: 2px;
+    color: #a0a0a0;
+}
+.watson-value.watson-has-description {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.watson-value.watson-has-value-suffix em.watson-value-suffix {
+    display: inline-block;
+}
+.watson-value.watson-has-description em.watson-description {
     display: block;
 }
-.watson-value.watson-icon {
+.watson-value.watson-has-icon {
     padding-left: 40px;
     background-position: 0 50%;
 }
 .watson-value.watson-no-results {
     background-color: #F0F0F0;
 }
-.watson-value.watson-quick-look:after {
+.watson-value.watson-has-quick-look:after {
     content: '';
     position: absolute;
     top: 50%;
@@ -60,7 +72,7 @@
     background-size: 100% 100%;
 }
 
-.tt-suggestion.tt-is-under-cursor .watson-value.watson-quick-look:after {
+.tt-suggestion.tt-is-under-cursor .watson-value.watson-has-quick-look:after {
     display: block;
 }
 
