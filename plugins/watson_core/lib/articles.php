@@ -11,6 +11,16 @@ class watson_core_articles extends watson_searcher
 
     public function legend()
     {
+        global $I18N;
+
+        $legend = new watson_legend();
+        $legend->setName($I18N->msg('b_watson_legend_articles'));
+        $legend->addKeyword('a', false, true, $I18N->msg('b_watson_legend_create_article_in_structure'));
+        $legend->addKeyword('c', false, true, $I18N->msg('b_watson_legend_create_category_in_structure'));
+        $legend->addKeyword('on', true, false, $I18N->msg('b_watson_legend_article_online'));
+        $legend->addKeyword('off', true, false, $I18N->msg('b_watson_legend_article_offline'));
+
+        return $legend;
     }
 
     public function search(watson_search_term $watson_search_term)

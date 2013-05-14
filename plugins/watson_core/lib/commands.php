@@ -11,6 +11,15 @@ class watson_core_commands extends watson_searcher
 
     public function legend()
     {
+        global $I18N;
+
+        $legend = new watson_legend();
+        $legend->setName($I18N->msg('b_watson_legend_commands'));
+        $legend->addKeyword('home', false, false, $I18N->msg('b_watson_legend_command_home'));
+        $legend->addKeyword('logout', false, false, $I18N->msg('b_watson_legend_command_logout'));
+        $legend->addKeyword('start', false, false, $I18N->msg('b_watson_legend_command_start'));
+
+        return $legend;
     }
 
     public function search(watson_search_term $watson_search_term)

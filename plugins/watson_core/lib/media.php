@@ -11,6 +11,14 @@ class watson_core_media extends watson_searcher
 
     public function legend()
     {
+        global $I18N;
+
+        $legend = new watson_legend();
+        $legend->setName($I18N->msg('b_watson_legend_media'));
+        $legend->addKeyword('m', true, true);
+        $legend->addKeyword('f', true, true, $I18N->msg('b_watson_legend_synonym_for', 'm'));
+
+        return $legend;
     }
 
     public function search(watson_search_term $watson_search_term)

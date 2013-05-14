@@ -1,7 +1,8 @@
 jQuery(function($){
 
-    var $watson         = $('#watson');
-    var $watson_overlay = $('#watson-overlay');
+    var $watson          = $('#watson');
+    var $watson_overlay  = $('#watson-overlay');
+    var $watson_settings = $('#watson-settings');
 
     $(document).ready( function() {
 
@@ -13,6 +14,14 @@ jQuery(function($){
 
         $watson_overlay.click(function(){
             hideWatson();
+        });
+
+
+        $('.watson-settings-open').click(function(){
+            showWatsonSettings();
+        });
+        $('.watson-settings-close').click(function(){
+            hideWatsonSettings();
         });
     });
 
@@ -36,9 +45,9 @@ jQuery(function($){
 
     function checkWatson() {
         if ($watson.hasClass('watson-active')) {
-            hideWatson($watson);
+            hideWatson();
         } else {
-            showWatson($watson);
+            showWatson();
         }
     }
 
@@ -79,9 +88,18 @@ jQuery(function($){
     }
 
     function hideWatson() {
+        hideWatsonSettings();
         $watson_overlay.fadeOut('fast');
         $watson.fadeOut('fast').removeClass('watson-active');
         $('.typeahead').typeahead('destroy');
+    }
+
+    function showWatsonSettings() {
+        $watson_settings.fadeIn('fast').addClass('watson-active');
+    }
+
+    function hideWatsonSettings() {
+        $watson_settings.fadeOut('fast').removeClass('watson-active');
     }
 
     function getUrlParameter(name) {

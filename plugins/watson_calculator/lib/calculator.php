@@ -11,6 +11,16 @@ class watson_calculator extends watson_searcher
 
     public function legend()
     {
+        global $I18N;
+
+        $legend = new watson_legend();
+        $legend->setName($I18N->msg('b_watson_legend_calculator'));
+        $legend->addKeyword('=', false, false);
+        $legend->addKeyword(strtolower($I18N->msg('b_gross')), false, false, $I18N->msg('b_watson_legend_calculator_gross'));
+        $legend->addKeyword(strtolower($I18N->msg('b_net')), false, false, $I18N->msg('b_watson_legend_calculator_net'));
+        $legend->addKeyword(strtolower($I18N->msg('b_vat_calculator')), false, false, $I18N->msg('b_watson_legend_calculator_vat'));
+
+        return $legend;
     }
 
     public function search(watson_search_term $watson_search_term)

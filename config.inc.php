@@ -38,6 +38,7 @@ $REX['ADDON']['perm'][$myaddon]        = 'admin[]';
 if (OOAddon::isActivated($myaddon)) {
 
     require_once($basedir . '/lib/watson.php');
+    require_once($basedir . '/lib/watson_legend.php');
     require_once($basedir . '/lib/watson_searcher.php');
     require_once($basedir . '/lib/watson_search_entry.php');
     require_once($basedir . '/lib/watson_search_term.php');

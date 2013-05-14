@@ -12,10 +12,25 @@ class watson_extensions
                         <input class="typeahead" type="text" name="q" value="" />
                     </fieldset>
                 </form>
+                <span class="watson-settings-open"></span>
             </div><div id="watson-overlay"></div>';
 
 
         watson::setPageParams();
+
+        $params['subject'] = str_replace('</body>', $panel . '</body>', $params['subject']);
+        return $params['subject'];
+    }
+
+    public static function legend($params)
+    {
+        global $REX, $I18N;
+        $panel = '
+            <div id="watson-settings">
+                <h1>' . $I18N->msg('b_watson_title'). '</h1>
+                ' . $params['html'] . '
+                <span class="watson-settings-close"></span>
+            </div>';
 
         $params['subject'] = str_replace('</body>', $panel . '</body>', $params['subject']);
         return $params['subject'];
@@ -29,6 +44,39 @@ class watson_extensions
         // Phase 1
         /** @var $searcher watson_searcher[] */
         $searchers = rex_register_extension_point('WATSON_SEARCHER');
+
+
+        // Phase 2
+        // Legenden holen
+        if (count($searchers) > 0) {
+            $legends = array();
+            foreach($searchers as $searcher) {
+                $legend = $searcher->legend();
+                if ($legend instanceof watson_legend) {
+                    $legends[] = $legend->get();
+                }
+            }
+
+            $html = implode('', $legends);
+            $html = '<table class="watson-legend">
+                        <thead>
+                        <tr>
+                            <th class="watson-legend-title">' . $I18N->msg('b_title'). '</th>
+                            <th class="watson-legend-keyword">' . $I18N->msg('b_keyword'). '</th>
+                            <th class="watson-legend-search">' . $I18N->msg('b_search'). '</th>
+                            <th class="watson-legend-add">' . $I18N->msg('b_add'). '</th>
+                            <th class="watson-legend-description">' . $I18N->msg('b_description'). '</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        ' . $html . '
+                        </tbody>
+                     </table>';
+            $params = array('html' => $html);
+
+            rex_register_extension('OUTPUT_FILTER', 'watson_extensions::legend', $params);
+        }
+
 
         // Phase 2
         // User Eingabe parsen in $input
@@ -58,7 +106,7 @@ class watson_extensions
                 $search_results[] = $searcher->search($watson_search_term);
             }
 
-            // irgendwo später Ergebnis rendern
+            // Ergebnis rendern
             $results = array();
             foreach ($search_results as $search_result) {
                 // render json/html whatever

@@ -11,6 +11,13 @@ class watson_core_users extends watson_searcher
 
     public function legend()
     {
+        global $I18N;
+
+        $legend = new watson_legend();
+        $legend->setName($I18N->msg('b_watson_legend_users'));
+        $legend->addKeyword('u', false, true);
+
+        return $legend;
     }
 
     public function search(watson_search_term $watson_search_term)
