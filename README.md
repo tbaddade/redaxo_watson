@@ -2,22 +2,28 @@
 Watson
 ================================================================================
 
-Stellt eine globale Suche bereit, an der sich andere AddOns andocken können.
+Ein Suchagent für REDAXO 4.5+
 
-Zum Bspl. dockt sich das **[watson_core](https://github.com/tbaddade/redaxo_watson/blob/master/README.md#watson_core)** Plugin mit einer Artikel-, Modul- und Templatesuche an.
+Watson spart Zeit bei der Suche nach Artikeln, Modulen, Templates, Benutzer und Dateien und … im REDAXO Backend.
+
+
+### Siehe auch
 
 
 
-Voraussetzungen
---------------------------------------------------------------------------------
+### Download
+http://www.redaxo.org/de/download/addons/?addon_id=1097
+
+
+
+### Voraussetzungen
 
 * **REDAXO** 4.5
 * **PHP:** 5.3
 
 
 
-Installation
---------------------------------------------------------------------------------
+### Installation
 
 * Ordner **redaxo_watson** in **watson** umbenennen
 * AddOn installieren und aktivieren
@@ -25,30 +31,60 @@ Installation
 
 
 
+### Bugtracker
+https://github.com/tbaddade/redaxo_watson/issues
 
-Hotkeys
+
+
+Benutzung
 --------------------------------------------------------------------------------
 
 
-### Watson öffnen:
+### Watson
 
-* **ctrl + space** (um im Firefox das Contextmenü zu vermeiden, **ctrl + alt + space** drücken)
-* **ctrl + alt + space**
-* **ctrl + cmd + space**
+* **öffnen**
+    * ctrl + space (um im Firefox das Contextmenü zu vermeiden, **ctrl + alt + space** drücken)
+    * ctrl + alt + space
+    * ctrl + cmd + space
+* **schließen**
+    * ESC
+    * ctrl + space
+    * ctrl + alt + space
+    * ctrl + cmd + space
 
 
-### Quick look:
-
-* **rechter Cursor**
 
 
+### Quick look
 
-Keywords
---------------------------------------------------------------------------------
+* **öffnen**
+    * Cursortaste rechts
+* **schließen**
+    * Cursortaste links
+    * Cursortaste oben
+    * Cursortaste unten
 
-Sind Keywords registriert, wird die Suche entsprechend eingegrenzt.
 
-Gibt man ein Keyword und nachfolgend ein **+** ein, gelangt man in den Add-Modus der angegebenen Url.
+
+
+### Keywords
+
+Sind Keywords registriert, wird die Suche entsprechend eingegrenzt.<br />
+
+`t text` :: **t** grenzt die Suche auf Templates ein
+
+#### Add-Modus
+
+Gibt man ein Keyword und nachfolgend ein **+** ein, gelangt man in den Add-Modus (hinzufügen/anlegen) der angegebenen Url.<br />
+
+`t+ Neues Template` :: **t+** wird ein neues Template mit dem Namen "Neues Template" anlegen
+
+
+### Kommandos
+
+Ein Kommando ist ein Keyword ohne weitere Texteingabe und löst bei **enter** eine Aktion aus.<br />
+
+`logout` :: hierdurch wird man vom REDAXO Backend ausgeloggt
 
 
 
@@ -57,78 +93,38 @@ Plugins
 
 ### watson_core
 
-#### Suchen
+* **Suchen**
+    * **Artikel**<br />
+        a+; c+; on; off - um eine(n) Kategorie/Arikel anzulegen, muss man sich in der Struktur befinden
+    * **Medien**<br />
+        m, m+; f, f+
+    * **Module**<br />
+        m, m+
+    * **Templates**<br />
+        t, t+
+    * **Benutzer**<br />
+        u+
+* **Kommandos**
+    * **start**<br />
+        zur Startseite im Backend
+    * **home**<br />
+        zur Startseite im Frontend
+    * **logout**<br />
+        REDAXO logout
 
-* Artikel (Keywords: a+; c+; on; off); um eine(n) Kategorie/Arikel anzulegen, muss man sich in der Struktur befinden
-* Medien (Keywords: m, m+; f, f+)
-* Module (Keyword: m, m+)
-* Templates (Keyword: t, t+)
-* Benutzer (Keyword: u+)
 
-
-#### Kommandos
-
-* start :: zur Startseite im Backend
-* home :: zur Startseite im Frontend
-* logout :: REDAXO logout
-
-
-***
 
 
 ### watson_calculator
 
-Ein einfacher Rechner (Keyword: =)
+Ein einfacher Rechner
 
-#### Konstanten
-
-* Pi (Kreiszahl π), 3.141592653589793
-* G (Gravitationskonstante), 6.67384E-11
-
-#### Beispiele
-
-##### Allgemein
-
-| Eingabe                   | Ergebnis      |
-|:--------------------------|--------------:|
-| 2+4                       | 6             |
-| 2+4*6                     | 26            |
-| 2+4*6/8                   | 5             |
-| Pi*2                      | 6,28318530718 |
-| G*5.9736E+24/6.371E+6^2   | 9,82192737896 |
-
-
-##### Prozent
-
-| Eingabe                   | Ergebnis      |
-|:--------------------------|--------------:|
-| 20 von 200                | 40            |
-| 20% von 200               | 40            |
-
-
-##### Umsatzsteuer
-
-| Eingabe                   | Ergebnis      |
-|:--------------------------|--------------:|
-| brutto 200                | 238           |
-| brutto 100+100            | 238           |
-| brutto 7 200              | 214           |
-| brutto 7 100+100          | 214           |
-| netto 238                 | 200           |
-| netto 138+100             | 200           |
-| netto 7 214               | 200           |
-| netto 7 114+100           | 200           |
-| ust 238                   | 38            |
-| ust 138+100               | 38            |
-| ust 7 214                 | 14            |
-| ust 7 114+100             | 14            |
-
-
-Screenshots
---------------------------------------------------------------------------------
-
-### Watson
-![Watson](http://blumbeet.com/screens/github/watson/2013-04-22-14-01-49.png)
-
-### Quick look
-![Watson](http://blumbeet.com/screens/github/watson/2013-04-22-14-03-23.png)
+* **Keywords**<br />
+  *abhängig von der Backendsprache*
+    * =
+    * brutto / gross
+    * netto / net
+    * ust / vat
+* **Konstanten**
+    * Pi (Kreiszahl π), 3.141592653589793
+    * G (Gravitationskonstante), 6.67384E-11
