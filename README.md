@@ -12,7 +12,7 @@ Watson spart Zeit bei der Suche nach Artikeln, Modulen, Templates, Benutzer und 
 
 
 ### Download
-http://www.redaxo.org/de/download/addons/?addon_id=1097
+
 
 
 
@@ -32,7 +32,24 @@ http://www.redaxo.org/de/download/addons/?addon_id=1097
 
 
 ### Bugtracker
-https://github.com/tbaddade/redaxo_watson/issues
+
+Du hast einen Fehler gefunden oder ein nettes Feature parat? [Lege ein Issue an](https://github.com/tbaddade/redaxo_watson/issues). Bevor du ein neues Issue erstellts, suche bitte ob bereits eines mit deinem Anliegen existiert und lese die [Issue Guidelines (englisch)](https://github.com/necolas/issue-guidelines) von [Nicolas Gallagher](https://github.com/necolas/).
+
+
+### Changelog
+
+siehe [CHANGELOG.md](https://github.com/tbaddade/redaxo_watson/blob/master/CHANGELOG.md)
+
+### Lizenz
+
+siehe [LICENSE.md](https://github.com/tbaddade/redaxo_watson/blob/master/LICENSE.md)
+
+
+### Autor
+
+**Thomas Blum**
+* http://blumbeet.com
+* https://github.com/tbaddade
 
 
 
