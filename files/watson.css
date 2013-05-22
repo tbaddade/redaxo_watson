@@ -1,17 +1,12 @@
 /*
  * Watson Icons
  *
- * Sherlock
- * http://www.iconfinder.com/icondetails/6249/128/agent_detective_hat_icon
- * License: GPL
- * Designer Alessandro Rei - http://www.kde-look.org/usermanager/search.php?username=mentalrey
+ * Logo
+ * Designer Ralph Zumkeller - http://www.yakamara.de
  *
  *
- * Magnify
- * http://www.iconfinder.com/icondetails/103857/64/find_glass_magnifying_search_icon
- * License: Free for commercial use
- * Designer Iconleak - http://iconleak.com/product/free-windows-icon-atrous/
- *
+ * Enter
+ * By Font Lucida Grande Bold
  *
  * Enter
  * By Font Lucida Grande Bold
@@ -20,7 +15,7 @@
 */
 
 #watson {
-    background-image: url(logo.png);
+    background-image: url(watson_logo.png);
 }
 
 .watson-value {
@@ -88,8 +83,8 @@
     margin-left: -300px;
     padding: 10px;
     background-color: #E0E0E0;
-    background-position: 520px 50%;
-    background-size: 50px 50px;
+    background-position: 512px 50%;
+    background-size: 64px 64px;
     border: 10px solid rgba(0, 0, 0, .5);
     -webkit-border-radius: 5px;
             border-radius: 5px;
