@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Redaxo watson by tbaddade</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Redaxo watson</h1>
+        <p>Suchagent für REDAXO 4.5</p>
+
+        <p class="view"><a href="https://github.com/tbaddade/redaxo_watson">View the Project on GitHub <small>tbaddade/redaxo_watson</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/tbaddade/redaxo_watson/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/tbaddade/redaxo_watson/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/tbaddade/redaxo_watson">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Watson</h1>
+
+<p>Ein Suchagent für REDAXO 4.5+</p>
+
+<p>Watson spart Zeit bei der Suche nach Artikeln, Modulen, Templates, Benutzer und Dateien und … im REDAXO Backend.</p>
+
+<h3>Siehe auch</h3>
+
+<h3>Download</h3>
+
+<h3>Voraussetzungen</h3>
+
+<ul>
+<li>
+<strong>REDAXO</strong> 4.5</li>
+<li>
+<strong>PHP:</strong> 5.3</li>
+</ul><h3>Installation</h3>
+
+<ul>
+<li>Ordner <strong>redaxo_watson</strong> in <strong>watson</strong> umbenennen</li>
+<li>AddOn installieren und aktivieren</li>
+<li>Plugins installieren und aktivieren</li>
+</ul><h3>Bugtracker</h3>
+
+<p>Du hast einen Fehler gefunden oder ein nettes Feature parat? <a href="https://github.com/tbaddade/redaxo_watson/issues">Lege ein Issue an</a>. Bevor du ein neues Issue erstellts, suche bitte ob bereits eines mit deinem Anliegen existiert und lese die <a href="https://github.com/necolas/issue-guidelines">Issue Guidelines (englisch)</a> von <a href="https://github.com/necolas/">Nicolas Gallagher</a>.</p>
+
+<h3>Changelog</h3>
+
+<p>siehe <a href="https://github.com/tbaddade/redaxo_watson/blob/master/CHANGELOG.md">CHANGELOG.md</a></p>
+
+<h3>Lizenz</h3>
+
+<p>siehe <a href="https://github.com/tbaddade/redaxo_watson/blob/master/LICENSE.md">LICENSE.md</a></p>
+
+<h3>Autor</h3>
+
+<p><strong>Thomas Blum</strong></p>
+
+<ul>
+<li><a href="http://blumbeet.com">http://blumbeet.com</a></li>
+<li><a href="https://github.com/tbaddade">https://github.com/tbaddade</a></li>
+</ul><h3>Credits</h3>
+
+<ul>
+<li>Watson Logo <strong>Ralph Zumkeller</strong>
+</li>
+</ul><h2>Benutzung</h2>
+
+<h3>Watson</h3>
+
+<ul>
+<li>
+<strong>öffnen</strong>
+
+<ul>
+<li>ctrl + space (um im Firefox das Contextmenü zu vermeiden, <strong>ctrl + alt + space</strong> drücken)</li>
+<li>ctrl + alt + space</li>
+<li>ctrl + cmd + space</li>
+</ul>
+</li>
+<li>
+<strong>schließen</strong>
+
+<ul>
+<li>ESC</li>
+<li>ctrl + space</li>
+<li>ctrl + alt + space</li>
+<li>ctrl + cmd + space</li>
+</ul>
+</li>
+</ul><h3>Quick look</h3>
+
+<ul>
+<li>
+<strong>öffnen</strong>
+
+<ul>
+<li>Cursortaste rechts</li>
+</ul>
+</li>
+<li>
+<strong>schließen</strong>
+
+<ul>
+<li>Cursortaste links</li>
+<li>Cursortaste oben</li>
+<li>Cursortaste unten</li>
+</ul>
+</li>
+</ul><h3>Keywords</h3>
+
+<p>Sind Keywords registriert, wird die Suche entsprechend eingegrenzt.<br></p>
+
+<p><code>t text</code> :: <strong>t</strong> grenzt die Suche auf Templates ein</p>
+
+<h4>Add-Modus</h4>
+
+<p>Gibt man ein Keyword und nachfolgend ein <strong>+</strong> ein, gelangt man in den Add-Modus (hinzufügen/anlegen) der angegebenen Url.<br></p>
+
+<p><code>t+ Neues Template</code> :: <strong>t+</strong> wird ein neues Template mit dem Namen "Neues Template" anlegen</p>
+
+<h3>Kommandos</h3>
+
+<p>Ein Kommando ist ein Keyword ohne weitere Texteingabe und löst bei <strong>enter</strong> eine Aktion aus.<br></p>
+
+<p><code>logout</code> :: hierdurch wird man vom REDAXO Backend ausgeloggt</p>
+
+<h2>Plugins</h2>
+
+<h3>watson_core</h3>
+
+<ul>
+<li>
+<strong>Suchen</strong>
+
+<ul>
+<li>
+<strong>Artikel</strong><br>
+a+; c+; on; off - um eine(n) Kategorie/Arikel anzulegen, muss man sich in der Struktur befinden</li>
+<li>
+<strong>Medien</strong><br>
+m, m+; f, f+</li>
+<li>
+<strong>Module</strong><br>
+m, m+</li>
+<li>
+<strong>Templates</strong><br>
+t, t+</li>
+<li>
+<strong>Benutzer</strong><br>
+u+</li>
+</ul>
+</li>
+<li>
+<strong>Kommandos</strong>
+
+<ul>
+<li>
+<strong>start</strong><br>
+zur Startseite im Backend</li>
+<li>
+<strong>home</strong><br>
+zur Startseite im Frontend</li>
+<li>
+<strong>logout</strong><br>
+REDAXO logout</li>
+</ul>
+</li>
+</ul><h3>watson_calculator</h3>
+
+<p>Ein einfacher Rechner</p>
+
+<ul>
+<li>
+<strong>Keywords</strong><br><em>abhängig von der Backendsprache</em>
+
+<ul>
+<li>=</li>
+<li>brutto / gross</li>
+<li>netto / net</li>
+<li>ust / vat</li>
+</ul>
+</li>
+<li>
+<strong>Konstanten</strong>
+
+<ul>
+<li>Pi (Kreiszahl π), 3.141592653589793</li>
+<li>G (Gravitationskonstante), 6.67384E-11</li>
+</ul>
+</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/tbaddade">tbaddade</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
