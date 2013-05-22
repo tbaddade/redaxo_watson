@@ -48,8 +48,14 @@ siehe [LICENSE.md](https://github.com/tbaddade/redaxo_watson/blob/master/LICENSE
 ### Autor
 
 **Thomas Blum**
+
 * http://blumbeet.com
 * https://github.com/tbaddade
+
+
+### Credits
+
+* Watson Logo **Ralph Zumkeller**
 
 
 
