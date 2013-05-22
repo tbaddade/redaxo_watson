@@ -24,12 +24,15 @@ class watson
     }
 
 
-    public static function debug($value)
+    public static function debug($value, $exit = true)
     {
         echo '<pre style="text-align: left">';
         print_r($value);
         echo '</pre>';
-        exit();
+
+        if ($exit) {
+            exit();
+        }
 
     }
 
