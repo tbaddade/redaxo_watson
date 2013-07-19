@@ -48,7 +48,7 @@ class watson_extensions
 
         // Phase 2
         // Legenden holen
-        if (count($searchers) > 0) {
+        if (is_array($searchers) && count($searchers) > 0) {
             $legends = array();
             foreach($searchers as $searcher) {
                 $legend = $searcher->legend();
@@ -81,7 +81,7 @@ class watson_extensions
         // Phase 2
         // User Eingabe parsen in $input
         $input = rex_request('watson', 'string');
-        if ($input != '' && count($searchers) > 0) {
+        if ($input != '' && is_array($searchers) && count($searchers) > 0) {
 
             $watson_search_term = new watson_search_term($input);
 
