@@ -17,4 +17,4 @@ $myaddon = 'watson';
 // Check AddOns und Versionen --------------------------------------------------
 require_once($basedir . '/lib/' . $myaddon . '_load.php');
 $myclass = $myaddon . '_load';
-$myclass ::install();
+$myclass::install();
