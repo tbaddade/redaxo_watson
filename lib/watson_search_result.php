@@ -57,7 +57,10 @@ class watson_search_result
                     $return['value_suffix']     = $entry->getValueSuffix();
                 }
 
-                if ($entry->hasIcon()) {
+                if ($entry->hasPreview()) {
+                    $classes[]                  = 'watson-has-preview';
+                    $styles[]                   = 'background-image: url(' . $entry->getPreview() . ');';
+                } elseif ($entry->hasIcon()) {
                     $classes[]                  = 'watson-has-icon';
                     $styles[]                   = 'background-image: url(' . $entry->getIcon() . ');';
                 }

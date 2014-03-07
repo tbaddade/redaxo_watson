@@ -48,9 +48,15 @@
     display: block;
 }
 .watson-value.watson-has-icon {
-    padding-left: 40px;
+    padding-left: 50px;
     background-position: 0 50%;
 }
+.watson-value.watson-has-preview {
+    padding-left: 60px;
+    margin-left: -10px;
+    background-position: 0 50%;
+}
+
 .watson-value.watson-no-results {
     background-color: #F0F0F0;
 }

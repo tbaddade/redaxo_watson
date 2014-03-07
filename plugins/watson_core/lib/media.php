@@ -85,6 +85,8 @@ class watson_core_media extends watson_searcher
                         if ($m instanceof OOMedia) {
                             if ($m->isImage()) {
                                 $entry->setQuickLookUrl(watson::url(array('rex_img_type' => 'rex_mediapool_maximized', 'rex_img_file' => $result['filename'])));
+                                $entry->setPreview(watson::url(array('rex_img_type' => 'watson_preview', 'rex_img_file' => $result['filename'])));
+
                             }
                         }
 

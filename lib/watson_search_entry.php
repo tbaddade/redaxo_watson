@@ -6,6 +6,7 @@ class watson_search_entry
     private $value;
     private $value_suffix;
     private $icon;
+    private $preview;
     private $description;
     private $quick_look_url;
     private $url;
@@ -116,6 +117,36 @@ class watson_search_entry
     public function hasIcon()
     {
         return !empty($this->icon) && file_exists($this->icon);
+    }
+
+    /**
+     * Sets a preview
+     *
+     * @param string $value
+     */
+    public function setPreview($url)
+    {
+        $this->preview = htmlspecialchars_decode($url);
+    }
+
+    /**
+     * Returns the preview
+     *
+     * @return string
+     */
+    public function getPreview()
+    {
+        return $this->preview;
+    }
+
+    /**
+     * Returns whether a preview is set
+     *
+     * @return bool
+     */
+    public function hasPreview()
+    {
+        return !empty($this->preview);
     }
 
 
