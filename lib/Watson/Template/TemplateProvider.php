@@ -52,7 +52,7 @@ class TemplateProvider extends SupportProvider
     public function registerTemplateConsole()
     {
     
-        return new TemplateConsole();
+        //return new TemplateConsole();
 
     }
 
