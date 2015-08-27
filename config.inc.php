@@ -1,61 +1,66 @@
 <?php
 
 /**
+ * This file is part of the Watson package.
  *
- * @author blumbeet - web.studio
- * @author Thomas Blum
- * @author mail[at]blumbeet[dot]com Thomas Blum
+ * @author (c) Thomas Blum <thomas@addoff.de>
  *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
+if ($REX['REDAXO'] && $REX['USER']) {
 
-$basedir = __DIR__;
-$myaddon = 'watson';
+    $package = require __DIR__ . '/lib/Package/start.php';
+    $name    = $package::get('name', 'watson', 'watson');
 
+    
+    //if ($package::get('rex.backend', false, $name) && $package::get('rex.user', false, $name)) {
 
-
-// Sprachdateien anhaengen
-// muss wegen Developer-AddOn-Block extra sein
-if ($REX['REDAXO']) {
-    $I18N->appendFile($basedir . '/lang/');
-}
+    $providers = $package::get('package.providers', false, $name);
 
 
+    if (count($providers)) {
+    
+        $searchers = array();
 
-$REX['ADDON']['rxid'][$myaddon] = '';
-//$REX['ADDON']['name'][$myaddon] = $I18N->msg('b_watson_title');
+        foreach ($providers as $provider) {
 
-// Credits
-$REX['ADDON']['version'][$myaddon]     = '0.0';
-$REX['ADDON']['author'][$myaddon]      = 'blumbeet - web.studio';
-$REX['ADDON']['supportpage'][$myaddon] = '';
-$REX['ADDON']['perm'][$myaddon]        = 'admin[]';
-//$REX['ADDON']['navigation'][$myaddon]  = array('block' => 'developer');
+            if ($provider instanceof \Watson\Foundation\Search) {
 
+                $searchers[] = $provider;
 
+            }
 
-// Check AddOns und Versionen --------------------------------------------------
-if (OOAddon::isActivated($myaddon)) {
+            if ($provider instanceof \Watson\Foundation\Console) {
 
-    require_once($basedir . '/lib/watson.php');
-    require_once($basedir . '/lib/watson_legend.php');
-    require_once($basedir . '/lib/watson_searcher.php');
-    require_once($basedir . '/lib/watson_search_entry.php');
-    require_once($basedir . '/lib/watson_search_term.php');
-    require_once($basedir . '/lib/watson_search_result.php');
+                $console_instances[] = $provider;
 
-    require_once($basedir . '/lib/watson_extensions.php');
+            }
+        }
+        
 
-    if ($REX['USER']) {
+        if (count($searchers)) {
+        
+            rex_register_extension('PAGE_HEADER'    , '\Watson\Foundation\Extension::searchHead');
+        
+            rex_register_extension('OUTPUT_FILTER'  , '\Watson\Foundation\Extension::searchAgent');
 
-        $files = array();
-        $files['css']['screen'] = array('facebox.css', 'watson.css');
-        $files['js']            = array('hogan.min.js', 'typeahead.js', 'facebox.js', 'watson.js');
+            rex_register_extension('ADDONS_INCLUDED', '\Watson\Foundation\Extension::searchRun', array('searchers' => $searchers), REX_EXTENSION_LATE);
 
-        rex_register_extension('PAGE_HEADER'    , 'watson_extensions::page_header', $files);
-        rex_register_extension('OUTPUT_FILTER'  , 'watson_extensions::agent');
+        }
+        
 
-        rex_register_extension('ADDONS_INCLUDED', 'watson_extensions::searcher', array(), REX_EXTENSION_LATE);
+        if (count($console_instances)) {
+        
+            rex_register_extension('PAGE_HEADER'    , '\Watson\Foundation\Extension::consoleHead');
+        
+            rex_register_extension('OUTPUT_FILTER'  , '\Watson\Foundation\Extension::consoleAgent');
+
+            rex_register_extension('ADDONS_INCLUDED', '\Watson\Foundation\Extension::consoleRun', array('console_instances' => $console_instances), REX_EXTENSION_LATE);
+
+        }
 
     }
+
 }

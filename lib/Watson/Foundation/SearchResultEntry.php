@@ -1,7 +1,18 @@
 <?php
 
+/**
+ * This file is part of the Watson package.
+ *
+ * @author (c) Thomas Blum <thomas@addoff.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Watson\Foundation;
 
-class watson_search_entry
+use \Watson\Foundation\Watson;
+
+class SearchResultEntry
 {
     private $value;
     private $value_suffix;
@@ -10,6 +21,7 @@ class watson_search_entry
     private $quick_look_url;
     private $url;
     private $url_open_window;
+    private $html_fields;
 
 
 
@@ -115,7 +127,7 @@ class watson_search_entry
      */
     public function hasIcon()
     {
-        return !empty($this->icon) && file_exists($this->icon);
+        return !empty($this->icon) && file_exists(Watson::getMediaDir() . $this->icon);
     }
 
 
@@ -204,6 +216,7 @@ class watson_search_entry
     public function setQuickLookUrl($value)
     {
         $this->quick_look_url = $value;
+        $this->quick_look_url = htmlspecialchars_decode($value);
     }
 
     /**
@@ -224,5 +237,37 @@ class watson_search_entry
     public function hasQuickLookUrl()
     {
         return !empty($this->quick_look_url);
+    }
+
+
+
+    /**
+     * Sets a description
+     *
+     * @param string $value
+     */
+    public function setHtmlFields($value)
+    {
+        $this->html_fields = $value;
+    }
+
+    /**
+     * Returns the icon
+     *
+     * @return string
+     */
+    public function getHtmlFields()
+    {
+        return $this->html_fields;
+    }
+
+    /**
+     * Returns whether a icon is set
+     *
+     * @return bool
+     */
+    public function hasHtmlFields()
+    {
+        return !empty($this->html_fields);
     }
 }

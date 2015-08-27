@@ -1,20 +1,24 @@
 <?php
 
 /**
+ * This file is part of the Watson package.
  *
- * @author blumbeet - web.studio
- * @author Thomas Blum
- * @author mail[at]blumbeet[dot]com Thomas Blum
+ * @author (c) Thomas Blum <thomas@addoff.de>
  *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 
+/**
+ * Install Apllication
+ * Check AddOns and Versions
+ *
+ */
 
-// Einstellungen ---------------------------------------------------------------
-$basedir = __DIR__;
-$myaddon = 'watson';
+if (! class_exists('\Package\Package')) {
+    require  __DIR__ . '/lib/Package/Package.php';
+}
 
-// Check AddOns und Versionen --------------------------------------------------
-require_once($basedir . '/lib/' . $myaddon . '_load.php');
-$myclass = $myaddon . '_load';
-$myclass::install();
+\Package\Package::install();
+

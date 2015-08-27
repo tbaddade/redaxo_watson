@@ -1,7 +1,18 @@
 <?php
 
+/**
+ * This file is part of the Watson package.
+ *
+ * @author (c) Thomas Blum <thomas@addoff.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+namespace Watson\Foundation;
 
-class watson_search_result
+use \Watson\Foundation\Watson;
+
+class SearchResult
 {
     private $entries;
     private $header;
@@ -31,7 +42,7 @@ class watson_search_result
     /**
      * render all result entries
      */
-    public function render()
+    public function render($displayKey)
     {
         $entries = $this->entries;
 
@@ -59,7 +70,7 @@ class watson_search_result
 
                 if ($entry->hasIcon()) {
                     $classes[]                  = 'watson-has-icon';
-                    $styles[]                   = 'background-image: url(' . $entry->getIcon() . ');';
+                    $styles[]                   = 'background-image: url(' . Watson::getMediaDir() . $entry->getIcon() . ');';
                 }
 
                 if ($entry->hasDescription()) {
@@ -77,8 +88,14 @@ class watson_search_result
                     $return['quick_look_url']   = $entry->getQuickLookUrl();
                 }
 
+                if ($entry->hasHtmlFields()) {
+                    $classes[]                  = 'watson-has-quick-look';
+                    $return['html_fields']      = $entry->getHtmlFields();
+                }
+
                 $return['value']        = $value;
                 $return['tokens']       = array($value);
+                $return['displayKey']   = $displayKey;
 
 
                 $class = count($classes) > 0 ? ' ' . implode(' ', $classes) : '';
