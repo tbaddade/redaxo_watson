@@ -303,26 +303,6 @@ class Package
             }
 
         }
-
-/*
-        if ($this->application_is_activated && $this->rex_user) {
-
-            rex_register_extension('OUTPUT_FILTER'  , '\Watson\Feature\FeatureAgent::panel');
-            rex_register_extension('OUTPUT_FILTER'  , '\Watson\Base\Extension::panel');
-            
-            rex_register_extension('ADDONS_INCLUDED', '\Watson\Feature\FeatureAgent::register', array(), REX_EXTENSION_LATE);
-            rex_register_extension('ADDONS_INCLUDED', '\Watson\Feature\FeatureAgent::run', array(), REX_EXTENSION_LATE);
-            
-            //rex_register_extension('ADDONS_INCLUDED', 'watson_extensions::console', array(), REX_EXTENSION_LATE);
-            //rex_register_extension('ADDONS_INCLUDED', 'watson_extensions::terminal', array(), REX_EXTENSION_LATE);
-            
-            rex_register_extension('ADDONS_INCLUDED', '\Watson\Base\Extension::callUserFunc', array(), REX_EXTENSION_LATE);
-
-
-            $object = new \watson_core_articles();
-            rex_register_extension('WATSON_FEATURE', array('\Watson\Feature\FeatureAgent', 'register'), array('feature' => $object));
-        }
-        */
     }
     
 
