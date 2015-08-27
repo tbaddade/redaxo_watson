@@ -1,0 +1,9 @@
+package: watson
+version: '5.0-alpha7'
+author: Thomas Blum
+supportpage: www.redaxo.org/de/forum/
+
+page:
+    title: 'translate:watson'
+    perm: watson[]
+    pjax: false
