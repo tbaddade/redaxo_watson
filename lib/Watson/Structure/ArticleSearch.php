@@ -163,7 +163,8 @@ class ArticleSearch extends Search
 
 
                 // Rechte prüfen
-                if (\rex_clang_perm::hasPerm($clang_id) && \rex_structure_perm::hasCategoryPerm($category_id)) {
+
+                if (\rex_complex_perm::get('clang')->hasPerm($clang_id) && \rex_complex_perm::get('structure')->hasCategoryPerm($category_id)) {
 
                     $path = array();
 
