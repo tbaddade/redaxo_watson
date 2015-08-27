@@ -61,8 +61,6 @@ class ArticleSearch extends Search
      */
     public function fire(SearchCommand $search)
     {
-        global $REX;
-
 
         $search_result = new SearchResult();
 
@@ -150,7 +148,6 @@ class ArticleSearch extends Search
         }
         
 
-
         // Ergebnisse auf Rechte prüfen und bereitstellen
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         if (count($searchResults)) {
@@ -158,13 +155,13 @@ class ArticleSearch extends Search
             foreach ($searchResults as $result) {
 
                 $clang_id    = $result['clang_id'];
-                $article     = \OOArticle::getArticleById($result['id'], $clang_id);
+                $article     = \rex_article::get($result['id'], $clang_id);
                 $category_id = $article->getCategoryId();
 
 
                 // Rechte prüfen
 
-                if (\rex_complex_perm::get('clang')->hasPerm($clang_id) && \rex_complex_perm::get('structure')->hasCategoryPerm($category_id)) {
+                if (\rex::getUser()->getComplexPerm('clang')->hasPerm($clang_id) && \rex::getUser()->getComplexPerm('structure')->hasCategoryPerm($category_id)) {
 
                     $path = array();
 
@@ -182,32 +179,29 @@ class ArticleSearch extends Search
                     
                     $url = Watson::getUrl(array('page' => 'structure', 'category_id' => $article->getCategoryId(), 'clang' => $clang_id));
                     
-                    if (isset($result['ctype'])) {
+                    if (isset($result['ctype_id'])) {
 
-                        $url = Watson::getUrl(array('page' => 'content', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang_id, 'ctype' => $result['ctype']));
+                        $url = Watson::getUrl(array('page' => 'content/edit', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang_id, 'ctype' => $result['ctype_id']));
 
                     }
 
 
                     $suffix = array();
-                    if ($REX['USER']->hasPerm('advancedMode[]')) {
-                        $suffix[] = $article->getId();
-                    }
+                    $suffix[] = $article->getId();
 
-                    if (count($REX['CLANG']) > 1) {
-                        $suffix[] = $REX['CLANG'][$clang];
+                    if (count(\rex_clang::getAll()) > 1) {
+                        $suffix[] = \rex_clang::get($clang_id)->getName();
                     }
                     $suffix = implode(', ', $suffix);
                     $suffix = $suffix != '' ? '(' . $suffix . ')' : '';
 
 
-
                     $entry = new SearchResultEntry();
                     $entry->setValue($article->getName(), $suffix);
                     $entry->setDescription($path);
-                    $entry->setIcon('icon_article.png');
+                    $entry->setIcon('watson-icon-article');
                     $entry->setUrl($url);
-                    $entry->setQuickLookUrl('../index.php?article_id=' . $article->getId() . '&clang=' . $clang);
+                    $entry->setQuickLookUrl('../index.php?article_id=' . $article->getId() . '&clang=' . $article->getClang());
 
                     $search_result->addEntry($entry);
                 }

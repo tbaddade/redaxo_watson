@@ -126,12 +126,15 @@ class Watson
      * @param  array $params
      * @return string
      */
-    public static function getUrl(array $params = array())
+    public static function getUrl(array $params = array(), $backend = true)
     {
-        $query = Watson::buildQuery($params);
-        $query = $query ? '?' . $query : '';
+        return \rex_url::backendController($params);
 
-        return htmlspecialchars('../redaxo/index.php' . $query);
+        if ($backend) {
+            return htmlspecialchars( \rex_url::backendController($params) );
+        } else {
+            return \rex_url::backendController($params);
+        }
     }
 
 

@@ -22,13 +22,15 @@
     position: relative;
     display: block;
     padding: 13px 5px 12px 5px;
-    font-size: 18px;
+    font-size: 14px;
+    font-weight: 700;
     line-height: 1;
 }
 .watson-value em {
     display: none;
-    font-size: 13px;
+    font-size: 14px;
     font-style: normal;
+    font-weight: 400;
 }
 .watson-value em.watson-value-suffix {
     margin-left: 5px;
@@ -69,6 +71,34 @@
 
 .tt-suggestion.tt-is-under-cursor .watson-value.watson-has-quick-look:after {
     display: block;
+}
+
+.watson-icon {    
+    display: none;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);;
+}
+.watson-value.watson-has-icon .watson-icon {
+    display: inline-block;
+    float: left;
+    margin-left: -40px;
+    margin-top: 3px;
+}
+.watson-icon-article:before {
+    content: '\f0f6';
+}
+.watson-icon-media:before {
+    content: '\f03e';
+}
+.watson-icon-module:before {
+    content: '\f1c0';
+}
+.watson-icon-template:before {
+    content: '\f1ea';
 }
 
 
@@ -250,7 +280,7 @@ table.watson-legend-data tbody tr th {
 .tt-suggestion {
     position: relative;
     display: block;
-    padding: 0 70px 0 10px;
+    padding: 0 10px;
     border-bottom: 1px solid #E0E0E0;
     vertical-align: middle;
 }

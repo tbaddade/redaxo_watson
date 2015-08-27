@@ -70,7 +70,8 @@ class SearchResult
 
                 if ($entry->hasIcon()) {
                     $classes[]                  = 'watson-has-icon';
-                    $styles[]                   = 'background-image: url(' . Watson::getMediaDir() . $entry->getIcon() . ');';
+                    //$styles[]                   = 'background-image: url(' . Watson::getMediaDir() . $entry->getIcon() . ');';
+                    $return['icon']             = ' ' . $entry->getIcon();
                 }
 
                 if ($entry->hasDescription()) {
@@ -89,7 +90,7 @@ class SearchResult
                 }
 
                 if ($entry->hasHtmlFields()) {
-                    $classes[]                  = 'watson-has-quick-look';
+                    $classes[]                  = 'watson-has-html-fields';
                     $return['html_fields']      = $entry->getHtmlFields();
                 }
 

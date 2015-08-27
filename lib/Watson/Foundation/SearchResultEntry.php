@@ -127,7 +127,7 @@ class SearchResultEntry
      */
     public function hasIcon()
     {
-        return !empty($this->icon) && file_exists(Watson::getMediaDir() . $this->icon);
+        return !empty($this->icon);
     }
 
 

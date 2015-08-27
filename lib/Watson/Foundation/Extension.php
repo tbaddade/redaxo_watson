@@ -184,6 +184,7 @@ class Extension
                                 'resultLimit' => Watson::getSearchResultLimit(), 
                                 'backend'     => true, 
                                 'backendUrl'  => \rex_url::backendPage('watson', array('watson_search' => ''), false) . '%QUERY', 
+                                'wildcard'  => '%QUERY', 
                             )
                         );
 
@@ -235,14 +236,8 @@ class Extension
 
     public static function searchRun(\rex_extension_point $ep)
     {
-        //global $REX, $I18N;
 
         $searchers = $ep->getParam('searchers');
-
-        // registrierte Page Params speichern
-        //watson::saveRegisteredPageParams($searchers);
-        //watson::setPageRequest();
-
 
         // Phase 2
         // User Eingabe parsen in $input
@@ -304,7 +299,7 @@ class Extension
 
             if (count($json) == 0) {
 
-                $json[] = array('value_name' => $I18N->msg('b_no_results'), 'value' => Watson::translate('b_no_results'), 'tokens' => array(Watson::translate('b_no_results')));
+                $json[] = array('value_name' => Watson::translate('b_no_results'), 'value' => Watson::translate('b_no_results'), 'tokens' => array(Watson::translate('b_no_results')));
 
             }
 
@@ -314,76 +309,6 @@ class Extension
             exit();
         }
 
-    }
-
-
-    public static function agents($params)
-    {
-        global $REX, $I18N;
-        
-        $panel = '';
-        /**
-        * Watson Searcher
-        */
-        $panel .= '
-            <div id="watson-searcher">
-                <form action="">
-                    <fieldset>
-                        <input class="typeahead" type="text" name="q" value="" />
-                    </fieldset>
-                </form>
-                <span class="watson-legend-open"></span>
-            </div>';
-
-        /**
-        * Watson Console
-        */
-        $panel .= '
-            <div id="watson-console">
-                <form action="">
-                    <fieldset>
-                        <input class="typeahead" type="text" name="q" value="" />
-                    </fieldset>
-                </form>
-                <span class="watson-legend-open"></span>
-            </div>';
-
-        /**
-        * Watson Terminal
-        */
-        $panel .= '
-            <div id="watson-terminal"></div>';
-        
-        /**
-        * Watson Legend
-        */
-        $panel .= '
-            <div id="watson-searcher-legend" class="watson-legend">
-                <h1>' . $I18N->msg('b_watson_title'). '</h1>
-                <span class="watson-legend-close"></span>
-                <!-- WATSON_LEGEND //-->
-            </div>';
-
-        $panel .= '
-            <div id="watson-console-legend" class="watson-legend">
-                <h1>' . $I18N->msg('b_watson_title'). '</h1>
-                <span class="watson-legend-close"></span>
-                <!-- WATSON_CONSOLE //-->
-            </div>';
-        
-        /**
-        * Watson save the request
-        */
-        $panel .= '<div id="watson-request">' . watson::getRegisteredPageRequestAsJson() . '</div>';
-        
-        /**
-        * Watson Overlay
-        */
-        $panel .= '<div id="watson-overlay"></div>';
-
-
-        $params['subject'] = str_replace('</body>', $panel . '</body>', $params['subject']);
-        return $params['subject'];
     }
 
 

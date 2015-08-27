@@ -150,7 +150,9 @@ jQuery(function($){
             queryTokenizer: Bloodhound.tokenizers.whitespace,
 
             remote: {
-                url: WatsonSearch.backendUrl
+                url: WatsonSearch.backendUrl,
+                wildcard: WatsonSearch.wildcard,
+                cache: false
             }
         });
 
@@ -158,7 +160,7 @@ jQuery(function($){
         var $template = 
             Hogan.compile([
                 '<div class="watson-result">',
-                '<span class="watson-value{{class}}" style="{{style}}">{{value_name}}<em class="watson-value-suffix">{{value_suffix}}</em><em class="watson-description">{{description}}</em></span>',
+                '<span class="watson-value{{class}}" style="{{style}}"><i class="watson-icon{{icon}}"></i> {{value_name}}<em class="watson-value-suffix">{{value_suffix}}</em><em class="watson-description">{{description}}</em></span>',
                 '<div class="watson-preview"><iframe src="{{quick_look_url}}"></iframe></div>', 
                 '</div>'
         ].join(''));

@@ -85,12 +85,12 @@ class ModuleSearch extends Search
 
             foreach ($results as $result) {
 
-                $url = Watson::getUrl(array('page' => 'module', 'modul_id' => $result['id'], 'function' => 'edit'));
+                $url = Watson::getUrl(array('page' => 'modules/modules', 'module_id' => $result['id'], 'function' => 'edit'));
 
                 $entry = new SearchResultEntry();
                 $entry->setValue($result['name']);
                 $entry->setDescription(Watson::translate('watson_open_module'));
-                $entry->setIcon('icon_module.png');
+                $entry->setIcon('watson-icon-module');
                 $entry->setUrl($url);
                 $entry->setQuickLookUrl($url);
 

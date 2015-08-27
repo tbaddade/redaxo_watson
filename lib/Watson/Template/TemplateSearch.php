@@ -88,7 +88,7 @@ class TemplateSearch extends Search
                 $entry = new SearchResultEntry();
                 $entry->setValue($result['name']);
                 $entry->setDescription(Watson::translate('watson_open_template'));
-                $entry->setIcon('icon_template.png');
+                $entry->setIcon('watson-icon-template');
                 $entry->setUrl($url);
                 $entry->setQuickLookUrl($url);
 

@@ -83,7 +83,8 @@ class MediaSearch extends Search
         }
 
 
-        $sql_query  = ' SELECT      filename,
+        $sql_query  = ' SELECT      id, 
+                                    filename,
                                     title
                         FROM        ' . Watson::getTable('media') . '
                         WHERE       ' . $search->getSqlWhere($fields) . '
@@ -100,16 +101,15 @@ class MediaSearch extends Search
                 $entry = new SearchResultEntry();
                 $entry->setValue($result['filename']);
                 $entry->setDescription(Watson::translate('watson_open_media') . $title);
-                $entry->setIcon('icon_media.png');
-                $entry->setUrl('javascript:newPoolWindow(\'' . Watson::getUrl(array('page' => 'mediapool', 'subpage' => 'detail', 'file_name' => $result['filename'])) . '\')');
+                $entry->setIcon('watson-icon-media');
+                $entry->setUrl('javascript:newPoolWindow(\'' . Watson::getUrl(array('page' => 'mediapool/media', 'file_id' => $result['id'])) . '\')');
 
-                $m = \OOMedia::getMediaByFileName($result['filename']);
-                if ($m instanceof \OOMedia) {
+                $m = \rex_media::get($result['filename']);
+                if ($m instanceof \rex_media) {
 
                     if ($m->isImage()) {
 
-                        $entry->setQuickLookUrl(Watson::getUrl(array('rex_img_type' => 'rex_mediapool_maximized', 'rex_img_file' => $result['filename'])));
-
+                        $entry->setQuickLookUrl(Watson::getUrl(array('rex_media_type' => 'rex_mediapool_maximized', 'rex_media_file' => $result['filename']), false));
                     }
                 }
 
