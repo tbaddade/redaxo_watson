@@ -40,9 +40,47 @@ class Watson
 
     public static function translate($key)
     {
-        global $I18N;
+        return \rex_i18n::msg($key);
+    }
 
-        return $I18N->msg($key);
+
+
+
+    public static function loadProviders()
+    {
+        $providers = \rex_addon::get('watson')->getProperty('providers');
+
+        $loaded_providers = array();
+
+        if (count($providers) > 0) {
+
+            foreach ($providers as $provider) {
+
+                $instance = new $provider();
+
+                if (is_dir($instance->i18n())) {
+
+                    \rex_i18n::addDirectory( $instance->i18n() );
+
+                }
+
+                $register = $instance->register();
+                if (is_array($register)) {
+
+                    $loaded_providers = array_merge($loaded_providers, $register);
+
+                } else {
+
+                    $loaded_providers[] = $register;
+
+                }
+
+                
+            }
+
+        }
+
+        return $loaded_providers;
     }
 
 
@@ -106,8 +144,7 @@ class Watson
      */
     public static function getTable($table)
     {
-        global $REX;
-        return $REX['TABLE_PREFIX'] . $table;
+        return \rex::getTable($table);
     }
 
 

@@ -176,19 +176,20 @@ class Extension
 
 
 
-    public static function searchHead($params)
+    public static function searchHead(\rex_extension_point $ep)
     {
 
         $js_properties = json_encode(
                             array(
                                 'resultLimit' => Watson::getSearchResultLimit(), 
                                 'backend'     => true, 
-                                'backendUrl'  => parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
+                                'backendUrl'  => \rex_url::backendPage('watson', array('watson_search' => ''), false) . '%QUERY', 
                             )
                         );
 
+
         if ($js_properties) {
-            $params['subject'] .= "\n" . '
+            $ep->setSubject( $ep->getSubject() . "\n" . '
 
                 <script type="text/javascript">
                     <!--
@@ -196,16 +197,15 @@ class Extension
                         var WatsonSearch = ' . $js_properties . ';
                     }
                     //-->
-                </script>';
+                </script>'
+            );
         }
-
-        return $params['subject'];
 
     }
 
 
 
-    public static function searchAgent($params)
+    public static function searchAgent(\rex_extension_point $ep)
     {
         $panel = '';
         $panel .= '
@@ -227,18 +227,17 @@ class Extension
         $panel .= '<div id="watson-overlay"></div>';
 
 
-        $params['subject'] = str_replace('</body>', $panel . '</body>', $params['subject']);
-        return $params['subject'];
+        $ep->setSubject( str_replace('</body>', $panel . '</body>', $ep->getSubject()));
 
     }
 
 
 
-    public static function searchRun($params)
+    public static function searchRun(\rex_extension_point $ep)
     {
-        global $REX, $I18N;
+        //global $REX, $I18N;
 
-        $searchers = $params['searchers'];
+        $searchers = $ep->getParam('searchers');
 
         // registrierte Page Params speichern
         //watson::saveRegisteredPageParams($searchers);
@@ -248,7 +247,7 @@ class Extension
         // Phase 2
         // User Eingabe parsen in $input
         $userInput = rex_request('watson_search', 'string');
-//\Package\Package::console($userInput);
+
         if ($userInput != '') {
 
             $searchCommand = new SearchCommand($userInput);

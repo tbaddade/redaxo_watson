@@ -69,8 +69,8 @@ class ModuleSearch extends Search
         
         $fields = array(
             'name',
-            'eingabe',
-            'ausgabe',
+            'input',
+            'output',
         );
 
         $sql_query  = ' SELECT      id,

@@ -69,7 +69,7 @@ class MediaSearch extends Search
         );
 
         $s = \rex_sql::factory();
-        $s->setQuery('SELECT * FROM ' . Watson::getTable('file') .' LIMIT 0');
+        $s->setQuery('SELECT * FROM ' . Watson::getTable('media') .' LIMIT 0');
         $fieldnames = $s->getFieldnames();
 
         foreach ($fieldnames as $fieldname) {
@@ -85,7 +85,7 @@ class MediaSearch extends Search
 
         $sql_query  = ' SELECT      filename,
                                     title
-                        FROM        ' . Watson::getTable('file') . '
+                        FROM        ' . Watson::getTable('media') . '
                         WHERE       ' . $search->getSqlWhere($fields) . '
                         ORDER BY    filename';
 

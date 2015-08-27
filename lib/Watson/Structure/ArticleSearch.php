@@ -86,8 +86,8 @@ class ArticleSearch extends Search
         }
 
         $sql_query  = ' SELECT      a.id,
-                                    a.clang,
-                                    CONCAT(a.id, "|", a.clang) as bulldog
+                                    a.clang_id,
+                                    CONCAT(a.id, "|", a.clang_id) as bulldog
                         FROM        ' . Watson::getTable('article') . ' AS a
                         WHERE       ' . $where . '
                         GROUP BY    bulldog
@@ -110,8 +110,8 @@ class ArticleSearch extends Search
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         $fields = array(
             's.value'     => range('1', '20'),
-            's.file'      => range('1', '10'),
-            's.filelist'  => range('1', '10'),
+            's.media'     => range('1', '10'),
+            's.medialist' => range('1', '10'),
         );
 
         $searchFields = array();
@@ -129,13 +129,13 @@ class ArticleSearch extends Search
         $fields = $searchFields;
 
         $sql_query  = ' SELECT      s.article_id AS id,
-                                    s.clang,
-                                    s.ctype,
-                                    CONCAT(s.article_id, "|", s.clang) as bulldog
+                                    s.clang_id,
+                                    s.ctype_id,
+                                    CONCAT(s.article_id, "|", s.clang_id) as bulldog
                         FROM        ' . Watson::getTable('article_slice') . ' AS s
                             LEFT JOIN
                                     ' . Watson::getTable('article') . ' AS a
-                                ON  (s.article_id = a.id AND s.clang = a.clang)
+                                ON  (s.article_id = a.id AND s.clang_id = a.clang_id)
                         WHERE       ' . $search->getSqlWhere($fields) . '
                         GROUP BY    bulldog';
 
@@ -148,6 +148,7 @@ class ArticleSearch extends Search
 
             }
         }
+        
 
 
         // Ergebnisse auf Rechte prüfen und bereitstellen
@@ -156,13 +157,13 @@ class ArticleSearch extends Search
 
             foreach ($searchResults as $result) {
 
-                $clang       = $result['clang'];
-                $article     = \OOArticle::getArticleById($result['id'], $clang);
+                $clang_id    = $result['clang_id'];
+                $article     = \OOArticle::getArticleById($result['id'], $clang_id);
                 $category_id = $article->getCategoryId();
 
 
                 // Rechte prüfen
-                if (in_array($clang, $REX['USER']->getClangPerm()) && $REX['USER']->hasCategoryPerm($category_id)) {
+                if (\rex_clang_perm::hasPerm($clang_id) && \rex_structure_perm::hasCategoryPerm($category_id)) {
 
                     $path = array();
 
@@ -178,11 +179,11 @@ class ArticleSearch extends Search
                     $path = '/' . implode('/', $path);
 
                     
-                    $url = Watson::getUrl(array('page' => 'structure', 'category_id' => $article->getCategoryId(), 'clang' => $clang));
+                    $url = Watson::getUrl(array('page' => 'structure', 'category_id' => $article->getCategoryId(), 'clang' => $clang_id));
                     
                     if (isset($result['ctype'])) {
 
-                        $url = Watson::getUrl(array('page' => 'content', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang, 'ctype' => $result['ctype']));
+                        $url = Watson::getUrl(array('page' => 'content', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang_id, 'ctype' => $result['ctype']));
 
                     }
 
