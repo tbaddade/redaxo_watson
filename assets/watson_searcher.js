@@ -150,8 +150,7 @@ jQuery(function($){
             queryTokenizer: Bloodhound.tokenizers.whitespace,
 
             remote: {
-                url: WatsonSearch.backendUrl + '?watson_search=%QUERY',
-                wildcard: '%QUERY'
+                url: WatsonSearch.backendUrl
             }
         });
 
