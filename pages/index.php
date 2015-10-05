@@ -2,12 +2,13 @@
 
 /**
  *
- * @author blumbeet - web.studio
  * @author Thomas Blum
- * @author mail[at]blumbeet[dot]com Thomas Blum
+ * @author thomas.blum[at]redaxo[dot]de
  *
  */
 
-use \Package\Package;
+$subpage = rex_be_controller::getCurrentPagePart(2);
 
-Package::requirePage();
+echo rex_view::title(rex_i18n::msg('watson_title'));
+
+include rex_be_controller::getCurrentPageObject()->getSubPath();
