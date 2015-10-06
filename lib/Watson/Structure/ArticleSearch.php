@@ -152,6 +152,7 @@ class ArticleSearch extends Search
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         if (count($searchResults)) {
 
+            $counter = 0;
             foreach ($searchResults as $result) {
 
                 $clang_id    = $result['clang_id'];
@@ -195,8 +196,12 @@ class ArticleSearch extends Search
                     $suffix = implode(', ', $suffix);
                     $suffix = $suffix != '' ? '(' . $suffix . ')' : '';
 
+                    $counter++;
 
                     $entry = new SearchResultEntry();
+                    if ($counter == 1) {
+                        $entry->setLegend(Watson::translate('watson_structure_legend'));
+                    }
                     $entry->setValue($article->getName(), $suffix);
                     $entry->setDescription($path);
                     $entry->setIcon('watson-icon-article');

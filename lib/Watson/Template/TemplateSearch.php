@@ -75,17 +75,24 @@ class TemplateSearch extends Search
                         FROM        ' . Watson::getTable('template') . '
                         WHERE       ' . $search->getSqlWhere($fields) . '
                         ORDER BY    name
-                        LIMIT       20';
+                        LIMIT       ' . Watson::getSearchResultLimit();
 
         $results = $this->getDatabaseResults($sql_query);
 
         if (count($results)) {
 
+            $counter = 0;
+            
             foreach ($results as $result) {
 
-                $url = Watson::getUrl(array('page' => 'template', 'template_id' => $result['id'], 'function' => 'edit'));
+                $url = Watson::getUrl(array('page' => 'templates', 'template_id' => $result['id'], 'function' => 'edit'));
+
+                $counter++;
 
                 $entry = new SearchResultEntry();
+                if ($counter == 1) {
+                    $entry->setLegend(Watson::translate('watson_template_legend'));
+                }
                 $entry->setValue($result['name']);
                 $entry->setDescription(Watson::translate('watson_open_template'));
                 $entry->setIcon('watson-icon-template');

@@ -1,10 +1,12 @@
 <?php
 
 /**
+ * This file is part of the Watson package.
  *
- * @author Thomas Blum
- * @author thomas.blum[at]redaxo[dot]de
+ * @author (c) Thomas Blum <thomas@addoff.de>
  *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 $subpage = rex_be_controller::getCurrentPagePart(2);

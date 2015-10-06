@@ -181,10 +181,12 @@ class Extension
 
         $js_properties = json_encode(
                             array(
-                                'resultLimit' => Watson::getSearchResultLimit(), 
-                                'backend'     => true, 
-                                'backendUrl'  => \rex_url::backendPage('watson', array('watson_search' => ''), false) . '%QUERY', 
-                                'wildcard'  => '%QUERY', 
+                                'resultLimit'      => Watson::getSearchResultLimit(), 
+                                'agent_hotkey'     => Watson::getSearchAgentHotkey(), 
+                                'quicklook_hotkey' => Watson::getSearchQuicklookHotkey(), 
+                                'backend'          => true, 
+                                'backendUrl'       => \rex_url::backendPage('watson', array('watson_search' => ''), false) . '%QUERY', 
+                                'wildcard'         => '%QUERY', 
                             )
                         );
 
@@ -218,14 +220,14 @@ class Extension
                 </form>
                 <span class="watson-searcher-help-open"></span>
             </div>';
-
+/*
         $panel .= '
             <div id="watson-searcher-help" class="watson-searcher-help">
                 <h1>' . Watson::translate('b_watson_title'). '</h1>
                 <span class="watson-searcher-help-close"></span>
             </div>';
-
-        $panel .= '<div id="watson-overlay"></div>';
+*/
+        $panel .= '<div id="watson-searcher-overlay"></div>';
 
 
         $ep->setSubject( str_replace('</body>', $panel . '</body>', $ep->getSubject()));
@@ -299,7 +301,7 @@ class Extension
 
             if (count($json) == 0) {
 
-                $json[] = array('value_name' => Watson::translate('b_no_results'), 'value' => Watson::translate('b_no_results'), 'tokens' => array(Watson::translate('b_no_results')));
+                $json[] = array('value_name' => Watson::translate('watson_no_results'), 'value' => Watson::translate('watson_no_results'), 'tokens' => array(Watson::translate('watson_no_results')));
 
             }
 
@@ -311,7 +313,7 @@ class Extension
 
     }
 
-
+/*
     public static function legend($params)
     {
         if (isset($params['replace'])) {
@@ -326,7 +328,7 @@ class Extension
         global $REX, $I18N;
 
         // Phase 1
-        /** @var $searcher watson_searcher[] */
+        // @var $searcher watson_searcher[]
         $searchers = array();
         $get_searchers = rex_register_extension_point('WATSON_SEARCHER');
         if (isset($get_searchers['searchers'])) {
@@ -392,7 +394,7 @@ class Extension
             }
 
             // Eingabe an vorher registrierte Search übergeben und Ergebnisse einsammeln
-            /** @var $search_results watson_search_result[] */
+            // @var $search_results watson_search_result[]
             $search_results = array();
             foreach($searchers as $searcher) {
                 $search_results[] = $searcher->search($watson_search_term);
@@ -430,7 +432,7 @@ class Extension
         global $REX, $I18N;
 
         // Phase 1
-        /** @var $searcher watson_searcher[] */
+        // @var $searcher watson_searcher[]
         $console_commands = rex_register_extension_point('WATSON_CONSOLE');
 
         // registrierte Page Params speichern
@@ -454,14 +456,13 @@ class Extension
                 }
             }
 
-            /**
-             * Unterschied zum Searcher
-             * Trifft kein Keyword zu, geht es nicht weiter
-            */
+            
+            // Unterschied zum Searcher
+            // Trifft kein Keyword zu, geht es nicht weiter
             $console_commands = $save_console_commands;
 
             // Eingabe an vorher registriertes Kommando übergeben und Ergebnisse einsammeln
-            /** @var $search_results watson_search_result[] */
+            // @var $search_results watson_search_result[]
             $console_command_results = array();
             foreach($console_commands as $console_command) {
                 $console_command_results[] = $console_command->run($watson_console_command);
@@ -501,7 +502,7 @@ class Extension
         global $REX, $I18N;
 
         // Phase 1
-        /** @var $commands watson_terminal[] */
+        / @var $commands watson_terminal[]
         $commands = rex_register_extension_point('WATSON_TERMINAL');
         $commands = $commands['terminal'];
 
@@ -545,13 +546,7 @@ class Extension
         foreach ($js_files as $file) {
             $params['subject'] .= "\n" . '<script type="text/javascript" src="' . $addon_assets . $file . '"></script>';
         }
-/*
-echo '<pre style="color: #fff; text-align: left">';
-print_r($REX);
-echo '</pre>';
-echo 'Article' . $REX['ARTICLE_ID'];
-echo 'Article' . REX_CATEGORY_ID;
-*/
+
         return $params['subject'];
     }
 
@@ -567,4 +562,5 @@ echo 'Article' . REX_CATEGORY_ID;
             call_user_func_array(array($call_class, $call_method), array($call_params));
         }
     }
+    */
 }

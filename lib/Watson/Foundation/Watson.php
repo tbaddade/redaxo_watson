@@ -16,7 +16,42 @@ class Watson
 
     public static function getSearchResultLimit()
     {
-        return 20;
+        return \rex_config::get('watson', 'search_result_limit', 20);
+    }
+
+
+    public static function getSearchAgentHotkeys()
+    {
+        return array(
+                     '16-32'    => 'shift - space', 
+                     '16-17-32' => 'shift - ctrl - space', 
+                     '16-18-32' => 'shift - alt - space', 
+                     '17-32'    => 'ctrl - space', 
+                     '17-18-32' => 'ctrl - alt - space', 
+                     '17-91-32' => 'ctrl - cmd - space',
+                     '18-32'    => 'alt - space', 
+                );
+    }
+
+    public static function getSearchAgentHotkey()
+    {
+        return \rex_config::get('watson', 'search_agent_hotkey', '17-32');
+    }
+
+
+    public static function getSearchQuicklookHotkeys()
+    {
+        return array(
+                     '16' => 'shift', 
+                     '17' => 'ctrl', 
+                     '18' => 'alt', 
+                     '91' => 'cmd', 
+                );
+    }
+
+    public static function getSearchQuicklookHotkey()
+    {
+        return \rex_config::get('watson', 'search_quicklook_hotkey', '91');
     }
 
 
@@ -29,11 +64,9 @@ class Watson
     }
 
 
-    public static function getMediaDir()
+    public static function getAssetsDir()
     {
-        global $REX;
-
-        return '../' . $REX['MEDIA_ADDON_DIR'] . '/watson/';
+        return \rex_path::addonAssets('watson');
     }
 
 

@@ -83,11 +83,18 @@ class ModuleSearch extends Search
 
         if (count($results)) {
 
+            $counter = 0;
+
             foreach ($results as $result) {
 
                 $url = Watson::getUrl(array('page' => 'modules/modules', 'module_id' => $result['id'], 'function' => 'edit'));
 
+                $counter++;
+
                 $entry = new SearchResultEntry();
+                if ($counter == 1) {
+                    $entry->setLegend(Watson::translate('watson_module_legend'));
+                }
                 $entry->setValue($result['name']);
                 $entry->setDescription(Watson::translate('watson_open_module'));
                 $entry->setIcon('watson-icon-module');

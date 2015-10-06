@@ -16,6 +16,7 @@ class SearchResultEntry
 {
     private $value;
     private $value_suffix;
+    private $legend;
     private $icon;
     private $description;
     private $quick_look_url;
@@ -96,6 +97,38 @@ class SearchResultEntry
     public function hasValueSuffix()
     {
         return !empty($this->value_suffix);
+    }
+
+
+
+    /**
+     * Sets a legend
+     *
+     * @param string $value
+     */
+    public function setLegend($value)
+    {
+        $this->legend = $value;
+    }
+
+    /**
+     * Returns the legend
+     *
+     * @return string
+     */
+    public function getLegend()
+    {
+        return $this->legend;
+    }
+
+    /**
+     * Returns whether a legend is set
+     *
+     * @return bool
+     */
+    public function hasLegend()
+    {
+        return !empty($this->legend);
     }
 
 

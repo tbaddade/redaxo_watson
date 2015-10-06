@@ -30,9 +30,9 @@ if (rex::isBackend() && rex::getUser()) {
 
         if (count($searchers)) {
         
-            rex_extension::register('PAGE_HEADER'    , '\Watson\Foundation\Extension::searchHead');
+            rex_extension::register('PAGE_HEADER'      , '\Watson\Foundation\Extension::searchHead');
         
-            rex_extension::register('OUTPUT_FILTER'  , '\Watson\Foundation\Extension::searchAgent');
+            rex_extension::register('OUTPUT_FILTER'    , '\Watson\Foundation\Extension::searchAgent');
 
             rex_extension::register('PACKAGES_INCLUDED', '\Watson\Foundation\Extension::searchRun', rex_extension::LATE, array('searchers' => $searchers));
 

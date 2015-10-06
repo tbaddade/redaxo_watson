@@ -9,8 +9,6 @@ jQuery(function($){
     |
     */
     
-    var $watson_overlay = $('#watson-overlay');
-
     $(document).ready( function() {
 
         var $watson_id   = getUrlParameter('watson_id');
@@ -65,7 +63,7 @@ jQuery(function($){
 
     function quicklook($link) {
 
-         console.log('quicklook');
+        console.log('quicklook');
         if ($('#facebox_overlay').length > 0) {
 
             console.log('$.facebox.close');
@@ -110,7 +108,14 @@ jQuery(function($){
     });
 
     $(document).keydown(function(e) {
-        if ((e.keyCode == 32 && e.ctrlKey) || (e.keyCode == 32 && e.ctrlKey && e.altKey) || (e.keyCode == 32 && e.ctrlKey && e.metaKey)) {
+        if ((WatsonSearch.agent_hotkey == '16-32' && e.shiftKey && e.keyCode == 32) ||
+            (WatsonSearch.agent_hotkey == '16-17-32' && e.shiftKey && e.ctrlKey && e.keyCode == 32) ||
+            (WatsonSearch.agent_hotkey == '16-18-32' && e.shiftKey && e.altKey && e.keyCode == 32) ||
+            (WatsonSearch.agent_hotkey == '17-32' && e.ctrlKey && e.keyCode == 32) ||
+            (WatsonSearch.agent_hotkey == '17-18-32' && e.ctrlKey && e.altKey && e.keyCode == 32) ||
+            (WatsonSearch.agent_hotkey == '17-91-32' && e.ctrlKey && e.metaKey && e.keyCode == 32) ||
+            (WatsonSearch.agent_hotkey == '18-32' && e.altKey && e.keyCode == 32)) {
+
             checkWatsonSearcher();
         }
     });
@@ -159,9 +164,9 @@ jQuery(function($){
 
         var $template = 
             Hogan.compile([
-                '<div class="watson-result">',
+                '<div class="watson-result" data-legend="{{legend}}">',
                 '<span class="watson-value{{class}}" style="{{style}}"><i class="watson-icon{{icon}}"></i> {{value_name}}<em class="watson-value-suffix">{{value_suffix}}</em><em class="watson-description">{{description}}</em></span>',
-                '<div class="watson-preview"><iframe src="{{quick_look_url}}"></iframe></div>', 
+                //'<div class="watson-preview"><iframe src="{{quick_look_url}}"></iframe></div>', 
                 '</div>'
         ].join(''));
 
@@ -193,13 +198,17 @@ jQuery(function($){
                 }
             });
 
-        $watsonTypeahead.on('typeahead:opened', onOpened);
+        $watsonTypeahead.on('typeahead:open', onOpen);
         $watsonTypeahead.on('typeahead:autocompleted', onAutocompleted);
-        $watsonTypeahead.on('typeahead:selected', onSelected);
+        $watsonTypeahead.on('typeahead:select', onSelect);
         
-        $watsonTypeahead.on('typeahead:cursorchanged', function($e, $item){
+        $watsonTypeahead.on('typeahead:cursorchange', function($e, $item){
             $curTypeaheadItem = $item;
             $curUserInput = $(this).typeahead('val');
+
+            if ($curTypeaheadItem && $curTypeaheadItem.quick_look_url !== undefined) {
+                $('.watson-quick-look-frame').html('<iframe src="' + $curTypeaheadItem.quick_look_url + '"></iframe>').show();
+            }
         });
         
         $watsonTypeahead.on('typeahead:closed', function(){
@@ -209,7 +218,12 @@ jQuery(function($){
 
         $watsonTypeahead.keydown(function(e) {
 
-            if ($curTypeaheadItem && $curTypeaheadItem.quick_look_url !== undefined && e.ctrlKey) {
+            if ($curTypeaheadItem && $curTypeaheadItem.quick_look_url !== undefined && 
+                (WatsonSearch.quicklook_hotkey == '16' && e.shiftKey) ||
+                (WatsonSearch.quicklook_hotkey == '17' && e.ctrlKey) ||
+                (WatsonSearch.quicklook_hotkey == '18' && e.altKey) ||
+                (WatsonSearch.quicklook_hotkey == '91' && e.metaKey)
+                ) {
                 quicklook($curTypeaheadItem.quick_look_url);
             }
             
@@ -222,36 +236,12 @@ jQuery(function($){
 
     
  
-    function onOpened($e) {
-        console.log('opened');
-
-        
+    function onOpen($e) {
+        //console.log('opened');
+        destroyWatsonQuickLookFrame();
+        $('#watson-searcher .twitter-typeahead').append('<div class="watson-quick-look-frame"></div>');
     }
 
-    function onCursorChanged($e, $item) {
-        
-        console.log('onCursorChanged');
-        console.log($e);
-        console.log($item);
-        var $save = $('#watson-searcher .tt-input').val();
-
-        if ($item.quick_look_url !== undefined) {
-
-            $(document).keypress(function(e) {
-
-                if (e.keyCode == 32) {
-                    $('#watson-searcher .tt-input').val($.trim($save));
-                    quicklook($item.quick_look_url);
-                    $('#watson-searcher .typeahead').typeahead('setQuery', $save);
-                    //
-                    $.unbind();
-                }
-                
-                //$('#watson-searcher .tt-input').val($save);
-            });
-        }
-    }
-     
     function onAutocompleted($e, item) {
         console.log('autocompleted');
         console.log(item);
@@ -265,7 +255,7 @@ jQuery(function($){
         }
     }
      
-    function onSelected($e, item) {
+    function onSelect($e, item) {
         console.log('selected');
         console.log(item);
 
@@ -291,5 +281,9 @@ jQuery(function($){
 
     function hideWatsonSearcherHelp() {
         $watson_searcher_help.fadeOut('fast').removeClass('watson-active');
+    }
+
+    function destroyWatsonQuickLookFrame() {
+        $('#watson-searcher .twitter-typeahead').find('.watson-quick-look-frame').remove();
     }
 });

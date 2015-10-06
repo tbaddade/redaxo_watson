@@ -59,6 +59,10 @@ class SearchResult
                 $return['value_name']   = $entry->getValue();
                 $return['description']  = '';
 
+                if ($entry->hasLegend()) {
+                    $return['legend']           = ' ' . $entry->getLegend();
+                }
+
                 if ($entry->hasValueSuffix()) {
                     // Suffix anhängen, da sonst nur ein Ergebnis erscheint
                     // Bspl. gleicher Artikelname in 2 Sprachen
@@ -70,7 +74,6 @@ class SearchResult
 
                 if ($entry->hasIcon()) {
                     $classes[]                  = 'watson-has-icon';
-                    //$styles[]                   = 'background-image: url(' . Watson::getMediaDir() . $entry->getIcon() . ');';
                     $return['icon']             = ' ' . $entry->getIcon();
                 }
 
@@ -97,7 +100,6 @@ class SearchResult
                 $return['value']        = $value;
                 $return['tokens']       = array($value);
                 $return['displayKey']   = $displayKey;
-
 
                 $class = count($classes) > 0 ? ' ' . implode(' ', $classes) : '';
                 $style = count($styles) > 0 ? implode(' ', $styles) : '';

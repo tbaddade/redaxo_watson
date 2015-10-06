@@ -94,11 +94,18 @@ class MediaSearch extends Search
 
         if (count($results)) {
 
+            $counter = 0;
+
             foreach ($results as $result) {
 
                 $title = ($result['title'] != '') ? ' (' . Watson::translate('watson_media_title') . ': ' . $result['title'] . ')' : '';
 
+                $counter++;
+
                 $entry = new SearchResultEntry();
+                if ($counter == 1) {
+                    $entry->setLegend(Watson::translate('watson_media_legend'));
+                }
                 $entry->setValue($result['filename']);
                 $entry->setDescription(Watson::translate('watson_open_media') . $title);
                 $entry->setIcon('watson-icon-media');
