@@ -108,6 +108,20 @@ class Command
 
 
 
+    public function deleteCommandFromCommandParts()
+    {
+        foreach ($this->command_parts as $key => $command_part) {
+
+            if ($this->command == $command_part) {
+
+                unset($this->command_parts[$key]);
+
+            }
+        }
+    }
+
+
+
     public function getArgument($position)
     {
         return isset($this->arguments[$position]) ? $this->arguments[$position] : null;
@@ -132,6 +146,28 @@ class Command
     public function getOptions()
     {
         return $this->options;
+    }
+
+
+
+    public function getSqlWhere($fields)
+    {
+        $where = array();
+
+        foreach ($fields as $field) {
+
+            $w = array();
+
+            foreach ($this->getCommandParts() as $command_part) {
+
+                $w[] = $field . ' LIKE "%' . $command_part . '%"';
+
+            }
+
+            $where[] = '(' . implode(' AND ', $w) . ')';
+        }
+
+        return implode(' OR ', $where);
     }
 
 
