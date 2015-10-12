@@ -12,10 +12,10 @@ page:
         settings: { title: 'translate:settings' }
 
 providers:
-    - 'Watson\Media\MediaProvider'
-    - 'Watson\Module\ModuleProvider'
-    - 'Watson\Structure\StructureProvider'
-    - 'Watson\Template\TemplateProvider'
+    - 'Watson\Workflows\Media\MediaProvider'
+    - 'Watson\Workflows\Module\ModuleProvider'
+    - 'Watson\Workflows\Structure\StructureProvider'
+    - 'Watson\Workflows\Template\TemplateProvider'
 
 stylesheets:
     - facebox.css
