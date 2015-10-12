@@ -83,6 +83,8 @@ class Watson
     {
         $providers = \rex_addon::get('watson')->getProperty('providers');
 
+        $providers = \rex_extension::registerPoint(new \rex_extension_point('WATSON_PROVIDER', $providers));
+
         $loaded_providers = array();
 
         if (count($providers) > 0) {
