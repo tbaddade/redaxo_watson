@@ -57,9 +57,9 @@ abstract class Workflow
 
 
         $sql = \rex_sql::factory();
-//        $sql->debugsql = true;
+        //$sql->setDebug();
         $sql->setQuery($query);
-//exit();
+        //exit();
         return $sql->getArray();
     }
 
