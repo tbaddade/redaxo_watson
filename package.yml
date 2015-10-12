@@ -9,7 +9,7 @@ page:
     pjax: false
     icon: watson-icon-logo
     subpages:
-        settings: { title: 'translate:settings' }
+        settings: { title: 'translate:config' }
 
 providers:
     - 'Watson\Workflows\Media\MediaProvider'
