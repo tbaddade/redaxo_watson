@@ -14,13 +14,13 @@ namespace Watson\Foundation;
 class Watson
 {
 
-    public static function getSearchResultLimit()
+    public static function getResultLimit()
     {
-        return \rex_config::get('watson', 'search_result_limit', 20);
+        return \rex_config::get('watson', 'resultLimit', 20);
     }
 
 
-    public static function getSearchAgentHotkeys()
+    public static function getAgentHotkeys()
     {
         return array(
                      '16-32'    => 'shift - space', 
@@ -33,13 +33,13 @@ class Watson
                 );
     }
 
-    public static function getSearchAgentHotkey()
+    public static function getAgentHotkey()
     {
-        return \rex_config::get('watson', 'search_agent_hotkey', '17-32');
+        return \rex_config::get('watson', 'agentHotkey', '17-32');
     }
 
 
-    public static function getSearchQuicklookHotkeys()
+    public static function getQuicklookHotkeys()
     {
         return array(
                      '16' => 'shift', 
@@ -49,9 +49,9 @@ class Watson
                 );
     }
 
-    public static function getSearchQuicklookHotkey()
+    public static function getQuicklookHotkey()
     {
-        return \rex_config::get('watson', 'search_quicklook_hotkey', '91');
+        return \rex_config::get('watson', 'quicklookHotkey', '91');
     }
 
 

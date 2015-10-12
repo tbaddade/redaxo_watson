@@ -15,15 +15,15 @@ use \Watson\Foundation\Watson;
 $content = '';
 
 $func = rex_request('func', 'string');
-$searchResultLimit = rex_request('search_result_limit', 'int');
-$searchAgentHotkey = rex_request('search_agent_hotkey', 'string');
-$searchQuicklookHotkey = rex_request('search_quicklook_hotkey', 'string');
+$resultLimit = rex_request('resultLimit', 'int');
+$agentHotkey = rex_request('agentHotkey', 'string');
+$quicklookHotkey = rex_request('quicklookHotkey', 'string');
 
 if ($func == 'update') {
     echo \rex_view::info($this->i18n('config_saved'));
-    \rex_config::set('watson', 'search_result_limit', $searchResultLimit);
-    \rex_config::set('watson', 'search_agent_hotkey', $searchAgentHotkey);
-    \rex_config::set('watson', 'search_quicklook_hotkey', $searchQuicklookHotkey);
+    \rex_config::set('watson', 'resultLimit', $resultLimit);
+    \rex_config::set('watson', 'agentHotkey', $agentHotkey);
+    \rex_config::set('watson', 'quicklookHotkey', $quicklookHotkey);
 }
 
 $content .= '
@@ -33,39 +33,39 @@ $content .= '
 
         $formElements = [];
         $n = [];
-        $n['label'] = '<label for="watson-search-result-limit">' . $this->i18n('search_result_limit') . '</label>';
-        $n['field'] = '<input class="form-control" type="text" id="watson-search-result-limit" name="search_result_limit" value="' . htmlspecialchars(Watson::getSearchResultLimit()) . '" />';
+        $n['label'] = '<label for="watson-result-limit">' . $this->i18n('resultLimit') . '</label>';
+        $n['field'] = '<input class="form-control" type="text" id="watson-result-limit" name="resultLimit" value="' . htmlspecialchars(Watson::getResultLimit()) . '" />';
         $formElements[] = $n;
 
         
         $agentHotkeysSelect = new \rex_select();
-        $agentHotkeysSelect->setName('search_agent_hotkey');
+        $agentHotkeysSelect->setName('agentHotkey');
         $agentHotkeysSelect->setSize(1);
         $agentHotkeysSelect->setAttribute('class', 'form-control');
-        $agentHotkeysSelect->setAttribute('id', 'watson-search-agent-hotkey');
-        foreach (Watson::getSearchAgentHotkeys() as $hotkeyValue => $hotkeyLabel) {
+        $agentHotkeysSelect->setAttribute('id', 'watson-agent-hotkey');
+        foreach (Watson::getAgentHotkeys() as $hotkeyValue => $hotkeyLabel) {
             $agentHotkeysSelect->addOption($hotkeyLabel, $hotkeyValue);
         }
-        $agentHotkeysSelect->setSelected(Watson::getSearchAgentHotkey());
+        $agentHotkeysSelect->setSelected(Watson::getAgentHotkey());
 
         $n = [];
-        $n['label'] = '<label for="watson-search-agent-hotkey">' . $this->i18n('search_agent_hotkey') . '</label>';
+        $n['label'] = '<label for="watson-agent-hotkey">' . $this->i18n('agentHotkey') . '</label>';
         $n['field'] = $agentHotkeysSelect->get();
         $formElements[] = $n;
 
         
         $quicklookHotkeysSelect = new \rex_select();
-        $quicklookHotkeysSelect->setName('search_quicklook_hotkey');
+        $quicklookHotkeysSelect->setName('quicklookHotkey');
         $quicklookHotkeysSelect->setSize(1);
         $quicklookHotkeysSelect->setAttribute('class', 'form-control');
-        $quicklookHotkeysSelect->setAttribute('id', 'watson-search-quicklook-hotkey');
-        foreach (Watson::getSearchQuicklookHotkeys() as $hotkeyValue => $hotkeyLabel) {
+        $quicklookHotkeysSelect->setAttribute('id', 'watson-quicklook-hotkey');
+        foreach (Watson::getQuicklookHotkeys() as $hotkeyValue => $hotkeyLabel) {
             $quicklookHotkeysSelect->addOption($hotkeyLabel, $hotkeyValue);
         }
-        $quicklookHotkeysSelect->setSelected(Watson::getSearchQuicklookHotkey());
+        $quicklookHotkeysSelect->setSelected(Watson::getQuicklookHotkey());
 
         $n = [];
-        $n['label'] = '<label for="watson-search-quicklook-hotkey">' . $this->i18n('search_quicklook_hotkey') . '</label>';
+        $n['label'] = '<label for="watson-quicklook-hotkey">' . $this->i18n('quicklookHotkey') . '</label>';
         $n['field'] = $quicklookHotkeysSelect->get();
         $formElements[] = $n;
 
@@ -79,7 +79,7 @@ $content .= '
         $formElements = [];
 
         $n = [];
-        $n['field'] = '<a class="btn btn-abort" href="' . \rex_url::currentBackendPage() . '"><i class="rex-icon rex-icon-back"></i> ' . \rex_i18n::msg('form_abort') . '</a>';
+        $n['field'] = '<a class="btn btn-abort" href="' . \rex_url::currentBackendPage() . '">' . \rex_i18n::msg('form_abort') . '</a>';
         $formElements[] = $n;
 
         $n = [];
@@ -94,7 +94,8 @@ $content .= '
     </fieldset>';
 
 $fragment = new \rex_fragment();
-$fragment->setVar('title', $this->i18n('search_config'), false);
+$fragment->setVar('class', 'edit', false);
+$fragment->setVar('title', $this->i18n('settings'), false);
 $fragment->setVar('body', $content, false);
 $fragment->setVar('buttons', $buttons, false);
 $content = $fragment->parse('core/page/section.php');
