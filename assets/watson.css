@@ -53,7 +53,7 @@
     border: 0;
     font-size: 36px;
 }
-#watson-overlay {
+#watson-agent-overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -137,6 +137,9 @@
 }
 .watson-icon-template:before {
     content: '\f1ea';
+}
+.watson-icon-wildcard:before {
+    content: '\f021';
 }
 
 
