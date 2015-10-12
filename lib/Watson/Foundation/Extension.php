@@ -182,10 +182,10 @@ class Extension
         $js_properties = json_encode(
                             array(
                                 'resultLimit'      => Watson::getSearchResultLimit(), 
-                                'agent_hotkey'     => Watson::getSearchAgentHotkey(), 
-                                'quicklook_hotkey' => Watson::getSearchQuicklookHotkey(), 
+                                'agentHotkey'      => Watson::getSearchAgentHotkey(), 
+                                'quicklookHotkey'  => Watson::getSearchQuicklookHotkey(), 
                                 'backend'          => true, 
-                                'backendUrl'       => \rex_url::backendPage('watson', array('watson_search' => ''), false) . '%QUERY', 
+                                'backendUrl'       => \rex_url::backendPage('watson', array('watson_query' => ''), false) . '%QUERY', 
                                 'wildcard'         => '%QUERY', 
                             )
                         );
@@ -196,8 +196,8 @@ class Extension
 
                 <script type="text/javascript">
                     <!--
-                    if (typeof(WatsonSearch) == "undefined") {
-                        var WatsonSearch = ' . $js_properties . ';
+                    if (typeof($watsonSettings) == "undefined") {
+                        var $watsonSettings = ' . $js_properties . ';
                     }
                     //-->
                 </script>'
@@ -212,22 +212,15 @@ class Extension
     {
         $panel = '';
         $panel .= '
-            <div id="watson-searcher">
+            <div id="watson-agent">
                 <form action="">
                     <fieldset>
                         <input class="typeahead" type="text" name="q" value="" />
                     </fieldset>
                 </form>
-                <span class="watson-searcher-help-open"></span>
             </div>';
-/*
-        $panel .= '
-            <div id="watson-searcher-help" class="watson-searcher-help">
-                <h1>' . Watson::translate('b_watson_title'). '</h1>
-                <span class="watson-searcher-help-close"></span>
-            </div>';
-*/
-        $panel .= '<div id="watson-searcher-overlay"></div>';
+
+        $panel .= '<div id="watson-agent-overlay"></div>';
 
 
         $ep->setSubject( str_replace('</body>', $panel . '</body>', $ep->getSubject()));
@@ -243,7 +236,7 @@ class Extension
 
         // Phase 2
         // User Eingabe parsen in $input
-        $userInput = rex_request('watson_search', 'string');
+        $userInput = rex_request('watson_query', 'string');
 
         if ($userInput != '') {
 
@@ -301,7 +294,7 @@ class Extension
 
             if (count($json) == 0) {
 
-                $json[] = array('value_name' => Watson::translate('watson_no_results'), 'value' => Watson::translate('watson_no_results'), 'tokens' => array(Watson::translate('watson_no_results')));
+                $json[] = array('displayKey' => $userInput, 'value_name' => Watson::translate('watson_no_results'), 'value' => Watson::translate('watson_no_results'), 'tokens' => array(Watson::translate('watson_no_results')));
 
             }
 

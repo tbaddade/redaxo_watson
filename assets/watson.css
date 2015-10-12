@@ -21,7 +21,7 @@
     vertical-align: middle;
 
 }
-#watson-searcher {
+#watson-agent {
     display: none;
     position: absolute;
     top: 100px;
@@ -43,10 +43,10 @@
     z-index: 1000;
 }
 
-#watson-searcher form {
+#watson-agent form {
     margin-right: 60px;
 }
-#watson-searcher input[type="text"] {
+#watson-agent input[type="text"] {
     width: 100%;
     padding: 5px 10px;
     background-color: #d0d0d0;
@@ -154,10 +154,10 @@
     max-height: 60px;
 }
 
-#watson-searcher .twitter-typeahead {
+#watson-agent .twitter-typeahead {
     display: block !important;
 }
-#watson-searcher .tt-menu {
+#watson-agent .tt-menu {
     position: relative !important;
     width: 460px;
     height: 480px;
@@ -166,7 +166,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
 }
-#watson-searcher .tt-menu .tt-dataset {
+#watson-agent .tt-menu .tt-dataset {
     padding: 10px;
 }
 
@@ -194,33 +194,7 @@
     transform: scale(0.4);
     transform-origin: 0 0;
 }
-/*
-.tt-menu .watson-preview {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: -300px;
-    left: 500px;
-    height: 160px;
-    overflow: hidden;
-}
-.tt-menu .tt-cursor .watson-preview {
-    display: block;
-}
-.tt-menu .watson-preview iframe {
-    width: 1200px;
-    height: 800px;
-    border: none;
-    -moz-transform: scale(0.2);
-    -moz-transform-origin: 0 0;
-    -o-transform: scale(0.2);
-    -o-transform-origin: 0 0;
-    -webkit-transform: scale(0.2);
-    -webkit-transform-origin: 0 0;
-    transform: scale(0.2);
-    transform-origin: 0 0;
-}
-*/
+
 .tt-suggestion {
     /*position: relative; */
     display: block;
@@ -298,76 +272,6 @@
     color: #000;
 }
 
-
-/*
-#watson-console, 
-#watson-console-legend {
-    display: none;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 964px;
-    margin-left: 8px;
-    background-color: #E0E0E0;
-    background-position: 512px 50%;
-    background-size: 64px 64px;
-    border: 10px solid rgba(0, 0, 0, .5);
-       -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-}
-#watson-console-legend {
-    top: 0;
-    bottom: 200px;
-    width: 300px;
-    margin-left: 972px;
-    padding: 10px;
-    background-color: #E0E0E0;
-    border: 0;
-}
-#watson-console input[type="text"] {
-    width: 100%;
-    height: 36px;
-    padding: 9px 10px;
-    background-color: #D0D0D0;
-    border: 0;
-       -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-    font-family: Menlo;
-    font-size: 18px;
-    line-height: 1;
-}
-
-#watson-console .tt-dropdown-menu {
-    position: fixed !important;
-    left: 0 !important;
-    bottom: 0 !important;
-    top: auto !important;
-    width: 360px;
-    margin: 0 0 0 972px;
-    padding: 0;
-    background-color: #F0F0F0;
-    border: 10px solid rgba(0, 0, 0, .5);
-       -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-    z-index: 1000;
-}
-
-#watson-console .watson-value {
-    min-height: 36px;
-    padding: 9px 5px;
-       -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-    font-family: Menlo;
-    font-size: 12px;
-}
-#watson-request {
-    display: none;
-}
-*/
 
 #facebox {
     z-index: 1200;

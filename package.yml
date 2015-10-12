@@ -25,4 +25,4 @@ javascripts:
     - facebox.js
     - hogan-3.0.2.min.js
     - typeahead.bundle.js
-    - watson_searcher.js
+    - watson.js
