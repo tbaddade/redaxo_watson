@@ -15,26 +15,26 @@ if (rex::isBackend() && rex::getUser()) {
 
     if (count($providers)) {
     
-        $searchers = array();
+        $workflows = array();
 
         foreach ($providers as $provider) {
 
-            if ($provider instanceof \Watson\Foundation\Search) {
+            if ($provider instanceof \Watson\Foundation\Workflow) {
 
-                $searchers[] = $provider;
+                $workflows[] = $provider;
 
             }
 
         }
         
 
-        if (count($searchers)) {
+        if (count($workflows)) {
         
-            rex_extension::register('PAGE_HEADER'      , '\Watson\Foundation\Extension::searchHead');
+            rex_extension::register('PAGE_HEADER'      , '\Watson\Foundation\Extension::head');
         
-            rex_extension::register('OUTPUT_FILTER'    , '\Watson\Foundation\Extension::searchAgent');
+            rex_extension::register('OUTPUT_FILTER'    , '\Watson\Foundation\Extension::agent');
 
-            rex_extension::register('PACKAGES_INCLUDED', '\Watson\Foundation\Extension::searchRun', rex_extension::LATE, array('searchers' => $searchers));
+            rex_extension::register('PACKAGES_INCLUDED', '\Watson\Foundation\Extension::run', rex_extension::LATE, array('workflows' => $workflows));
 
         }
 
