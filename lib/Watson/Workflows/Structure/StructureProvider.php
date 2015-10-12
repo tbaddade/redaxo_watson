@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Watson\Media;
+namespace Watson\Workflows\Structure;
 
 use \Watson\Foundation\SupportProvider;
 
-class MediaProvider extends SupportProvider
+class StructureProvider extends SupportProvider
 {
 
     /**
@@ -35,7 +35,23 @@ class MediaProvider extends SupportProvider
     public function register()
     {
         
-        return new MediaSearch();
+        $register = array();
+        $register[] = $this->registerArticleSearch();
+        
+        return $register;
+
+    }
+
+
+    /**
+     * Register article search.
+     *
+     * @return void
+     */
+    public function registerArticleSearch()
+    {
+        
+        return new ArticleSearch();
 
     }
 }

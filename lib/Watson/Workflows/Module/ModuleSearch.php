@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Watson\Template;
+namespace Watson\Workflows\Module;
 
 use \Watson\Foundation\Documentation;
 use \Watson\Foundation\Search;
@@ -17,7 +17,7 @@ use \Watson\Foundation\SearchResult;
 use \Watson\Foundation\SearchResultEntry;
 use \Watson\Foundation\Watson;
 
-class TemplateSearch extends Search
+class ModuleSearch extends Search
 {
     /**
      * Provide the commands of the search.
@@ -26,7 +26,7 @@ class TemplateSearch extends Search
      */
     public function commands()
     {
-        return array('t');
+        return array('m');
     }
 
     /**
@@ -36,10 +36,11 @@ class TemplateSearch extends Search
     public function documentation()
     {
         $documentation = new Documentation();
-        $documentation->setDescription(Watson::translate('watson_template_documentation_description'));
-        $documentation->setUsage('t keyword');
-        $documentation->setExample('$navi');
-        $documentation->setExample('t $navigation');
+        $documentation->setDescription(Watson::translate('watson_module_documentation_description'));
+        $documentation->setUsage('m keyword');
+        $documentation->setExample('$headline');
+        $documentation->setExample('m $headline');
+        $documentation->setExample('m module name');
 
         return $documentation;
     }
@@ -65,37 +66,38 @@ class TemplateSearch extends Search
         $search_result = new SearchResult();
 
 
+        
         $fields = array(
             'name',
-            'content',
+            'input',
+            'output',
         );
 
         $sql_query  = ' SELECT      id,
                                     name
-                        FROM        ' . Watson::getTable('template') . '
+                        FROM        ' . Watson::getTable('module') . '
                         WHERE       ' . $search->getSqlWhere($fields) . '
-                        ORDER BY    name
-                        LIMIT       ' . Watson::getSearchResultLimit();
+                        ORDER BY    name';
 
         $results = $this->getDatabaseResults($sql_query);
 
         if (count($results)) {
 
             $counter = 0;
-            
+
             foreach ($results as $result) {
 
-                $url = Watson::getUrl(array('page' => 'templates', 'template_id' => $result['id'], 'function' => 'edit'));
+                $url = Watson::getUrl(array('page' => 'modules/modules', 'module_id' => $result['id'], 'function' => 'edit'));
 
                 $counter++;
 
                 $entry = new SearchResultEntry();
                 if ($counter == 1) {
-                    $entry->setLegend(Watson::translate('watson_template_legend'));
+                    $entry->setLegend(Watson::translate('watson_module_legend'));
                 }
                 $entry->setValue($result['name']);
-                $entry->setDescription(Watson::translate('watson_open_template'));
-                $entry->setIcon('watson-icon-template');
+                $entry->setDescription(Watson::translate('watson_open_module'));
+                $entry->setIcon('watson-icon-module');
                 $entry->setUrl($url);
                 $entry->setQuickLookUrl($url);
 
