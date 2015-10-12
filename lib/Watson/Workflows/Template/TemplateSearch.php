@@ -11,13 +11,13 @@
 namespace Watson\Workflows\Template;
 
 use \Watson\Foundation\Documentation;
-use \Watson\Foundation\Search;
-use \Watson\Foundation\SearchCommand;
-use \Watson\Foundation\SearchResult;
-use \Watson\Foundation\SearchResultEntry;
+use \Watson\Foundation\Command;
+use \Watson\Foundation\Result;
+use \Watson\Foundation\ResultEntry;
 use \Watson\Foundation\Watson;
+use \Watson\Foundation\Workflow;
 
-class TemplateSearch extends Search
+class TemplateSearch extends Workflow
 {
     /**
      * Provide the commands of the search.
@@ -54,15 +54,15 @@ class TemplateSearch extends Search
     }
 
     /**
-     * Execute the search for the given SearchCommand
+     * Execute the command for the given Command
      *
-     * @param  SearchCommand $search
-     * @return SearchResult
+     * @param  Command $command
+     * @return Result
      */
-    public function fire(SearchCommand $search)
+    public function fire(Command $command)
     {
         
-        $search_result = new SearchResult();
+        $result = new Result();
 
 
         $fields = array(
@@ -73,39 +73,38 @@ class TemplateSearch extends Search
         $sql_query  = ' SELECT      id,
                                     name
                         FROM        ' . Watson::getTable('template') . '
-                        WHERE       ' . $search->getSqlWhere($fields) . '
-                        ORDER BY    name
-                        LIMIT       ' . Watson::getSearchResultLimit();
+                        WHERE       ' . $command->getSqlWhere($fields) . '
+                        ORDER BY    name';
 
-        $results = $this->getDatabaseResults($sql_query);
+        $items = $this->getDatabaseResults($sql_query);
 
-        if (count($results)) {
+        if (count($items)) {
 
             $counter = 0;
             
-            foreach ($results as $result) {
+            foreach ($items as $item) {
 
-                $url = Watson::getUrl(array('page' => 'templates', 'template_id' => $result['id'], 'function' => 'edit'));
+                $url = Watson::getUrl(array('page' => 'templates', 'template_id' => $item['id'], 'function' => 'edit'));
 
                 $counter++;
 
-                $entry = new SearchResultEntry();
+                $entry = new ResultEntry();
                 if ($counter == 1) {
                     $entry->setLegend(Watson::translate('watson_template_legend'));
                 }
-                $entry->setValue($result['name']);
+                $entry->setValue($item['name']);
                 $entry->setDescription(Watson::translate('watson_open_template'));
                 $entry->setIcon('watson-icon-template');
                 $entry->setUrl($url);
                 $entry->setQuickLookUrl($url);
 
-                $search_result->addEntry($entry);
+                $result->addEntry($entry);
 
             }
         }
 
 
-        return $search_result;
+        return $result;
     }
 
 }

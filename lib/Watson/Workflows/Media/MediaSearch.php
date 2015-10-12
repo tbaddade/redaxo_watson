@@ -11,13 +11,13 @@
 namespace Watson\Workflows\Media;
 
 use \Watson\Foundation\Documentation;
-use \Watson\Foundation\Search;
-use \Watson\Foundation\SearchCommand;
-use \Watson\Foundation\SearchResult;
-use \Watson\Foundation\SearchResultEntry;
+use \Watson\Foundation\Command;
+use \Watson\Foundation\Result;
+use \Watson\Foundation\ResultEntry;
 use \Watson\Foundation\Watson;
+use \Watson\Foundation\Workflow;
 
-class MediaSearch extends Search
+class MediaSearch extends Workflow
 {
     /**
      * Provide the commands of the search.
@@ -53,15 +53,15 @@ class MediaSearch extends Search
     }
 
     /**
-     * Execute the search for the given SearchCommand
+     * Execute the command for the given Command
      *
-     * @param  SearchCommand $search
-     * @return SearchResult
+     * @param  Command $command
+     * @return Result
      */
-    public function fire(SearchCommand $search)
+    public function fire(Command $command)
     {
         
-        $search_result = new SearchResult();
+        $result = new Result();
 
         $fields = array(
             'filename',
@@ -87,46 +87,46 @@ class MediaSearch extends Search
                                     filename,
                                     title
                         FROM        ' . Watson::getTable('media') . '
-                        WHERE       ' . $search->getSqlWhere($fields) . '
+                        WHERE       ' . $command->getSqlWhere($fields) . '
                         ORDER BY    filename';
 
-        $results = $this->getDatabaseResults($sql_query);
+        $items = $this->getDatabaseResults($sql_query);
 
-        if (count($results)) {
+        if (count($items)) {
 
             $counter = 0;
 
-            foreach ($results as $result) {
+            foreach ($items as $item) {
 
-                $title = ($result['title'] != '') ? ' (' . Watson::translate('watson_media_title') . ': ' . $result['title'] . ')' : '';
+                $title = ($item['title'] != '') ? ' (' . Watson::translate('watson_media_title') . ': ' . $item['title'] . ')' : '';
 
                 $counter++;
 
-                $entry = new SearchResultEntry();
+                $entry = new ResultEntry();
                 if ($counter == 1) {
                     $entry->setLegend(Watson::translate('watson_media_legend'));
                 }
-                $entry->setValue($result['filename']);
+                $entry->setValue($item['filename']);
                 $entry->setDescription(Watson::translate('watson_open_media') . $title);
                 $entry->setIcon('watson-icon-media');
-                $entry->setUrl('javascript:newPoolWindow(\'' . Watson::getUrl(array('page' => 'mediapool/media', 'file_id' => $result['id'])) . '\')');
+                $entry->setUrl('javascript:newPoolWindow(\'' . Watson::getUrl(array('page' => 'mediapool/media', 'file_id' => $item['id'])) . '\')');
 
-                $m = \rex_media::get($result['filename']);
+                $m = \rex_media::get($item['filename']);
                 if ($m instanceof \rex_media) {
 
                     if ($m->isImage()) {
 
-                        $entry->setQuickLookUrl(Watson::getUrl(array('rex_media_type' => 'rex_mediapool_maximized', 'rex_media_file' => $result['filename']), false));
+                        $entry->setQuickLookUrl(Watson::getUrl(array('rex_media_type' => 'rex_mediapool_maximized', 'rex_media_file' => $item['filename']), false));
                     }
                 }
 
-                $search_result->addEntry($entry);
+                $result->addEntry($entry);
 
             }
         }
 
 
-        return $search_result;
+        return $result;
     }
 
 }

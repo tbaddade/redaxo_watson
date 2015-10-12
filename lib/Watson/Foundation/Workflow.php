@@ -10,10 +10,10 @@
  */
 namespace Watson\Foundation;
 
-use \Watson\Foundation\SearchCommand;
+use \Watson\Foundation\Command;
 use \Watson\Foundation\Watson;
 
-abstract class Search
+abstract class Workflow
 {
     /**
      * Provide the commands of the search.
@@ -35,12 +35,12 @@ abstract class Search
     abstract function registerPageParams();
 
     /**
-     * Execute the search for the given SearchCommand
+     * Execute the command for the given Command
      *
-     * @param  SearchCommand $search
-     * @return SearchResult
+     * @param  Command $command
+     * @return Result
      */
-    abstract function fire(SearchCommand $search);
+    abstract function fire(Command $command);
 
 
     protected function getDatabaseResults($query)
@@ -53,7 +53,7 @@ abstract class Search
             $query = substr($query, 0, $limit);
         }
         
-        $query .= ' LIMIT ' . Watson::getSearchResultLimit();
+        $query .= ' LIMIT ' . Watson::getResultLimit();
 
 
         $sql = \rex_sql::factory();

@@ -12,7 +12,7 @@ namespace Watson\Foundation;
 
 use \Watson\Foundation\Watson;
 
-class SearchResultEntry
+class ResultEntry
 {
     private $value;
     private $value_suffix;

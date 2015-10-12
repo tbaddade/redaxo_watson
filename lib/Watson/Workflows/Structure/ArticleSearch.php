@@ -11,13 +11,13 @@
 namespace Watson\Workflows\Structure;
 
 use \Watson\Foundation\Documentation;
-use \Watson\Foundation\Search;
-use \Watson\Foundation\SearchCommand;
-use \Watson\Foundation\SearchResult;
-use \Watson\Foundation\SearchResultEntry;
+use \Watson\Foundation\Command;
+use \Watson\Foundation\Result;
+use \Watson\Foundation\ResultEntry;
 use \Watson\Foundation\Watson;
+use \Watson\Foundation\Workflow;
 
-class ArticleSearch extends Search
+class ArticleSearch extends Workflow
 {
     /**
      * Provide the commands of the search.
@@ -54,20 +54,20 @@ class ArticleSearch extends Search
     }
 
     /**
-     * Execute the search for the given SearchCommand
+     * Execute the command for the given Command
      *
-     * @param  SearchCommand $search
-     * @return SearchResult
+     * @param  Command $command
+     * @return Result
      */
-    public function fire(SearchCommand $search)
+    public function fire(Command $command)
     {
 
-        $search_result = new SearchResult();
+        $result = new Result();
 
 
         $searchResults = array();
 
-        $command_parts = $search->getCommandParts();
+        $command_parts = $command->getCommandParts();
 
         // Artikelnamen in der Struktur durchsuchen
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -75,7 +75,7 @@ class ArticleSearch extends Search
             'a.name',
         );
 
-        $where = $search->getSqlWhere($fields);
+        $where = $command->getSqlWhere($fields);
 
         if (count($command_parts) == 1 && (int)$command_parts[0] >= 1) {
 
@@ -91,12 +91,12 @@ class ArticleSearch extends Search
                         GROUP BY    bulldog
                         ';
 
-        $results = $this->getDatabaseResults($sql_query);
+        $items = $this->getDatabaseResults($sql_query);
 
-        if (count($results)) {
-            foreach ($results as $result) {
+        if (count($items)) {
+            foreach ($items as $item) {
 
-                $searchResults[ $result['bulldog'] ] = $result;
+                $searchResults[ $item['bulldog'] ] = $item;
 
             }
         }
@@ -134,15 +134,15 @@ class ArticleSearch extends Search
                             LEFT JOIN
                                     ' . Watson::getTable('article') . ' AS a
                                 ON  (s.article_id = a.id AND s.clang_id = a.clang_id)
-                        WHERE       ' . $search->getSqlWhere($fields) . '
+                        WHERE       ' . $command->getSqlWhere($fields) . '
                         GROUP BY    bulldog';
 
-        $results = $this->getDatabaseResults($sql_query);
+        $items = $this->getDatabaseResults($sql_query);
 
-        if (count($results)) {
-            foreach ($results as $result) {
+        if (count($items)) {
+            foreach ($items as $item) {
 
-                $searchResults[ $result['bulldog'] ] = $result;
+                $searchResults[ $item['bulldog'] ] = $item;
 
             }
         }
@@ -153,10 +153,10 @@ class ArticleSearch extends Search
         if (count($searchResults)) {
 
             $counter = 0;
-            foreach ($searchResults as $result) {
+            foreach ($searchResults as $item) {
 
-                $clang_id    = $result['clang_id'];
-                $article     = \rex_article::get($result['id'], $clang_id);
+                $clang_id    = $item['clang_id'];
+                $article     = \rex_article::get($item['id'], $clang_id);
                 $category_id = $article->getCategoryId();
 
 
@@ -180,9 +180,9 @@ class ArticleSearch extends Search
                     
                     $url = Watson::getUrl(array('page' => 'structure', 'category_id' => $article->getCategoryId(), 'clang' => $clang_id));
                     
-                    if (isset($result['ctype_id'])) {
+                    if (isset($item['ctype_id'])) {
 
-                        $url = Watson::getUrl(array('page' => 'content/edit', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang_id, 'ctype' => $result['ctype_id']));
+                        $url = Watson::getUrl(array('page' => 'content/edit', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang_id, 'ctype' => $item['ctype_id']));
 
                     }
 
@@ -198,7 +198,7 @@ class ArticleSearch extends Search
 
                     $counter++;
 
-                    $entry = new SearchResultEntry();
+                    $entry = new ResultEntry();
                     if ($counter == 1) {
                         $entry->setLegend(Watson::translate('watson_structure_legend'));
                     }
@@ -208,13 +208,13 @@ class ArticleSearch extends Search
                     $entry->setUrl($url);
                     $entry->setQuickLookUrl('../index.php?article_id=' . $article->getId() . '&clang=' . $article->getClang());
 
-                    $search_result->addEntry($entry);
+                    $result->addEntry($entry);
                 }
 
             }
         }
 
-        return $search_result;
+        return $result;
     }
 
 }

@@ -12,7 +12,7 @@ namespace Watson\Foundation;
 
 use \Watson\Foundation\Watson;
 
-class SearchResult
+class Result
 {
     private $entries;
     private $header;
