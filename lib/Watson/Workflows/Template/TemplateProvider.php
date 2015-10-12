@@ -34,25 +34,8 @@ class TemplateProvider extends SupportProvider
      */
     public function register()
     {
-        
-        $register = array();
-        $register[] = $this->registerTemplateConsole();
-        $register[] = $this->registerTemplateSearch();
-        
-        return $register;
 
-    }
-
-
-    /**
-     * Register template console.
-     *
-     * @return void
-     */
-    public function registerTemplateConsole()
-    {
-    
-        //return new TemplateConsole();
+        return new TemplateSearch();;
 
     }
 
