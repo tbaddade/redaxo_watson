@@ -64,87 +64,57 @@ class WildcardSearch extends Workflow
         
         $result = new Result();
 
-        if ($command->getOption('miss') && \rex_addon::get('structure')->isAvailable() && \rex_plugin::get('structure', 'content')->isAvailable()) {
+        $fields = array(
+            '`wildcard`',
+            '`replace`',
+        );
 
-            $missingWildcards = \Wildcard\Wildcard::getMissingWildcards();
+        $sql_query  = ' SELECT      id,
+                                    clang_id, 
+                                    wildcard, 
+                                    `replace`
+                        FROM        ' . Watson::getTable('wildcard') . '
+                        WHERE       ' . $command->getSqlWhere($fields) . '
+                        ORDER BY    wildcard';
 
-            if (count($missingWildcards)) {
+        $items = $this->getDatabaseResults($sql_query);
 
-                $counter = 0;
+        if (count($items)) {
 
-                foreach ($missingWildcards as $name => $params) {
+            $counter = 0;
+
+            $clangs = \rex_clang::getAll();
             
-                    $url = Watson::getUrl(array('page' => 'wildcard/wildcard', 'wildcard_name' => $params['wildcard'], 'func' => 'add'));
+            foreach ($items as $item) {
 
-                    $counter++;
-                    
-                    $entry = new ResultEntry();
-                    if ($counter == 1) {
-                        $entry->setLegend(Watson::translate('watson_wildcard_legend_missing'));
-                    }
-                    $entry->setValue( $params['wildcard'] );
-                    $entry->setDescription(Watson::translate('watson_wildcard_create_description'));
-                    $entry->setIcon('watson-icon-wildcard');
-                    $entry->setUrl($url);
-                    $entry->setQuicklookUrl($url);
+                $url = Watson::getUrl(array('page' => 'wildcard/wildcard', 'wildcard_id' => $item['id'], 'func' => 'edit'));
 
-                    $result->addEntry($entry);
+                $counter++;
+
+                $entry = new ResultEntry();
+                if ($counter == 1) {
+                    $entry->setLegend(Watson::translate('watson_wildcard_legend'));
                 }
-            }
 
-        } else {
-
-            $fields = array(
-                '`wildcard`',
-                '`replace`',
-            );
-
-            $sql_query  = ' SELECT      id,
-                                        clang_id, 
-                                        wildcard, 
-                                        `replace`
-                            FROM        ' . Watson::getTable('wildcard') . '
-                            WHERE       ' . $command->getSqlWhere($fields) . '
-                            ORDER BY    wildcard';
-
-            $items = $this->getDatabaseResults($sql_query);
-
-            if (count($items)) {
-
-                $counter = 0;
-
-                $clangs = \rex_clang::getAll();
-                
-                foreach ($items as $item) {
-
-                    $url = Watson::getUrl(array('page' => 'wildcard/wildcard', 'wildcard_id' => $item['id'], 'func' => 'edit'));
-
-                    $counter++;
-
-                    $entry = new ResultEntry();
-                    if ($counter == 1) {
-                        $entry->setLegend(Watson::translate('watson_wildcard_legend'));
-                    }
-
-                    $value = $item['wildcard'];
-                    $value_suffix = '';
-                    if (isset($clangs[ $item['clang_id'] ])) {
-                        $value_suffix .= ' ' . $clangs[ $item['clang_id'] ]->getCode();
-                    }
-                    $value_suffix .= "\n" . $item['replace'];
-
-                    $entry->setValue( $value );
-                    $entry->setValueSuffix($value_suffix);
-                    $entry->setDescription(Watson::translate('watson_open_wildcard'));
-                    $entry->setIcon('watson-icon-wildcard');
-                    $entry->setUrl($url);
-                    $entry->setQuickLookUrl($url);
-
-                    $result->addEntry($entry);
-
+                $value = $item['wildcard'];
+                $value_suffix = '';
+                if (isset($clangs[ $item['clang_id'] ])) {
+                    $value_suffix .= ' › ' . $clangs[ $item['clang_id'] ]->getCode();
                 }
+                if ($item['replace'] != '') {
+                    $value_suffix .= ' › ' . $item['replace'];                        
+                }
+
+                $entry->setValue( $value );
+                $entry->setValueSuffix($value_suffix);
+                $entry->setDescription(Watson::translate('watson_open_wildcard'));
+                $entry->setIcon('watson-icon-wildcard');
+                $entry->setUrl($url);
+                $entry->setQuickLookUrl($url);
+
+                $result->addEntry($entry);
+
             }
-            
         }
 
         return $result;
