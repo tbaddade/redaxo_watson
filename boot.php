@@ -36,6 +36,10 @@ if (rex::isBackend() && rex::getUser()) {
 
             rex_extension::register('PACKAGES_INCLUDED', '\Watson\Foundation\Extension::run', rex_extension::LATE, array('workflows' => $workflows));
 
+            if (\Watson\Foundation\Watson::getToggleButtonStatus()) {
+                rex_extension::register('META_NAVI'    , '\Watson\Foundation\Extension::toggleButton');
+            }
+
         }
 
     }

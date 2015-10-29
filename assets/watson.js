@@ -100,6 +100,10 @@ jQuery(function($){
         $watsonOverlay.click(function(){
             hideWatsonAgent();
         });
+
+        $('.watson-btn').click(function(){
+            checkWatsonAgent();            
+        });
     });
 
     $(document).keydown(function(e) {

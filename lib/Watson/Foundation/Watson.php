@@ -19,6 +19,11 @@ class Watson
         return \rex_config::get('watson', 'resultLimit', 20);
     }
 
+    public static function getToggleButtonStatus()
+    {
+        return \rex_config::get('watson', 'toggleButton', 0);
+    }
+
 
     public static function getAgentHotkeys()
     {

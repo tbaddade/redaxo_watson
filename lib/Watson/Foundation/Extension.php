@@ -48,6 +48,16 @@ class Extension
 
 
 
+    public static function toggleButton(\rex_extension_point $ep)
+    {
+        $subject = $ep->getSubject();
+        array_unshift($subject, '<li class="navbar-btn"><button class="btn btn-default watson-btn">Watson</button></li>');
+        
+        $ep->setSubject($subject);
+    }
+
+
+
     public static function agent(\rex_extension_point $ep)
     {
         $panel = '';

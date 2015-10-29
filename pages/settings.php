@@ -18,12 +18,14 @@ $func = rex_request('func', 'string');
 $resultLimit = rex_request('resultLimit', 'int');
 $agentHotkey = rex_request('agentHotkey', 'string');
 $quicklookHotkey = rex_request('quicklookHotkey', 'string');
+$toggleButton = rex_request('toggleButton', 'bool');
 
 if ($func == 'update') {
     echo \rex_view::info($this->i18n('config_saved'));
     \rex_config::set('watson', 'resultLimit', $resultLimit);
     \rex_config::set('watson', 'agentHotkey', $agentHotkey);
     \rex_config::set('watson', 'quicklookHotkey', $quicklookHotkey);
+    \rex_config::set('watson', 'toggleButton', $toggleButton);
 }
 
 $content .= '
@@ -67,6 +69,21 @@ $content .= '
         $n = [];
         $n['label'] = '<label for="watson-quicklook-hotkey">' . $this->i18n('quicklookHotkey') . '</label>';
         $n['field'] = $quicklookHotkeysSelect->get();
+        $formElements[] = $n;
+
+        
+        $toggleButtonSelect = new \rex_select();
+        $toggleButtonSelect->setName('toggleButton');
+        $toggleButtonSelect->setSize(1);
+        $toggleButtonSelect->setAttribute('class', 'form-control');
+        $toggleButtonSelect->setAttribute('id', 'watson-toggle-button');
+        $toggleButtonSelect->addOption($this->i18n('no'), 0);
+        $toggleButtonSelect->addOption($this->i18n('yes'), 1);
+        $toggleButtonSelect->setSelected(Watson::getToggleButtonStatus());
+
+        $n = [];
+        $n['label'] = '<label for="watson-toggle-button">' . $this->i18n('showToggleButton') . '</label>';
+        $n['field'] = $toggleButtonSelect->get();
         $formElements[] = $n;
 
 

@@ -21,6 +21,15 @@
     vertical-align: middle;
 
 }
+.watson-btn {
+    margin-right: 20px;
+    padding: 16px;
+    background-image: url(watson-logo.svg);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;    
+    font-size: 0;
+}
 #watson-agent {
     display: none;
     position: absolute;
