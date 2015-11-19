@@ -23,6 +23,7 @@ class ResultEntry
     private $url;
     private $url_open_window;
     private $html_fields;
+    private $ajax;
 
 
 
@@ -275,7 +276,7 @@ class ResultEntry
 
 
     /**
-     * Sets a description
+     * Sets html fields
      *
      * @param string $value
      */
@@ -285,7 +286,7 @@ class ResultEntry
     }
 
     /**
-     * Returns the icon
+     * Returns the html fields
      *
      * @return string
      */
@@ -295,12 +296,42 @@ class ResultEntry
     }
 
     /**
-     * Returns whether a icon is set
+     * Returns whether html fields are set
      *
      * @return bool
      */
     public function hasHtmlFields()
     {
         return !empty($this->html_fields);
+    }
+
+    /**
+     * Sets a ajax
+     *
+     * @param string $value
+     */
+    public function setAjax($value)
+    {
+        $this->ajax = $value;
+    }
+
+    /**
+     * Returns the ajax
+     *
+     * @return string
+     */
+    public function getAjax()
+    {
+        return $this->ajax;
+    }
+
+    /**
+     * Returns whether a ajax is set
+     *
+     * @return bool
+     */
+    public function hasAjax()
+    {
+        return !empty($this->ajax);
     }
 }

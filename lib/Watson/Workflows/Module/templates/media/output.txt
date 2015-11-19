@@ -1,0 +1,7 @@
+
+$$VARIABLE$ = '';
+if (REX_MEDIA[id="$VALUE$" isset="1"]) {
+    $media = rex_media::get(REX_MEDIA[id="$VALUE$"]);
+    $$VARIABLE$ .= $media->toImage();
+}
+echo $$VARIABLE$;

@@ -22,9 +22,7 @@ class ModuleProvider extends SupportProvider
      */
     public function i18n()
     {
-        
         return __DIR__;
-
     }
 
     /**
@@ -34,8 +32,34 @@ class ModuleProvider extends SupportProvider
      */
     public function register()
     {
-        
-        return new ModuleSearch();
+        $register = array();
+        $register[] = $this->registerModuleSearch();
+        if (\rex::getUser()->isAdmin()) {
+            $register[] = $this->registerModuleGenerator();
+        }
 
+        return $register;
+    }
+
+
+    /**
+     * Register module search.
+     *
+     * @return void
+     */
+    public function registerModuleSearch()
+    {
+        return new ModuleSearch();
+    }
+
+
+    /**
+     * Register module generator.
+     *
+     * @return void
+     */
+    public function registerModuleGenerator()
+    {
+        return new ModuleGenerator();
     }
 }

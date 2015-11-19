@@ -1,0 +1,7 @@
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">$LABEL$</label>
+        <div class="col-sm-10">
+            <textarea class="form-control$ARGS_ATTRIBUTE_CLASS$" rows="10" name="REX_INPUT_VALUE[$VALUE$]"$ARGS_ATTRIBUTES_STRING$>REX_VALUE[$VALUE$]</textarea>
+        </div>
+    </div>

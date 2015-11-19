@@ -8,14 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\Module;
 
-use \Watson\Foundation\Documentation;
-use \Watson\Foundation\Command;
-use \Watson\Foundation\Result;
-use \Watson\Foundation\ResultEntry;
-use \Watson\Foundation\Watson;
-use \Watson\Foundation\Workflow;
+use Watson\Foundation\Documentation;
+use Watson\Foundation\Command;
+use Watson\Foundation\Result;
+use Watson\Foundation\ResultEntry;
+use Watson\Foundation\Watson;
+use Watson\Foundation\Workflow;
 
 class ModuleSearch extends Workflow
 {
@@ -26,11 +27,10 @@ class ModuleSearch extends Workflow
      */
     public function commands()
     {
-        return array('m');
+        return ['m'];
     }
 
     /**
-     *
      * @return Documentation
      */
     public function documentation()
@@ -46,34 +46,30 @@ class ModuleSearch extends Workflow
     }
 
     /**
-     *
      * @return an array of registered page params
      */
     public function registerPageParams()
     {
-        
     }
 
     /**
-     * Execute the command for the given Command
+     * Execute the command for the given Command.
      *
-     * @param  Command $command
+     * @param Command $command
+     *
      * @return Result
      */
     public function fire(Command $command)
     {
-        
         $result = new Result();
 
-
-        
-        $fields = array(
+        $fields = [
             'name',
             'input',
             'output',
-        );
+        ];
 
-        $sql_query  = ' SELECT      id,
+        $sql_query = ' SELECT      id,
                                     name
                         FROM        ' . Watson::getTable('module') . '
                         WHERE       ' . $command->getSqlWhere($fields) . '
@@ -82,14 +78,12 @@ class ModuleSearch extends Workflow
         $items = $this->getDatabaseResults($sql_query);
 
         if (count($items)) {
-
             $counter = 0;
 
             foreach ($items as $item) {
+                $url = Watson::getUrl(['page' => 'modules/modules', 'module_id' => $item['id'], 'function' => 'edit']);
 
-                $url = Watson::getUrl(array('page' => 'modules/modules', 'module_id' => $item['id'], 'function' => 'edit'));
-
-                $counter++;
+                ++$counter;
 
                 $entry = new ResultEntry();
                 if ($counter == 1) {
@@ -102,12 +96,9 @@ class ModuleSearch extends Workflow
                 $entry->setQuickLookUrl($url);
 
                 $result->addEntry($entry);
-
             }
         }
 
-
         return $result;
     }
-
 }

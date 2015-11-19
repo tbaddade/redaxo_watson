@@ -30,7 +30,7 @@ class Result
     /**
      * Sets result entry
      *
-     * @param watson_search_entry $entry
+     * @param ResultEntry $entry
      */
     public function addEntry($entry)
     {
@@ -95,6 +95,10 @@ class Result
                 if ($entry->hasHtmlFields()) {
                     $classes[]                  = 'watson-has-html-fields';
                     $return['html_fields']      = $entry->getHtmlFields();
+                }
+
+                if ($entry->hasAjax()) {
+                    $return['ajax'] = $entry->getAjax();
                 }
 
                 $return['value']        = $value;

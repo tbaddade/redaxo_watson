@@ -8,7 +8,7 @@ jQuery(function($){
     |
     |
     */
-    
+
     $(document).ready( function() {
 
         var $watson_id   = getUrlParameter('watson_id');
@@ -35,10 +35,10 @@ jQuery(function($){
     $.facebox.settings.closeImage   = '';
     $.facebox.settings.loadingImage = '';
     $.facebox.settings.opacity      = 0.5;
-    
+
     var iframe_min_width  = 800;
     var iframe_min_height = 600;
-    
+
     var width  = $(window).width()  - 200;
     var height = $(window).height() - 200;
 
@@ -50,7 +50,7 @@ jQuery(function($){
     }
     $.facebox.settings.iframe_width  = width;
     $.facebox.settings.iframe_height = height;
-    
+
 
     function showQuicklook(link) {
         $.facebox({ iframe: link });
@@ -70,7 +70,7 @@ jQuery(function($){
             $.facebox.close();
 
         } else if ($link !== undefined) {
-            
+
             console.log('$.facebox.open');
             $.facebox({ iframe: $link });
 
@@ -102,7 +102,7 @@ jQuery(function($){
         });
 
         $('.watson-btn').click(function(){
-            checkWatsonAgent();            
+            checkWatsonAgent();
         });
     });
 
@@ -148,18 +148,18 @@ jQuery(function($){
             queryTokenizer: Bloodhound.tokenizers.whitespace,
 
             remote: {
-                url: $watsonSettings.backendUrl,
+                url: $watsonSettings.backendRemoteUrl,
                 wildcard: $watsonSettings.wildcard,
                 cache: false
             }
         });
 
 
-        var $template = 
+        var $template =
             Hogan.compile([
                 '<div class="watson-result" data-legend="{{legend}}">',
                 '<span class="watson-value{{class}}" style="{{style}}"><i class="watson-icon{{icon}}"></i> {{value_name}}<em class="watson-value-suffix">{{value_suffix}}</em><em class="watson-description">{{description}}</em></span>',
-                //'<div class="watson-preview"><iframe src="{{quick_look_url}}"></iframe></div>', 
+                //'<div class="watson-preview"><iframe src="{{quick_look_url}}"></iframe></div>',
                 '</div>'
         ].join(''));
 
@@ -171,7 +171,7 @@ jQuery(function($){
                 hint: true,
                 minLength: 1
             }, {
-                name: 'watson', 
+                name: 'watson',
                 source: $watsonResults,
                 limit: $watsonSettings.resultLimit,
                 displayKey: function (str) {
@@ -192,38 +192,38 @@ jQuery(function($){
         $watsonTypeahead.on('typeahead:open', onOpen);
         $watsonTypeahead.on('typeahead:autocomplete', onAutocomplete);
         $watsonTypeahead.on('typeahead:select', onSelect);
-        
+
         $watsonTypeahead.on('typeahead:render', function($e, $item){
             hideWatsonQuickLookFrame();
         });
-        
+
         $watsonTypeahead.on('typeahead:cursorchange', function($e, $item){
             $curTypeaheadItem = $item;
             $curUserInput = $(this).typeahead('val');
 
-            if ($curTypeaheadItem && $curTypeaheadItem.quick_look_url !== undefined) {
+            if ($curTypeaheadItem && $curTypeaheadItem != null && typeof($curTypeaheadItem) !== 'undefined' && typeof($curTypeaheadItem.quick_look_url) !== 'undefined') {
                 $('.watson-quick-look-frame').html('<iframe src="' + $curTypeaheadItem.quick_look_url + '"></iframe>').show();
             } else {
                 hideWatsonQuickLookFrame();
             }
         });
-        
+
         $watsonTypeahead.on('typeahead:close', function(){
             $curTypeaheadItem = null;
         });
 
 
         $watsonTypeahead.keydown(function(e) {
-
-            if ($curTypeaheadItem && $curTypeaheadItem.quick_look_url !== undefined && 
-                ($watsonSettings.quicklookHotkey == '16' && e.shiftKey) ||
+            if (($watsonSettings.quicklookHotkey == '16' && e.shiftKey) ||
                 ($watsonSettings.quicklookHotkey == '17' && e.ctrlKey) ||
                 ($watsonSettings.quicklookHotkey == '18' && e.altKey) ||
                 ($watsonSettings.quicklookHotkey == '91' && e.metaKey)
                 ) {
-                quicklook($curTypeaheadItem.quick_look_url);
+                if (typeof($curTypeaheadItem) !== 'undefined' && typeof($curTypeaheadItem.quick_look_url) !== 'undefined') {
+                    quicklook($curTypeaheadItem.quick_look_url);
+                }
             }
-            
+
         });
 
         $watsonOverlay.fadeIn('fast');
@@ -231,8 +231,8 @@ jQuery(function($){
         $watsonAgent.find('input').focus();
     }
 
-    
- 
+
+
     function onOpen($e) {
         //console.log('opened');
         $watsonAgent.find('.twitter-typeahead').append('<div class="watson-quick-look-frame"></div>').hide();
@@ -250,11 +250,35 @@ jQuery(function($){
             }
         }
     }
-     
-    function onSelect($e, item) {
-        console.log('selected');
-        console.log(item);
 
+    function onSelect($e, item) {
+        //console.log('selected');
+        //console.log(item);
+        if (item.ajax !== undefined) {
+            var $data  = $.parseJSON(item.ajax);
+            //console.log($data);
+            console.log(JSON.stringify($data['params']));
+            var $url = $watsonSettings.backendUrl;
+            $.ajax({
+                url: $url,
+                type: 'POST',
+                data: {
+                    watsonCallClass : $data['class'],
+                    watsonCallMethod: $data['method'],
+                    watsonCallParams: JSON.stringify($data['params'])
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(JSON.stringify(jqXHR));
+                        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                 }
+            }).done(function(result) {
+                //console.log(result);
+                var $result = $.parseJSON(result);
+                if ($result.url !== undefined) {
+                    window.location.href = $result.url;
+                }
+            });
+        }
         if (item.url !== undefined) {
             if (item.url_open_window) {
                 window.open(item.url, '_newtab');
@@ -268,7 +292,7 @@ jQuery(function($){
         destroyWatsonQuickLookFrame();
         $watsonOverlay.fadeOut('fast');
         $watsonAgent.fadeOut('fast').removeClass('watson-active');
-        
+
         $watsonTypeahead.typeahead('destroy');
     }
 
@@ -276,7 +300,7 @@ jQuery(function($){
     function hideWatsonQuickLookFrame() {
         $('.watson-quick-look-frame').hide();
     }
-                
+
     function destroyWatsonQuickLookFrame() {
         $watsonAgent.find('.twitter-typeahead .watson-quick-look-frame').remove();
     }
