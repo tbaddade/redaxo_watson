@@ -19,7 +19,16 @@
     background-repeat: no-repeat;
     background-size: 20px 20px;
     vertical-align: middle;
-
+}
+#watson-agent .watson-logo {
+    position: absolute;
+    right: -2px;
+    top: 6px;
+    width: 64px;
+    height: 64px;
+}
+#watson-agent .watson-logo > svg .fill-1 {
+    fill: #324050;
 }
 .watson-btn {
     margin-right: 20px;
@@ -27,7 +36,7 @@
     background-image: url(watson-logo.svg);
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    background-size: 24px 24px;    
+    background-size: 24px 24px;
     font-size: 0;
 }
 #watson-agent {
@@ -40,16 +49,25 @@
     margin-left: -480px;
     padding: 10px;
     background-color: #e0e0e0;
-    background-image: url(watson-logo.svg);
+    /*background-image: url(watson-logo.svg);
     background-position: 100% 10px;
     background-repeat: no-repeat;
-    background-size: 64px 64px;
+    background-size: 64px 64px;*/
     border: 10px solid rgba(0, 0, 0, .5);
     -webkit-border-radius: 5px;
             border-radius: 5px;
     -webkit-box-shadow: 0 0 8px 0 rgba(0, 0, 0, .5);
             box-shadow: 0 0 8px 0 rgba(0, 0, 0, .5);
     z-index: 1000;
+/*
+    background: #9ca5b2;
+    -webkit-mask:  url(watson-logo.svg) no-repeat 50% 50%;
+       -moz-mask: url(watson-logo.svg) no-repeat 50% 50%;
+            mask: url(watson-logo.svg) no-repeat 50% 50%;
+    -webkit-mask-size: cover;
+       -moz-mask-size: cover;
+            mask-size: cover;
+*/
 }
 
 #watson-agent form {
@@ -120,7 +138,7 @@
 }
 
 
-.watson-icon {    
+.watson-icon {
     display: none;
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit;
@@ -161,7 +179,7 @@
 .twitter-typeahead .tt-hint {
     margin-bottom: 0;
 }
-.twitter-typeahead .tt-hint, 
+.twitter-typeahead .tt-hint,
 .twitter-typeahead .tt-input {
     max-height: 60px;
 }
@@ -214,7 +232,7 @@
     border-bottom: 1px solid #E0E0E0;
     vertical-align: middle;
 }
-.tt-suggestion.tt-is-under-cursor, 
+.tt-suggestion.tt-is-under-cursor,
 .tt-suggestion.tt-cursor {
     background-color: #E0E0E0;
     /* background-image: url(enter.png); */
@@ -223,7 +241,7 @@
     color: #000;
 }
 
-.tt-suggestion.tt-is-under-cursor a, 
+.tt-suggestion.tt-is-under-cursor a,
 .tt-suggestion.tt-cursor a {
     color: #000;
 }
@@ -254,9 +272,9 @@
             box-sizing: border-box;
     */
 }
-#watson-console .terminal-output, 
-#watson-console .terminal-output *, 
-#watson-console .cmd, 
+#watson-console .terminal-output,
+#watson-console .terminal-output *,
+#watson-console .cmd,
 #watson-console .cmd * {
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     font-size: 14px !important;
@@ -269,7 +287,7 @@
     width: 100%;
     margin: .5em 0;
 }
-#watson-console table th, 
+#watson-console table th,
 #watson-console table td {
     padding: 5px;
     background: #E9D763;

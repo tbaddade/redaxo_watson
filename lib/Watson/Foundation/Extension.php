@@ -62,6 +62,7 @@ class Extension
                         <input class="typeahead" type="text" name="q" value="" />
                     </fieldset>
                 </form>
+                <div class="watson-logo"><img class="rex-js-svg" src="' . \rex_addon::get('watson')->getAssetsUrl('watson-logo.svg') . '" /></div>
             </div>';
 
         $panel .= '<div id="watson-agent-overlay"></div>';
