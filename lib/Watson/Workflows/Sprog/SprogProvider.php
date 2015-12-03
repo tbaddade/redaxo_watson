@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Watson\Workflows\Wildcard;
+namespace Watson\Workflows\Sprog;
 
 use \Watson\Foundation\SupportProvider;
 
-class WildcardProvider extends SupportProvider
+class SprogProvider extends SupportProvider
 {
 
     /**
@@ -22,7 +22,7 @@ class WildcardProvider extends SupportProvider
      */
     public function i18n()
     {
-        
+
         return __DIR__;
 
     }
@@ -36,7 +36,7 @@ class WildcardProvider extends SupportProvider
     {
         $registered = array();
 
-        if (\rex_addon::get('wildcard')->isAvailable() && \rex::getUser()->hasPerm('wildcard[]')) {
+        if (\rex_addon::get('sprog')->isAvailable() && \rex::getUser()->hasPerm('sprog[wildcard]')) {
 
             $registered[] = $this->registerWildcardCreate();
             $registered[] = $this->registerWildcardSearch();
@@ -55,7 +55,7 @@ class WildcardProvider extends SupportProvider
      */
     public function registerWildcardCreate()
     {
-    
+
         return new WildcardCreate();
 
     }
@@ -68,7 +68,7 @@ class WildcardProvider extends SupportProvider
      */
     public function registerWildcardSearch()
     {
-    
+
         return new WildcardSearch();
 
     }

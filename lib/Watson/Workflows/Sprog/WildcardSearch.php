@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Watson\Workflows\Wildcard;
+namespace Watson\Workflows\Sprog;
 
 use \Watson\Foundation\Documentation;
 use \Watson\Foundation\Command;
@@ -50,7 +50,7 @@ class WildcardSearch extends Workflow
      */
     public function registerPageParams()
     {
-        
+
     }
 
     /**
@@ -61,7 +61,7 @@ class WildcardSearch extends Workflow
      */
     public function fire(Command $command)
     {
-        
+
         $result = new Result();
 
         $fields = array(
@@ -70,10 +70,10 @@ class WildcardSearch extends Workflow
         );
 
         $sql_query  = ' SELECT      id,
-                                    clang_id, 
-                                    wildcard, 
+                                    clang_id,
+                                    wildcard,
                                     `replace`
-                        FROM        ' . Watson::getTable('wildcard') . '
+                        FROM        ' . Watson::getTable('sprog_wildcard') . '
                         WHERE       ' . $command->getSqlWhere($fields) . '
                         ORDER BY    wildcard';
 
@@ -84,10 +84,10 @@ class WildcardSearch extends Workflow
             $counter = 0;
 
             $clangs = \rex_clang::getAll();
-            
+
             foreach ($items as $item) {
 
-                $url = Watson::getUrl(array('page' => 'wildcard/wildcard', 'wildcard_id' => $item['id'], 'func' => 'edit'));
+                $url = Watson::getUrl(array('page' => 'sprog/wildcard', 'wildcard_id' => $item['id'], 'func' => 'edit'));
 
                 $counter++;
 
@@ -102,7 +102,7 @@ class WildcardSearch extends Workflow
                     $value_suffix .= ' › ' . $clangs[ $item['clang_id'] ]->getCode();
                 }
                 if ($item['replace'] != '') {
-                    $value_suffix .= ' › ' . $item['replace'];                        
+                    $value_suffix .= ' › ' . $item['replace'];
                 }
 
                 $entry->setValue( $value );

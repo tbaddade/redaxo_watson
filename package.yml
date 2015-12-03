@@ -16,7 +16,7 @@ providers:
     - 'Watson\Workflows\Media\MediaProvider'
     - 'Watson\Workflows\Module\ModuleProvider'
     - 'Watson\Workflows\Template\TemplateProvider'
-    - 'Watson\Workflows\Wildcard\WildcardProvider'
+    - 'Watson\Workflows\Sprog\SprogProvider'
 
 stylesheets:
     - facebox.css

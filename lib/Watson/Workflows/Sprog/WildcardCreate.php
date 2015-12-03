@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Watson\Workflows\Wildcard;
+namespace Watson\Workflows\Sprog;
 
 use \Watson\Foundation\Documentation;
 use \Watson\Foundation\Command;
@@ -51,7 +51,7 @@ class WildcardCreate extends Workflow
      */
     public function registerPageParams()
     {
-        
+
     }
 
     /**
@@ -62,21 +62,20 @@ class WildcardCreate extends Workflow
      */
     public function fire(Command $command)
     {
-        
+
         $result = new Result();
-
-
+        
         if ($command->getOption('miss') && \rex_addon::get('structure')->isAvailable() && \rex_plugin::get('structure', 'content')->isAvailable()) {
 
-            $missingWildcards = \Wildcard\Wildcard::getMissingWildcards();
+            $missingWildcards = \Sprog\Wildcard::getMissingWildcards();
 
             if (count($missingWildcards)) {
 
                 $counter = 0;
 
                 foreach ($missingWildcards as $name => $params) {
-            
-                    $url = Watson::getUrl(array('page' => 'wildcard/wildcard', 'wildcard_name' => $params['wildcard'], 'func' => 'add'));
+
+                    $url = Watson::getUrl(array('page' => 'sprog/wildcard', 'wildcard_name' => $params['wildcard'], 'func' => 'add'));
 
                     $counter++;
 
@@ -101,7 +100,7 @@ class WildcardCreate extends Workflow
 
 
             if ($sql->getRows() == 0 && count($command->getOptions()) == 0 && in_array($command->getCommand(), $this->commands() )) {
-                $url = Watson::getUrl(array('page' => 'wildcard/wildcard', 'wildcard_name' => $command->getCommandPartsAsString(), 'func' => 'add'));
+                $url = Watson::getUrl(array('page' => 'sprog/wildcard', 'wildcard_name' => $command->getCommandPartsAsString(), 'func' => 'add'));
 
                 $entry = new ResultEntry();
                 $entry->setLegend(Watson::translate('watson_wildcard_legend_create'));
@@ -111,7 +110,7 @@ class WildcardCreate extends Workflow
                 $entry->setUrl($url);
                 $entry->setQuickLookUrl($url);
 
-                $result->addEntry($entry);  
+                $result->addEntry($entry);
             }
         }
 
