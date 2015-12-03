@@ -1,5 +1,5 @@
 package: watson
-version: '5.0-alpha7'
+version: '2.0.0-alpha'
 author: Thomas Blum
 supportpage: www.redaxo.org/de/forum/
 
@@ -12,9 +12,9 @@ page:
         settings: { title: 'translate:config' }
 
 providers:
+    - 'Watson\Workflows\Structure\StructureProvider'
     - 'Watson\Workflows\Media\MediaProvider'
     - 'Watson\Workflows\Module\ModuleProvider'
-    - 'Watson\Workflows\Structure\StructureProvider'
     - 'Watson\Workflows\Template\TemplateProvider'
     - 'Watson\Workflows\Wildcard\WildcardProvider'
 
