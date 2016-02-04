@@ -64,7 +64,7 @@ class WildcardCreate extends Workflow
     {
 
         $result = new Result();
-        
+
         if ($command->getOption('miss') && \rex_addon::get('structure')->isAvailable() && \rex_plugin::get('structure', 'content')->isAvailable()) {
 
             $missingWildcards = \Sprog\Wildcard::getMissingWildcards();
@@ -96,7 +96,7 @@ class WildcardCreate extends Workflow
         } else {
 
             $sql = \rex_sql::factory();
-            $sql->setQuery('SELECT pid FROM ' . Watson::getTable('wildcard') . ' WHERE wildcard = "' . $command->getCommandPartsAsString() . '"');
+            $sql->setQuery('SELECT pid FROM ' . Watson::getTable('sprog_wildcard') . ' WHERE wildcard = "' . $command->getCommandPartsAsString() . '"');
 
 
             if ($sql->getRows() == 0 && count($command->getOptions()) == 0 && in_array($command->getCommand(), $this->commands() )) {
