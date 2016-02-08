@@ -22,7 +22,7 @@ class StructureProvider extends SupportProvider
      */
     public function i18n()
     {
-        
+
         return __DIR__;
 
     }
@@ -34,10 +34,14 @@ class StructureProvider extends SupportProvider
      */
     public function register()
     {
-        
+
         $register = array();
         $register[] = $this->registerArticleSearch();
-        
+
+        if (\rex::getUser()->isAdmin()) {
+            $register[] = $this->registerCategoryGenerator();
+        }
+
         return $register;
 
     }
@@ -50,8 +54,17 @@ class StructureProvider extends SupportProvider
      */
     public function registerArticleSearch()
     {
-        
         return new ArticleSearch();
+    }
 
+
+    /**
+     * Register category generator.
+     *
+     * @return void
+     */
+    public function registerCategoryGenerator()
+    {
+        return new CategoryGenerator();
     }
 }

@@ -30,7 +30,7 @@ abstract class Workflow
 
     /**
      *
-     * @return an array of registered page params
+     * @return array of registered page params
      */
     abstract function registerPageParams();
 
@@ -48,11 +48,11 @@ abstract class Workflow
         $query = str_replace(array("\r\n", "\r", "\n"), '', $query);
 
         $limit = strpos(strtoupper($query), ' LIMIT ');
-        
+
         if($limit !== false) {
             $query = substr($query, 0, $limit);
         }
-        
+
         $query .= ' LIMIT ' . Watson::getResultLimit();
 
 

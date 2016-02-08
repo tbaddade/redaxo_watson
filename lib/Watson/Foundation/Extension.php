@@ -74,6 +74,12 @@ class Extension
     {
         $workflows = $ep->getParam('workflows');
 
+        Watson::deleteRegisteredPageParams();
+        foreach ($workflows as $workflow) {
+            if ($workflow->registerPageParams()) {
+                Watson::saveRegisteredPageParams($workflow->registerPageParams());
+            }
+        }
         // Phase 2
         // User Eingabe parsen in $input
         $userInput = rex_request('watson_query', 'string');
