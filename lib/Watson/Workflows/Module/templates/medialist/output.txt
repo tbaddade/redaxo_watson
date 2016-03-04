@@ -1,0 +1,10 @@
+
+$$VARIABLE$ = '';
+if (REX_MEDIALIST[id="$VALUE$" isset="1"]) {
+    $mediaList = explode(',', REX_MEDIALIST[id="$VALUE$"]);
+    foreach ($mediaList as $mediaName) {
+        $media = rex_media::get($mediaName);
+        $$VARIABLE$ .= $media->toImage();
+    }
+}
+echo $$VARIABLE$;

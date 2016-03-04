@@ -1,0 +1,10 @@
+
+$$VARIABLE$ = '';
+if (REX_LINKLIST[id="$VALUE$" isset="1"]) {
+    $ids = explode(',', REX_LINKLIST[id="$VALUE$"]);
+    foreach ($ids as $id) {
+        $article = rex_article::get($id);
+        $$VARIABLE$ .= $article->toLink();
+    }
+}
+echo $$VARIABLE$;

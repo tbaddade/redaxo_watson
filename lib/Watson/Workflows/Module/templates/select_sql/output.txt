@@ -1,0 +1,6 @@
+
+$$VARIABLE$ = '';
+if(REX_VALUE[id="$VALUE$" isset="1"]) {
+    $$VARIABLE$ = REX_VALUE[id="$VALUE$"];
+}
+echo $$VARIABLE$;

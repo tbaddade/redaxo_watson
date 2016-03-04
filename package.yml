@@ -1,0 +1,29 @@
+package: watson
+version: '2.0.0-alpha'
+author: Thomas Blum
+supportpage: www.redaxo.org/de/forum/
+
+page:
+    title: 'translate:watson'
+    perm: watson[]
+    pjax: false
+    icon: watson-icon-logo
+    subpages:
+        settings: { title: 'translate:config' }
+
+providers:
+    - 'Watson\Workflows\Structure\StructureProvider'
+    - 'Watson\Workflows\Media\MediaProvider'
+    - 'Watson\Workflows\Module\ModuleProvider'
+    - 'Watson\Workflows\Template\TemplateProvider'
+    - 'Watson\Workflows\Sprog\SprogProvider'
+
+stylesheets:
+    - facebox.css
+    - watson.css
+
+javascripts:
+    - facebox.js
+    - hogan-3.0.2.min.js
+    - typeahead.bundle.js
+    - watson.js

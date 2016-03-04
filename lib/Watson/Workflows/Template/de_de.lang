@@ -1,0 +1,16 @@
+watson_open_template = Template öffnen
+watson_template_legend = Templates
+watson_template_documentation_description = Sucht innerhalb von Templates
+
+
+
+watson_documentation_template_console_copy_description = Kopiert ein Template
+watson_documentation_template_console_copy_usage = t:copy template_id template_name
+watson_documentation_template_console_copy_example_1 = t:copy 2 Standardtemplate
+watson_documentation_template_console_copy_example_2 = t:copy 2 "01 - Standardtemplate"
+
+
+watson_documentation_template_console_make_description = Erstellt ein neues Template
+watson_documentation_template_console_make_usage = t:make template_name
+watson_documentation_template_console_make_example_1 = t:make Standardtemplate
+watson_documentation_template_console_make_example_2 = t:make "01 - Standardtemplate"

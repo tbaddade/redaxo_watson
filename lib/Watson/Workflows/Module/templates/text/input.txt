@@ -1,0 +1,7 @@
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">$LABEL$</label>
+        <div class="col-sm-10">
+            <input class="form-control$ARGS_ATTRIBUTE_CLASS$" type="text" name="REX_INPUT_VALUE[$VALUE$]" value="REX_VALUE[$VALUE$]"$ARGS_ATTRIBUTES_STRING$ />
+        </div>
+    </div>

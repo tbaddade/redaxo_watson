@@ -1,0 +1,10 @@
+
+$$VARIABLE$ = '';
+if (rex_addon::get('textile')->isAvailable()) {
+    if(REX_VALUE[id="$VALUE$" isset="1"]) {
+        $textile = REX_VALUE[id="$VALUE$"];
+        $textile = str_replace('<br />', '', $textile);
+        $$VARIABLE$ = rex_textile::parse($textile);
+    }
+}
+echo $$VARIABLE$;
