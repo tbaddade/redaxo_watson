@@ -50,7 +50,7 @@ class ArticleSearch extends Workflow
      */
     public function registerPageParams()
     {
-        
+
     }
 
     /**
@@ -69,9 +69,10 @@ class ArticleSearch extends Workflow
 
         $command_parts = $command->getCommandParts();
 
-        // Artikelnamen in der Struktur durchsuchen
+        // Artikelnamen und Id in der Struktur durchsuchen
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         $fields = array(
+            'a.id',
             'a.name',
         );
 
@@ -101,7 +102,7 @@ class ArticleSearch extends Workflow
             }
         }
 
-    
+
 
         // Slices der Artikel durchsuchen
         // Werden Slices gefunden, dann die Strukturartikel überschreiben
@@ -146,7 +147,7 @@ class ArticleSearch extends Workflow
 
             }
         }
-        
+
 
         // Ergebnisse auf Rechte prüfen und bereitstellen
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -177,9 +178,9 @@ class ArticleSearch extends Workflow
 
                     $path = '/' . implode('/', $path);
 
-                    
+
                     $url = Watson::getUrl(array('page' => 'structure', 'category_id' => $article->getCategoryId(), 'clang' => $clang_id));
-                    
+
                     if (isset($item['ctype_id'])) {
 
                         $url = Watson::getUrl(array('page' => 'content/edit', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang_id, 'ctype' => $item['ctype_id']));
