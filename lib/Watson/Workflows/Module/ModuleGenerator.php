@@ -26,7 +26,7 @@ class ModuleGenerator extends GeneratorWorkflow
      */
     public function commands()
     {
-        return array('m:make', 'module:maake');
+        return array('m:make', 'module:make');
     }
 
     /**
