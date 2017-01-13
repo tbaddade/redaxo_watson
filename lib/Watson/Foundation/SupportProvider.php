@@ -25,7 +25,7 @@ abstract class SupportProvider
     /**
      * Register the search provider.
      *
-     * @return void
+     * @return array
      */
     abstract function register();
 }
