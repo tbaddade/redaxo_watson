@@ -44,6 +44,7 @@ class OptionFieldsParser
             // The next will be the schema type
             $type = array_shift($chunks);
             $args = null;
+            $args_input = [];
 
             // See if args were provided, like:
             // name:select('SELECT)
@@ -113,7 +114,11 @@ class OptionFieldsParser
                     }
                     // else fallthrough
                 default:
-                    $return[$currentIndex] .= $string[$i];
+                    if (isset($return[$currentIndex])) {
+                        $return[$currentIndex] .= $string[$i];
+                    } else {
+                        $return[$currentIndex] = $string[$i];
+                    }
             }
         }
 
