@@ -29,11 +29,14 @@ class TemplateProvider extends SupportProvider
     /**
      * Register the service provider.
      *
-     * @return Workflow
+     * @return Workflow | array
      */
     public function register()
     {
-        return $this->registerTemplateSearch();
+        if (\rex::getUser()->isAdmin()) {
+            return $this->registerTemplateSearch();
+        }
+        return [];
     }
 
 

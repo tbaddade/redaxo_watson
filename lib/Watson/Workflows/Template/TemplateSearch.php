@@ -63,10 +63,6 @@ class TemplateSearch extends Workflow
     {
         $result = new Result();
 
-        if (!\rex::getUser()->isAdmin()) {
-            return $result;
-        }
-
         $fields = array(
             'name',
             'content',

@@ -34,9 +34,9 @@ class ModuleProvider extends SupportProvider
      */
     public function register()
     {
-        $register = array();
-        $register[] = $this->registerModuleSearch();
+        $register = [];
         if (\rex::getUser()->isAdmin()) {
+            $register[] = $this->registerModuleSearch();
             $register[] = $this->registerModuleGenerator();
         }
 
