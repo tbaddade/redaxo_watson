@@ -17,7 +17,7 @@ abstract class SupportProvider
     /**
      * Register the directory to search a translation file.
      *
-     * @return void
+     * @return string
      */
     abstract function i18n();
 
@@ -25,7 +25,7 @@ abstract class SupportProvider
     /**
      * Register the search provider.
      *
-     * @return array
+     * @return Workflow | array
      */
     abstract function register();
 }
