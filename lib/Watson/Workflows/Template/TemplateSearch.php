@@ -50,7 +50,7 @@ class TemplateSearch extends Workflow
      */
     public function registerPageParams()
     {
-        
+
     }
 
     /**
@@ -61,9 +61,11 @@ class TemplateSearch extends Workflow
      */
     public function fire(Command $command)
     {
-        
         $result = new Result();
 
+        if (!\rex::getUser()->isAdmin()) {
+            return $result;
+        }
 
         $fields = array(
             'name',
@@ -81,7 +83,7 @@ class TemplateSearch extends Workflow
         if (count($items)) {
 
             $counter = 0;
-            
+
             foreach ($items as $item) {
 
                 $url = Watson::getUrl(array('page' => 'templates', 'template_id' => $item['id'], 'function' => 'edit'));

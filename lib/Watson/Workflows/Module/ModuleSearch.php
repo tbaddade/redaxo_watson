@@ -63,6 +63,10 @@ class ModuleSearch extends Workflow
     {
         $result = new Result();
 
+        if (!\rex::getUser()->isAdmin()) {
+            return $result;
+        }
+
         $fields = [
             'name',
             'input',
