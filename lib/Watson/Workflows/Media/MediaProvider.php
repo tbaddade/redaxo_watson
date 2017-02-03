@@ -10,7 +10,8 @@
  */
 namespace Watson\Workflows\Media;
 
-use \Watson\Foundation\SupportProvider;
+use Watson\Foundation\SupportProvider;
+use Watson\Foundation\Workflow;
 
 class MediaProvider extends SupportProvider
 {
@@ -18,11 +19,11 @@ class MediaProvider extends SupportProvider
     /**
      * Register the directory to search a translation file.
      *
-     * @return void
+     * @return string
      */
     public function i18n()
     {
-        
+
         return __DIR__;
 
     }
@@ -30,12 +31,10 @@ class MediaProvider extends SupportProvider
     /**
      * Register the service provider.
      *
-     * @return void
+     * @return Workflow
      */
     public function register()
     {
-        
         return new MediaSearch();
-
     }
 }

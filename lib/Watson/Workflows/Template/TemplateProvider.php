@@ -11,6 +11,7 @@
 namespace Watson\Workflows\Template;
 
 use \Watson\Foundation\SupportProvider;
+use Watson\Foundation\Workflow;
 
 class TemplateProvider extends SupportProvider
 {
@@ -18,38 +19,32 @@ class TemplateProvider extends SupportProvider
     /**
      * Register the directory to search a translation file.
      *
-     * @return void
+     * @return string
      */
     public function i18n()
     {
-        
         return __DIR__;
-
     }
 
     /**
      * Register the service provider.
      *
-     * @return void
+     * @return Workflow
      */
     public function register()
     {
-
-        return new TemplateSearch();;
-
+        return $this->registerTemplateSearch();
     }
 
 
     /**
      * Register template search.
      *
-     * @return void
+     * @return Workflow
      */
     public function registerTemplateSearch()
     {
-    
         return new TemplateSearch();
-
     }
 
 

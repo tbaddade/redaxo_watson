@@ -10,7 +10,8 @@
  */
 namespace Watson\Workflows\YForm;
 
-use \Watson\Foundation\SupportProvider;
+use Watson\Foundation\SupportProvider;
+use Watson\Foundation\Workflow;
 
 class YFormProvider extends SupportProvider
 {
@@ -18,7 +19,7 @@ class YFormProvider extends SupportProvider
     /**
      * Register the directory to search a translation file.
      *
-     * @return void
+     * @return string
      */
     public function i18n()
     {
@@ -28,20 +29,20 @@ class YFormProvider extends SupportProvider
     /**
      * Register the service provider.
      *
-     * @return void
+     * @return Workflow | array
      */
     public function register()
     {
         if (\rex::getUser()->isAdmin() && \rex_addon::get('yform')->isAvailable() && \rex_plugin::get('yform', 'manager')->isAvailable()) {
             return $this->registerYFormSearch();
         }
+        return [];
     }
 
-
     /**
-     * Register template search.
+     * Register yform search.
      *
-     * @return void
+     * @return Workflow
      */
     public function registerYFormSearch()
     {

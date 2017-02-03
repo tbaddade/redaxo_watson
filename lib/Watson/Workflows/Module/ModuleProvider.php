@@ -10,7 +10,9 @@
  */
 namespace Watson\Workflows\Module;
 
-use \Watson\Foundation\SupportProvider;
+use Watson\Foundation\GeneratorWorkflow;
+use Watson\Foundation\SupportProvider;
+use Watson\Foundation\Workflow;
 
 class ModuleProvider extends SupportProvider
 {
@@ -18,7 +20,7 @@ class ModuleProvider extends SupportProvider
     /**
      * Register the directory to search a translation file.
      *
-     * @return void
+     * @return string
      */
     public function i18n()
     {
@@ -28,7 +30,7 @@ class ModuleProvider extends SupportProvider
     /**
      * Register the service provider.
      *
-     * @return void
+     * @return array
      */
     public function register()
     {
@@ -45,7 +47,7 @@ class ModuleProvider extends SupportProvider
     /**
      * Register module search.
      *
-     * @return void
+     * @return Workflow
      */
     public function registerModuleSearch()
     {
@@ -56,7 +58,7 @@ class ModuleProvider extends SupportProvider
     /**
      * Register module generator.
      *
-     * @return void
+     * @return GeneratorWorkflow
      */
     public function registerModuleGenerator()
     {

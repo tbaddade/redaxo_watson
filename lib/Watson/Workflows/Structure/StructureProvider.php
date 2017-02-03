@@ -10,7 +10,9 @@
  */
 namespace Watson\Workflows\Structure;
 
-use \Watson\Foundation\SupportProvider;
+use Watson\Foundation\GeneratorWorkflow;
+use Watson\Foundation\SupportProvider;
+use Watson\Foundation\Workflow;
 
 class StructureProvider extends SupportProvider
 {
@@ -18,7 +20,7 @@ class StructureProvider extends SupportProvider
     /**
      * Register the directory to search a translation file.
      *
-     * @return void
+     * @return string
      */
     public function i18n()
     {
@@ -30,7 +32,7 @@ class StructureProvider extends SupportProvider
     /**
      * Register the service provider.
      *
-     * @return void
+     * @return array
      */
     public function register()
     {
@@ -50,7 +52,7 @@ class StructureProvider extends SupportProvider
     /**
      * Register article search.
      *
-     * @return void
+     * @return Workflow
      */
     public function registerArticleSearch()
     {
@@ -61,7 +63,7 @@ class StructureProvider extends SupportProvider
     /**
      * Register category generator.
      *
-     * @return void
+     * @return GeneratorWorkflow
      */
     public function registerCategoryGenerator()
     {
