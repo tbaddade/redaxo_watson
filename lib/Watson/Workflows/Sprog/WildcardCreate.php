@@ -46,12 +46,13 @@ class WildcardCreate extends Workflow
     }
 
     /**
+     * Return array of registered page params
      *
-     * @return an array of registered page params
+     * @return array
      */
     public function registerPageParams()
     {
-
+        return [];
     }
 
     /**

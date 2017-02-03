@@ -44,12 +44,13 @@ class MediaSearch extends Workflow
     }
 
     /**
+     * Return array of registered page params
      *
-     * @return an array of registered page params
+     * @return array
      */
     public function registerPageParams()
     {
-        
+        return [];
     }
 
     /**
@@ -60,7 +61,7 @@ class MediaSearch extends Workflow
      */
     public function fire(Command $command)
     {
-        
+
         $result = new Result();
 
         $fields = array(

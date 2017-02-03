@@ -46,10 +46,13 @@ class ModuleSearch extends Workflow
     }
 
     /**
-     * @return array of registered page params
+     * Return array of registered page params
+     *
+     * @return array
      */
     public function registerPageParams()
     {
+        return [];
     }
 
     /**

@@ -29,8 +29,9 @@ abstract class Workflow
     abstract function documentation();
 
     /**
+     * Return array of registered page params
      *
-     * @return array of registered page params
+     * @return array
      */
     abstract function registerPageParams();
 
