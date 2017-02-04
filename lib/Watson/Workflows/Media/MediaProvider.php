@@ -23,9 +23,7 @@ class MediaProvider extends SupportProvider
      */
     public function i18n()
     {
-
         return __DIR__;
-
     }
 
     /**

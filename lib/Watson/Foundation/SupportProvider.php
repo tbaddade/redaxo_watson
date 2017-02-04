@@ -25,7 +25,7 @@ abstract class SupportProvider
     /**
      * Register the search provider.
      *
-     * @return Workflow | array
+     * @return Workflow|array
      */
     abstract function register();
 }
