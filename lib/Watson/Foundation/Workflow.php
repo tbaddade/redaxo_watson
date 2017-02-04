@@ -8,10 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Foundation;
 
-use \Watson\Foundation\Command;
-use \Watson\Foundation\Watson;
+use Watson\Foundation\Command;
+use Watson\Foundation\Watson;
 
 abstract class Workflow
 {
@@ -20,37 +21,37 @@ abstract class Workflow
      *
      * @return array
      */
-    abstract function commands();
+    abstract public function commands();
 
     /**
-     *
      * @return Documention
      */
-    abstract function documentation();
+    abstract public function documentation();
 
     /**
-     * Return array of registered page params
+     * Return array of registered page params.
      *
      * @return array
      */
-    abstract function registerPageParams();
+    abstract public function registerPageParams();
 
     /**
-     * Execute the command for the given Command
+     * Execute the command for the given Command.
      *
-     * @param  Command $command
+     * @param Command $command
+     *
      * @return Result
      */
-    abstract function fire(Command $command);
+    abstract public function fire(Command $command);
 
 
     protected function getDatabaseResults($query)
     {
-        $query = str_replace(array("\r\n", "\r", "\n"), '', $query);
+        $query = str_replace(["\r\n", "\r", "\n"], '', $query);
 
         $limit = strpos(strtoupper($query), ' LIMIT ');
 
-        if($limit !== false) {
+        if ($limit !== false) {
             $query = substr($query, 0, $limit);
         }
 
@@ -63,5 +64,4 @@ abstract class Workflow
         //exit();
         return $sql->getArray();
     }
-
 }

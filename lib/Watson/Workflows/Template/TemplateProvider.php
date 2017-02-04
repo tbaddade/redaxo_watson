@@ -29,7 +29,7 @@ class TemplateProvider extends SupportProvider
     /**
      * Register the service provider.
      *
-     * @return Workflow | array
+     * @return Workflow|array
      */
     public function register()
     {
