@@ -127,7 +127,7 @@
 }
 
 
-.watson-result[data-legend]:not(.watson-result[data-legend=""]):before {
+.watson-result[data-legend]:not([data-legend=""]):before {
     content: attr(data-legend);
     display: block;
     margin: 0 -10px;
