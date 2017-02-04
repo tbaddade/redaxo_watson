@@ -63,35 +63,32 @@ class YFormSearch extends Workflow
     {
         $result = new Result();
 
-        if (!\rex::getUser()->isAdmin()) {
-            return $result;
-        }
-
         $tables = \rex_yform_manager_table::getAll();
 
         if (count($tables)) {
             $results = [];
             $viewFields = ['title', 'titel', 'name', 'lastname', 'last_name', 'surname'];
             foreach ($tables as $table) {
-                $tableName = $table->getTableName();
-                $fields = $table->getValueFields();
-                $selectFields = 'id';
-                foreach ($viewFields as $viewField) {
-                    if (isset($fields[$viewField])) {
-                        $selectFields .= ', ' . $viewField . ' AS name';
-                        break;
+                if ($table->isActive() && \rex::getUser()->getComplexPerm('yform_manager_table')->hasPerm($table->getTableName())) {
+                    $fields = $table->getValueFields();
+                    $selectFields = 'id';
+                    foreach ($viewFields as $viewField) {
+                        if (isset($fields[$viewField])) {
+                            $selectFields .= ', ' . $viewField . ' AS name';
+                            break;
+                        }
                     }
+                    $searchFields = array_keys($fields);
+                    $orderByField = $table->getSortFieldName();
+
+                    $query  = '
+                            SELECT      ' . $selectFields .'
+                            FROM        ' . $table . '
+                            WHERE       ' . $command->getSqlWhere($searchFields) . '
+                            ORDER BY    ' . $orderByField;
+
+                    $results[$table->getTableName()] = $this->getDatabaseResults($query);
                 }
-                $searchFields = array_keys($fields);
-                $orderByField = $table->getSortFieldName();
-
-                $query  = '
-                        SELECT      ' . $selectFields .'
-                        FROM        ' . $table . '
-                        WHERE       ' . $command->getSqlWhere($searchFields) . '
-                        ORDER BY    ' . $orderByField;
-
-                $results[$tableName] = $this->getDatabaseResults($query);
             }
 
             foreach ($results as $tableName => $items) {

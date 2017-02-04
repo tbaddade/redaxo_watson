@@ -33,7 +33,7 @@ class YFormProvider extends SupportProvider
      */
     public function register()
     {
-        if (\rex::getUser()->isAdmin() && \rex_addon::get('yform')->isAvailable() && \rex_plugin::get('yform', 'manager')->isAvailable()) {
+        if (\rex_addon::get('yform')->isAvailable() && \rex_plugin::get('yform', 'manager')->isAvailable()) {
             return $this->registerYFormSearch();
         }
         return [];
