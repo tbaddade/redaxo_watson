@@ -1,4 +1,5 @@
 watson_open_module = Modul öffnen
 watson_module_legend = Module
 watson_module_documentation_description = Sucht innerhalb von Modulen
+watson_module_inuse_legend = Modul - {0} - wird verwendet in
 watson_create_module = Modul erstellen

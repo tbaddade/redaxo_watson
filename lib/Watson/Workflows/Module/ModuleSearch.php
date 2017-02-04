@@ -27,7 +27,7 @@ class ModuleSearch extends Workflow
      */
     public function commands()
     {
-        return ['m'];
+        return ['m', 'm:inuse'];
     }
 
     /**
@@ -64,6 +64,23 @@ class ModuleSearch extends Workflow
      */
     public function fire(Command $command)
     {
+        if ($command->getCommand() == 'm:inuse') {
+            return $this->searchModuleInUse($command);
+        } else {
+            return $this->searchInModules($command);
+        }
+    }
+
+
+    /**
+     * Execute the command for the given Command.
+     *
+     * @param Command $command
+     *
+     * @return Result
+     */
+    protected function searchInModules(Command $command)
+    {
         $result = new Result();
 
         $fields = [
@@ -99,6 +116,98 @@ class ModuleSearch extends Workflow
                 $entry->setQuickLookUrl($url);
 
                 $result->addEntry($entry);
+            }
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Execute the command for the given m:inuse Command.
+     *
+     * @param Command $command
+     *
+     * @return Result
+     */
+    protected function searchModuleInUse(Command $command)
+    {
+        $result = new Result();
+
+        if ((int)$command->getArgument(1) > 0) {
+            $moduleId = (int)$command->getArgument(1);
+            $query  = ' SELECT  s.article_id AS id,
+                                s.clang_id,
+                                s.ctype_id,
+                                m.name AS module_name,
+                                CONCAT(s.article_id, "|", s.clang_id) as bulldog
+                        FROM    ' . Watson::getTable('article_slice') . ' AS s
+                            LEFT JOIN
+                                ' . Watson::getTable('article') . ' AS a
+                                ON  (s.article_id = a.id AND s.clang_id = a.clang_id)
+                            LEFT JOIN
+                                ' . Watson::getTable('module') . ' AS m
+                                ON s.module_id = m.id
+                        WHERE   s.module_id = "' . $moduleId . '"
+                        GROUP BY bulldog';
+
+            $items = $this->getDatabaseResults($query);
+
+            $searchResults = [];
+            if (count($items)) {
+                foreach ($items as $item) {
+                    $searchResults[$item['bulldog']] = $item;
+                }
+            }
+
+
+            // Ergebnisse auf Rechte prüfen und bereitstellen
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            if (count($searchResults)) {
+                $counter = 0;
+                foreach ($searchResults as $item) {
+                    $clang_id = $item['clang_id'];
+                    $article = \rex_article::get($item['id'], $clang_id);
+                    $category_id = $article->getCategoryId();
+
+                    // Rechte prüfen
+                    if (\rex::getUser()->getComplexPerm('clang')->hasPerm($clang_id) && \rex::getUser()->getComplexPerm('structure')->hasCategoryPerm($category_id)) {
+                        $path = [];
+                        $tree = $article->getParentTree();
+                        foreach ($tree as $o) {
+                            $path[] = $o->getName();
+                        }
+
+                        if (!$article->isStartArticle()) {
+                            $path[] = $article->getName();
+                        }
+
+                        $path = '/' . implode('/', $path);
+                        $url = Watson::getUrl(array('page' => 'content/edit', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang_id, 'ctype' => $item['ctype_id']));
+
+                        $suffix = [];
+                        $suffix[] = $article->getId();
+                        if (count(\rex_clang::getAll()) > 1) {
+                            $suffix[] = \rex_clang::get($clang_id)->getName();
+                        }
+                        $suffix = implode(', ', $suffix);
+                        $suffix = $suffix != '' ? '(' . $suffix . ')' : '';
+
+                        $counter++;
+                        $entry = new ResultEntry();
+                        if ($counter == 1) {
+                            $entry->setLegend(str_replace('{0}', $item['module_name'], Watson::translate('watson_module_inuse_legend')));
+                        }
+                        $entry->setValue($article->getName(), $suffix);
+                        $entry->setDescription($path);
+                        $entry->setIcon('watson-icon-article');
+                        $entry->setUrl($url);
+                        $entry->setQuickLookUrl('../index.php?article_id=' . $article->getId() . '&clang=' . $article->getClang());
+
+                        $result->addEntry($entry);
+                    }
+
+                }
             }
         }
 
