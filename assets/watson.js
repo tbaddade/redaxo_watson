@@ -63,15 +63,15 @@ jQuery(function($){
 
     function quicklook($link) {
 
-        console.log('quicklook');
+        // console.log('quicklook');
         if ($('#facebox_overlay').length > 0) {
 
-            console.log('$.facebox.close');
+            // console.log('$.facebox.close');
             $.facebox.close();
 
         } else if ($link !== undefined) {
 
-            console.log('$.facebox.open');
+            // console.log('$.facebox.open');
             $.facebox({ iframe: $link });
 
         }
@@ -173,7 +173,8 @@ jQuery(function($){
             }, {
                 name: 'watson',
                 source: $watsonResults,
-                limit: $watsonSettings.resultLimit,
+                // limit: $watsonSettings.resultLimit,
+                limit: 3000,
                 displayKey: function (str) {
                     return str.displayKey;
                 },
@@ -239,8 +240,8 @@ jQuery(function($){
     }
 
     function onAutocomplete($e, item) {
-        console.log('autocomplete');
-        console.log(item);
+        // console.log('autocomplete');
+        // console.log(item);
 
         if (item.html_fields !== undefined) {
             var html_fields = $.parseJSON(item.html_fields);
@@ -257,7 +258,7 @@ jQuery(function($){
         if (item.ajax !== undefined) {
             var $data  = $.parseJSON(item.ajax);
             //console.log($data);
-            console.log(JSON.stringify($data['params']));
+            // console.log(JSON.stringify($data['params']));
             var $url = $watsonSettings.backendUrl;
             $.ajax({
                 url: $url,
@@ -268,11 +269,11 @@ jQuery(function($){
                     watsonCallParams: JSON.stringify($data['params'])
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                        console.log(JSON.stringify(jqXHR));
-                        console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                        // console.log(JSON.stringify(jqXHR));
+                        // console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                  }
             }).done(function(result) {
-                //console.log(result);
+                // console.log(result);
                 var $result = $.parseJSON(result);
                 if ($result.url !== undefined) {
                     window.location.href = $result.url;
