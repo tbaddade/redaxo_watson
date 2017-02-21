@@ -79,23 +79,25 @@ class YFormSearch extends Workflow
                         }
                     }
 
-                    $selectFields = 'id';
-                    foreach ($viewFields as $viewField) {
-                        if (isset($fields[$viewField])) {
-                            $selectFields .= ', ' . $viewField . ' AS name';
-                            break;
+                    if (count($fields)) {
+                        $selectFields = 'id';
+                        foreach ($viewFields as $viewField) {
+                            if (isset($fields[$viewField])) {
+                                $selectFields .= ', ' . $viewField . ' AS name';
+                                break;
+                            }
                         }
+                        $searchFields = array_keys($fields);
+                        $orderByField = $table->getSortFieldName();
+
+                        $query  = '
+                                SELECT      ' . $selectFields .'
+                                FROM        ' . $table . '
+                                WHERE       ' . $command->getSqlWhere($searchFields) . '
+                                ORDER BY    ' . $orderByField;
+
+                        $results[$table->getTableName()] = $this->getDatabaseResults($query);
                     }
-                    $searchFields = array_keys($fields);
-                    $orderByField = $table->getSortFieldName();
-
-                    $query  = '
-                            SELECT      ' . $selectFields .'
-                            FROM        ' . $table . '
-                            WHERE       ' . $command->getSqlWhere($searchFields) . '
-                            ORDER BY    ' . $orderByField;
-
-                    $results[$table->getTableName()] = $this->getDatabaseResults($query);
                 }
             }
 
