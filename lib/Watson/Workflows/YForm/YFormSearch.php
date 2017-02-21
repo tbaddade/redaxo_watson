@@ -71,6 +71,14 @@ class YFormSearch extends Workflow
             foreach ($tables as $table) {
                 if ($table->isActive() && \rex::getUser()->getComplexPerm('yform_manager_table')->hasPerm($table->getTableName())) {
                     $fields = $table->getValueFields();
+
+                    foreach ($fields as $fieldName => $field) {
+                        //if (!$field->isSearchable()) {
+                        if ($field->getTypeName() != 'text' && $field->getTypeName() != 'textarea') {
+                            unset($fields[$fieldName]);
+                        }
+                    }
+
                     $selectFields = 'id';
                     foreach ($viewFields as $viewField) {
                         if (isset($fields[$viewField])) {
@@ -117,11 +125,9 @@ class YFormSearch extends Workflow
 
                     }
                 }
-
             }
         }
 
         return $result;
     }
-
 }
