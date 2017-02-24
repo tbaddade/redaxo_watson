@@ -35,6 +35,12 @@ if (rex::isBackend() && rex::getUser()) {
         }
     }
 
+    rex_extension::register('CHEATSHEET_PROVIDER', function(\rex_extension_point $ep) {
+        $subject = $ep->getSubject();
+        $subject[] = '\Watson\Cheatsheet\CheatsheetServiceProvider';
+        $ep->setSubject($subject);
+    });
+
     $stylesheets = $this->getProperty('stylesheets');
 
     if (count($stylesheets)) {
