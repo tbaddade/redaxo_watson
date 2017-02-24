@@ -29,23 +29,19 @@ class CheatsheetServiceProvider extends ServiceProvider
      */
     public function page()
     {
-        $subpage = new Page();
-        $subpage->setKey('watson');
-        $subpage->setHref('index.php?page=cheatsheet/rex-var/watson');
-        $subpage->setPath('../watson/lib/Cheatsheet/pages/docs.php');
-        $subpage->setTitle(\rex_i18n::msg('watson_cheatsheet_docs_title'));
+        if (\rex_addon::get('watson')->isAvailable()) {
+            $page = \rex_be_controller::getPageObject('cheatsheet/addoff');
+            if (!$page) {
+                $page = new \rex_be_page('addoff', \rex_i18n::msg('watson_addoff_title'));
+                $page->setHref(['page' => 'cheatsheet/addoff']);
+            }
 
-        $page = \rex_be_controller::getPageObject('cheatsheet/addoff');
-        if ($page) {
-            $page->addSubpage($subpage->get());
+            $subpage = new \rex_be_page('watson', \rex_i18n::msg('watson_cheatsheet_docs_title'));
+            $subpage->setHref(['page' => 'cheatsheet/addoff/watson']);
+            $subpage->setSubPath(\rex_path::addon('watson', 'lib/Cheatsheet/pages/docs.php'));
+            $page->addSubpage($subpage);
+
             return $page;
         }
-
-        $page = new Page();
-        $page->setKey('addoff');
-        $page->setTitle(\rex_i18n::msg('watson_addoff_title'));
-        $page->addSubpage($subpage->get());
-
-        return $page->get();
     }
 }
