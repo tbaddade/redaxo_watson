@@ -18,6 +18,7 @@ providers:
     - 'Watson\Workflows\Template\TemplateProvider'
     - 'Watson\Workflows\Sprog\SprogProvider'
     - 'Watson\Workflows\YForm\YFormProvider'
+    - 'Watson\Workflows\Addon\AddonProvider'
 
 stylesheets:
     - facebox.css
@@ -28,3 +29,7 @@ javascripts:
     - hogan-3.0.2.min.js
     - typeahead.bundle.js
     - watson.js
+
+
+cheatsheet:
+    - \Watson\Cheatsheet\CheatsheetServiceProvider

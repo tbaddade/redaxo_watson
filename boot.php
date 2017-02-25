@@ -10,6 +10,7 @@
  */
 
 if (rex::isBackend() && rex::getUser()) {
+
     $providers = \Watson\Foundation\Watson::loadProviders();
 
     if (count($providers)) {
@@ -34,12 +35,6 @@ if (rex::isBackend() && rex::getUser()) {
             }
         }
     }
-
-    rex_extension::register('CHEATSHEET_PROVIDER', function(\rex_extension_point $ep) {
-        $subject = $ep->getSubject();
-        $subject[] = '\Watson\Cheatsheet\CheatsheetServiceProvider';
-        $ep->setSubject($subject);
-    });
 
     $stylesheets = $this->getProperty('stylesheets');
 
