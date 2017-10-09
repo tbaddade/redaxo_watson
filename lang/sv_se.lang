@@ -1,0 +1,11 @@
+watson = Watson
+watson_title = Watson
+watson_settings = Inställningar
+watson_config = Konfiguration
+watson_config_saved = Konfigurationen har sparats.
+watson_no_results = Inga resultat
+
+watson_resultLimit = max. antal träffar
+watson_agentHotkey = Shortcut to access Watson
+watson_quicklookHotkey = Shortcut for Quicklook
+watson_showToggleButton = Visa button
