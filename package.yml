@@ -18,7 +18,6 @@ providers:
     - 'Watson\Workflows\Template\TemplateProvider'
     - 'Watson\Workflows\Sprog\SprogProvider'
     - 'Watson\Workflows\YForm\YFormProvider'
-    - 'Watson\Workflows\Addon\AddonProvider'
 
 stylesheets:
     - facebox.css
