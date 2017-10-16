@@ -74,10 +74,12 @@ class Extension
     {
         $workflows = $ep->getParam('workflows');
 
-        Watson::deleteRegisteredPageParams();
-        foreach ($workflows as $workflow) {
-            if ($workflow->registerPageParams()) {
-                Watson::saveRegisteredPageParams($workflow->registerPageParams());
+        if (rex_request('watson_query', 'string', '') == '') {
+            Watson::deleteRegisteredPageParams();
+            foreach ($workflows as $workflow) {
+                if ($workflow->registerPageParams()) {
+                    Watson::saveRegisteredPageParams($workflow->registerPageParams());
+                }
             }
         }
         // Phase 2
