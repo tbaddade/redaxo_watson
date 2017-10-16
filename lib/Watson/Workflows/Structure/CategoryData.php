@@ -11,25 +11,44 @@
 
 namespace Watson\Workflows\Structure;
 
-use Watson\Foundation\Watson;
-use Watson\Parsers\OptionFieldsParser;
-
 class CategoryData
 {
     private $categories;
+    private $categoryId;
+    private $clangId;
+    private $status;
 
     public function __construct($categories)
     {
         $this->categories = explode(',', trim($categories, '"'));
     }
 
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+    }
+
+    public function setClangId($clangId)
+    {
+        $this->clangId = $clangId;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
     public function create()
     {
         foreach ($this->categories as $category) {
-
+            $data = [];
+            $data['catpriority'] = 1;
+            $data['catname'] = $category;
+            $data['name'] = $category;
+            $data['status'] = $this->status;
+            \rex_category_service::addCategory($this->categoryId, $data);
         }
-
-        echo json_encode(['url' => \rex_url::backendPage('modules/modules', ['function' => 'edit', 'module_id' => $this->id], false)]);
+        echo json_encode(['url' => \rex_url::backendPage('structure', ['category_id' => $this->categoryId, 'clang' => $this->clangId], false)]);
     }
 
 }

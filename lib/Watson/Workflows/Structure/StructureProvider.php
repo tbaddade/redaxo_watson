@@ -24,9 +24,7 @@ class StructureProvider extends SupportProvider
      */
     public function i18n()
     {
-
         return __DIR__;
-
     }
 
     /**
@@ -36,7 +34,6 @@ class StructureProvider extends SupportProvider
      */
     public function register()
     {
-
         $register = array();
         $register[] = $this->registerArticleSearch();
 
@@ -45,7 +42,6 @@ class StructureProvider extends SupportProvider
         }
 
         return $register;
-
     }
 
 

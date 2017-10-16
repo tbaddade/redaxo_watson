@@ -46,7 +46,7 @@ class CategoryGenerator extends GeneratorWorkflow
      */
     public function registerPageParams()
     {
-        return array('category_id');
+        return array('category_id', 'clang');
     }
 
     /**
@@ -58,38 +58,42 @@ class CategoryGenerator extends GeneratorWorkflow
     public function fire(Command $command)
     {
         //$category_id = rex_request('category_id', 'int');
-        ///$category_id = Watson::getRequest('category_id', 'int', 0);
-        $category_id = Watson::getRegisteredPageParam('category_id');
-        $result = new Result();
-        $categoriesAsString = $command->getArgument(1);
+        $categoryId = Watson::getRegisteredPageParam('category_id');
+        $categoryId = (int)$categoryId > 0 ? $categoryId : 0;
 
+        $clangId = Watson::getRegisteredPageParam('clang');
+        $clangId = (int)$clangId > 0 ? $clangId : 1;
+
+        $categoriesAsString = implode(',', $command->getArguments());
         $commandOptions = $command->getOptions();
 
         $status = isset($commandOptions['offline']) ? false : true;
 
-        $url = Watson::getUrl(array('page' => 'modules/modules', 'function' => 'add'));
-        $pre = Watson::buildQuery(\rex_request::session('watson_params'));
         $entry = new ResultEntry();
         $entry->setLegend(Watson::translate('watson_structure_legend'));
-        $entry->setValue($pre . ' :: ' . $category_id . ' :: ' . Watson::translate('watson_structure_add_categories'));
+        $entry->setValue($categoriesAsString);
+        $entry->setDescription(Watson::translate('watson_structure_add_categories'));
         $entry->setIcon('watson-icon-category');
-        //$entry->setUrl($url);
-        //$entry->setQuickLookUrl($url);
 
         $ajax = array();
         $ajax['class'] = '\Watson\Workflows\Structure\CategoryGenerator';
         $ajax['method'] = 'call';
         $ajax['params']['categories'] = $categoriesAsString;
+        $ajax['params']['categoryId'] = $categoryId;
+        $ajax['params']['clangId'] = $clangId;
         $ajax['params']['status'] = $status;
         $entry->setAjax(json_encode($ajax));
 
+        $result = new Result();
         $result->addEntry($entry);
         return $result;
     }
 
     public static function call($params)
     {
-        $data = new CategoryData($params['name'], $params['fields']);
+        $data = new CategoryData($params['categories']);
+        $data->setCategoryId($params['categoryId']);
+        $data->setClangId($params['clangId']);
         $data->setStatus($params['status']);
         $data->create();
         exit();
