@@ -26,7 +26,7 @@ class WildcardSearch extends Workflow
      */
     public function commands()
     {
-        return array('w', 'p');
+        return array('sp');
     }
 
     /**
@@ -37,9 +37,9 @@ class WildcardSearch extends Workflow
     {
         $documentation = new Documentation();
         $documentation->setDescription(Watson::translate('watson_wildcard_documentation_description'));
-        $documentation->setUsage('w wildcard');
+        $documentation->setUsage('sp wildcard');
         $documentation->setExample('wildcard');
-        $documentation->setExample('w wildcard');
+        $documentation->setExample('sp wildcard');
 
         return $documentation;
     }
