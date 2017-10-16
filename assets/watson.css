@@ -156,6 +156,9 @@
 .watson-icon-article:before {
     content: '\f0f6';
 }
+.watson-icon-category:before {
+    content: '\f07b';
+}
 .watson-icon-media:before {
     content: '\f03e';
 }
