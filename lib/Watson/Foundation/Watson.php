@@ -68,9 +68,9 @@ class Watson
         return \rex_path::addonAssets('watson');
     }
 
-    public static function translate($key)
+    public static function translate($key,...$params)
     {
-        return \rex_i18n::msg($key);
+        return \rex_i18n::msg($key,...$params);
     }
 
     public static function loadProviders()
@@ -103,12 +103,12 @@ class Watson
 
     public static function deleteRegisteredPageParams()
     {
-        //\rex_request::setSession('watson_params', []);
+        \rex_request::setSession('watson_params', []);
     }
 
     public static function getRegisteredPageParam($param, $default = false)
     {
-        $watsonParams = \rex_request::session('watson_params', []);
+        $watsonParams = \rex_request::session('watson_params', 'array', []);
         if (isset($watsonParams[$param])) {
             return $watsonParams[$param];
         }
