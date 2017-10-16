@@ -32,10 +32,10 @@ abstract class GeneratorWorkflow extends Workflow
         $pieces = explode(':', $commandName);
         $action = array_pop($pieces);
         switch ($action) {
+            case 'add':
             case 'create':
             case 'make':
                 return 'create';
-            case 'add':
             case 'append':
             case 'update':
             case 'insert':
