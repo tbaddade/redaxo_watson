@@ -101,7 +101,7 @@ jQuery(function($){
             hideWatsonAgent();
         });
 
-        $('.watson-btn').click(function(){
+        $(document).on('click', '.watson-btn', function(){
             checkWatsonAgent();
         });
     });
