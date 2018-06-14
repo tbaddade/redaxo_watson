@@ -1,0 +1,11 @@
+watson = Watson
+watson_title = Watson
+watson_settings = Ajustes
+watson_config = Configuración
+watson_config_saved = La configuración ha sido guardada.
+watson_no_results = Sin resultados
+
+watson_resultLimit = máx. Recuento de visitas
+watson_agentHotkey = Acceso directo para abrir Watson
+watson_quicklookHotkey = Acceso directo para Quicklook
+watson_showToggleButton = Mostrar botón
