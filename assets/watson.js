@@ -96,14 +96,14 @@ jQuery(function($){
     var $watsonOverlay   = $('#watson-overlay');
 
     $(document).ready( function() {
-
         $watsonOverlay.click(function(){
             hideWatsonAgent();
         });
-
-        $('.watson-btn').click(function(){
-            checkWatsonAgent();
-        });
+    });
+    
+    // support buttons created dynamically
+    $(document).on('click', '.watson-btn', function(){
+        checkWatsonAgent();
     });
 
     $(document).keydown(function(e) {
