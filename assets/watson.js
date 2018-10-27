@@ -95,8 +95,9 @@ jQuery(function($){
     $watsonOverlay.click(function(){
         hideWatsonAgent();
     });
-
-    $('.watson-btn').click(function(){
+    
+    // support buttons created dynamically
+    $(document).on('click', '.watson-btn', function(){
         checkWatsonAgent();
     });
 
