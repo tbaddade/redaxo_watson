@@ -9,14 +9,11 @@ jQuery(function($){
     |
     */
 
-    $(document).ready( function() {
-
-        var $watson_id   = getUrlParameter('watson_id');
-        var $watson_text = getUrlParameter('watson_text');
-        if ($watson_id && $watson_text) {
-            $('#' + $watson_id).val($watson_text).focus();
-        }
-    });
+    var $watson_id   = getUrlParameter('watson_id');
+    var $watson_text = getUrlParameter('watson_text');
+    if ($watson_id && $watson_text) {
+        $('#' + $watson_id).val($watson_text).focus();
+    }
 
     function getUrlParameter(name) {
         return decodeURI(
@@ -95,15 +92,12 @@ jQuery(function($){
     var $watsonTypeahead = $('#watson-agent .typeahead');
     var $watsonOverlay   = $('#watson-overlay');
 
-    $(document).ready( function() {
+    $watsonOverlay.click(function(){
+        hideWatsonAgent();
+    });
 
-        $watsonOverlay.click(function(){
-            hideWatsonAgent();
-        });
-
-        $('.watson-btn').click(function(){
-            checkWatsonAgent();
-        });
+    $('.watson-btn').click(function(){
+        checkWatsonAgent();
     });
 
     $(document).keydown(function(e) {
