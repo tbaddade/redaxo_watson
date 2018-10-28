@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\Module;
 
 use Watson\Foundation\GeneratorWorkflow;
@@ -16,7 +17,6 @@ use Watson\Foundation\Workflow;
 
 class ModuleProvider extends SupportProvider
 {
-
     /**
      * Register the directory to search a translation file.
      *
@@ -43,7 +43,6 @@ class ModuleProvider extends SupportProvider
         return $register;
     }
 
-
     /**
      * Register module search.
      *
@@ -53,7 +52,6 @@ class ModuleProvider extends SupportProvider
     {
         return new ModuleSearch();
     }
-
 
     /**
      * Register module generator.

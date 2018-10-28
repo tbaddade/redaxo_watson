@@ -8,14 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\Structure;
 
-use \Watson\Foundation\Documentation;
-use \Watson\Foundation\Command;
-use \Watson\Foundation\Result;
-use \Watson\Foundation\ResultEntry;
-use \Watson\Foundation\Watson;
-use \Watson\Foundation\GeneratorWorkflow;
+use Watson\Foundation\Command;
+use Watson\Foundation\Documentation;
+use Watson\Foundation\GeneratorWorkflow;
+use Watson\Foundation\Result;
+use Watson\Foundation\ResultEntry;
+use Watson\Foundation\Watson;
 
 class CategoryGenerator extends GeneratorWorkflow
 {
@@ -26,11 +27,10 @@ class CategoryGenerator extends GeneratorWorkflow
      */
     public function commands()
     {
-        return array('c:make');
+        return ['c:make'];
     }
 
     /**
-     *
      * @return Documentation
      */
     public function documentation()
@@ -41,28 +41,28 @@ class CategoryGenerator extends GeneratorWorkflow
     }
 
     /**
-     *
      * @return array of registered page params
      */
     public function registerPageParams()
     {
-        return array('category_id', 'clang');
+        return ['category_id', 'clang'];
     }
 
     /**
-     * Execute the command for the given Command
+     * Execute the command for the given Command.
      *
-     * @param  Command $command
+     * @param Command $command
+     *
      * @return Result
      */
     public function fire(Command $command)
     {
         //$category_id = rex_request('category_id', 'int');
         $categoryId = Watson::getRegisteredPageParam('category_id');
-        $categoryId = (int)$categoryId > 0 ? $categoryId : 0;
+        $categoryId = (int) $categoryId > 0 ? $categoryId : 0;
 
         $clangId = Watson::getRegisteredPageParam('clang');
-        $clangId = (int)$clangId > 0 ? $clangId : 1;
+        $clangId = (int) $clangId > 0 ? $clangId : 1;
 
         $categoriesAsString = implode(',', $command->getArguments());
         $commandOptions = $command->getOptions();
@@ -75,7 +75,7 @@ class CategoryGenerator extends GeneratorWorkflow
         $entry->setDescription(Watson::translate('watson_structure_add_categories'));
         $entry->setIcon('watson-icon-category');
 
-        $ajax = array();
+        $ajax = [];
         $ajax['class'] = '\Watson\Workflows\Structure\CategoryGenerator';
         $ajax['method'] = 'call';
         $ajax['params']['categories'] = $categoriesAsString;

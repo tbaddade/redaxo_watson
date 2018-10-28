@@ -22,9 +22,10 @@ abstract class GeneratorWorkflow extends Workflow
 
     /**
      * Try to mold user's input
-     * to one of the CRUD operations
+     * to one of the CRUD operations.
      *
      * @param $commandName
+     *
      * @return string
      */
     protected function normalizeCommandName($commandName)

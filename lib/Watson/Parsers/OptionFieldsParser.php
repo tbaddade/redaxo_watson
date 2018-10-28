@@ -15,7 +15,7 @@ class OptionFieldsParser
 {
     /**
      * Parse a string of fields, like
-     * name:text, text:textarea:textile, categories:select(SELECT id, name FROM table), yesno:select([0 => 'no', 1 => 'yes'])
+     * name:text, text:textarea:textile, categories:select(SELECT id, name FROM table), yesno:select([0 => 'no', 1 => 'yes']).
      *
      * @param string $fields
      *
@@ -88,7 +88,8 @@ class OptionFieldsParser
         return $parsed;
     }
 
-    protected function splitFields($string) {
+    protected function splitFields($string)
+    {
         // number of nested sets of brackets
         $level = 0;
         // array to return
@@ -96,7 +97,7 @@ class OptionFieldsParser
         // current index in the array to return, for convenience
         $currentIndex = 0;
 
-        for ($i = 0; $i < strlen($string); $i++) {
+        for ($i = 0; $i < strlen($string); ++$i) {
             switch ($string[$i]) {
                 case '(':
                     $level++;
@@ -108,11 +109,12 @@ class OptionFieldsParser
                     break;
                 case ',':
                     if ($level == 0) {
-                        $currentIndex++;
+                        ++$currentIndex;
                         $return[$currentIndex] = '';
                         break;
                     }
                     // else fallthrough
+                    // no break
                 default:
                     if (isset($return[$currentIndex])) {
                         $return[$currentIndex] .= $string[$i];
@@ -125,14 +127,14 @@ class OptionFieldsParser
         return array_map('trim', $return);
     }
 
-    protected function splitArgs($string) {
+    protected function splitArgs($string)
+    {
         preg_match_all("/\[(?:[^\[\]]|(?R))+\]|'[^']*'|[^\[\],]+/", $string, $matches);
         return $this->removeEmptyValuesAndRebuildKeys($matches[0]);
     }
 
-    protected function removeEmptyValuesAndRebuildKeys($array) {
+    protected function removeEmptyValuesAndRebuildKeys($array)
+    {
         return array_values(array_filter(array_map('trim', $array)));
     }
-
-
 }

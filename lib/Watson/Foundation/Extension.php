@@ -11,9 +11,6 @@
 
 namespace Watson\Foundation;
 
-use Watson\Foundation\Command;
-use Watson\Foundation\Watson;
-
 class Extension
 {
     public static function head(\rex_extension_point $ep)
@@ -25,18 +22,18 @@ class Extension
                                 'quicklookHotkey' => Watson::getQuicklookHotkey(),
                                 'backend' => true,
                                 'backendUrl' => \rex_url::backendPage('watson', [], false),
-                                'backendRemoteUrl' => \rex_url::backendPage('watson', ['watson_query' => ''], false) . '%QUERY',
+                                'backendRemoteUrl' => \rex_url::backendPage('watson', ['watson_query' => ''], false).'%QUERY',
                                 'wildcard' => '%QUERY',
                             ]
                         );
 
         if ($js_properties) {
-            $ep->setSubject($ep->getSubject() . "\n" . '
+            $ep->setSubject($ep->getSubject()."\n".'
 
                 <script type="text/javascript">
                     <!--
                     if (typeof($watsonSettings) == "undefined") {
-                        var $watsonSettings = ' . $js_properties . ';
+                        var $watsonSettings = '.$js_properties.';
                     }
                     //-->
                 </script>'
@@ -62,12 +59,12 @@ class Extension
                         <input class="typeahead" type="text" name="q" value="" />
                     </fieldset>
                 </form>
-                <div class="watson-logo"><img class="rex-js-svg" src="' . \rex_addon::get('watson')->getAssetsUrl('watson-logo.svg') . '" /></div>
+                <div class="watson-logo"><img class="rex-js-svg" src="'.\rex_addon::get('watson')->getAssetsUrl('watson-logo.svg').'" /></div>
             </div>';
 
         $panel .= '<div id="watson-agent-overlay"></div>';
 
-        $ep->setSubject(str_replace('</body>', $panel . '</body>', $ep->getSubject()));
+        $ep->setSubject(str_replace('</body>', $panel.'</body>', $ep->getSubject()));
     }
 
     public static function run(\rex_extension_point $ep)
@@ -96,9 +93,8 @@ class Extension
                     if (in_array($command->getCommand(), $workflow->commands())) {
                         $saveWorkflows = [$workflow];
                         break;
-                    } else {
-                        unset($workflows[$key]); // Workflow aus dem Sammelarray löschen. Wird ansonsten verwendet, wenn kein Commando gefunden wurde
                     }
+                    unset($workflows[$key]); // Workflow aus dem Sammelarray löschen. Wird ansonsten verwendet, wenn kein Commando gefunden wurde
                 } elseif (in_array($command->getCommand(), $workflow->commands())) {
                     $saveWorkflows[] = $workflow;
                 }
@@ -146,7 +142,7 @@ class Extension
         $callMethod = urldecode(rex_request('watsonCallMethod', 'string'));
         $callParams = urldecode(rex_request('watsonCallParams', 'string'));
         if ($callClass != '' && $callMethod != '') {
-            call_user_func_array(array($callClass, $callMethod), array(json_decode($callParams, true)));
+            call_user_func_array([$callClass, $callMethod], [json_decode($callParams, true)]);
         }
     }
 }

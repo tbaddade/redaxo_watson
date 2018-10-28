@@ -21,15 +21,13 @@ foreach ($navigation as $index => $label) {
     if (strpos($index, '/') !== false) {
         $navAttributes['class'][] = 'is-plugin';
     }
-    $nav[] = '<a' . rex_string::buildAttributes($navAttributes) . '>' . $label . '</a>';
+    $nav[] = '<a'.rex_string::buildAttributes($navAttributes).'>'.$label.'</a>';
 }
 
 $fragment = new rex_fragment();
 $fragment->setVar('title', rex_i18n::msg('watson_cheatsheet_docs_title'));
-$fragment->setVar('body', '<nav class="cheatsheet-docs-navigation"><ul><li>' . implode('</li><li>', $nav) . '</li></ul></nav>', false);
+$fragment->setVar('body', '<nav class="cheatsheet-docs-navigation"><ul><li>'.implode('</li><li>', $nav).'</li></ul></nav>', false);
 $sidebar = $fragment->parse('core/page/section.php');
-
-
 
 if ($requestIndex == 'use') {
     $body = '
@@ -147,7 +145,6 @@ if ($requestIndex == 'use') {
     $fragment->setVar('title', $navigation[$requestIndex]);
     $fragment->setVar('body', $body, false);
     $content .= $fragment->parse('core/page/section.php');
-
 } else {
     $fragment = new rex_fragment();
     $fragment->setVar('title', $navigation[$requestIndex]);
@@ -155,10 +152,8 @@ if ($requestIndex == 'use') {
     $content .= $fragment->parse('core/page/section.php');
 }
 
-
-
 echo '
 <section class="cheatsheet-docs">
-    <div class="cheatsheet-docs-sidebar">' . $sidebar . '</div>
-    <div class="cheatsheet-docs-content">' . $content . '</div>
+    <div class="cheatsheet-docs-sidebar">'.$sidebar.'</div>
+    <div class="cheatsheet-docs-content">'.$content.'</div>
 </section>';

@@ -11,8 +11,8 @@
 
 namespace Watson\Workflows\Module;
 
-use Watson\Foundation\Documentation;
 use Watson\Foundation\Command;
+use Watson\Foundation\Documentation;
 use Watson\Foundation\Result;
 use Watson\Foundation\ResultEntry;
 use Watson\Foundation\Watson;
@@ -46,7 +46,7 @@ class ModuleSearch extends Workflow
     }
 
     /**
-     * Return array of registered page params
+     * Return array of registered page params.
      *
      * @return array
      */
@@ -66,11 +66,9 @@ class ModuleSearch extends Workflow
     {
         if ($command->getCommand() == 'm:inuse') {
             return $this->searchModuleInUse($command);
-        } else {
-            return $this->searchInModules($command);
         }
+        return $this->searchInModules($command);
     }
-
 
     /**
      * Execute the command for the given Command.
@@ -91,8 +89,8 @@ class ModuleSearch extends Workflow
 
         $sql_query = ' SELECT      id,
                                     name
-                        FROM        ' . Watson::getTable('module') . '
-                        WHERE       ' . $command->getSqlWhere($fields) . '
+                        FROM        '.Watson::getTable('module').'
+                        WHERE       '.$command->getSqlWhere($fields).'
                         ORDER BY    name';
 
         $items = $this->getDatabaseResults($sql_query);
@@ -122,7 +120,6 @@ class ModuleSearch extends Workflow
         return $result;
     }
 
-
     /**
      * Execute the command for the given m:inuse Command.
      *
@@ -134,21 +131,21 @@ class ModuleSearch extends Workflow
     {
         $result = new Result();
 
-        if ((int)$command->getArgument(1) > 0) {
-            $moduleId = (int)$command->getArgument(1);
-            $query  = ' SELECT  s.article_id AS id,
+        if ((int) $command->getArgument(1) > 0) {
+            $moduleId = (int) $command->getArgument(1);
+            $query = ' SELECT  s.article_id AS id,
                                 s.clang_id,
                                 s.ctype_id,
                                 m.name AS module_name,
                                 CONCAT(s.article_id, "|", s.clang_id) as bulldog
-                        FROM    ' . Watson::getTable('article_slice') . ' AS s
+                        FROM    '.Watson::getTable('article_slice').' AS s
                             LEFT JOIN
-                                ' . Watson::getTable('article') . ' AS a
+                                '.Watson::getTable('article').' AS a
                                 ON  (s.article_id = a.id AND s.clang_id = a.clang_id)
                             LEFT JOIN
-                                ' . Watson::getTable('module') . ' AS m
+                                '.Watson::getTable('module').' AS m
                                 ON s.module_id = m.id
-                        WHERE   s.module_id = "' . $moduleId . '"
+                        WHERE   s.module_id = "'.$moduleId.'"
                         GROUP BY bulldog';
 
             $items = $this->getDatabaseResults($query);
@@ -159,7 +156,6 @@ class ModuleSearch extends Workflow
                     $searchResults[$item['bulldog']] = $item;
                 }
             }
-
 
             // Ergebnisse auf Rechte prüfen und bereitstellen
             // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -182,8 +178,8 @@ class ModuleSearch extends Workflow
                             $path[] = $article->getName();
                         }
 
-                        $path = '/' . implode('/', $path);
-                        $url = Watson::getUrl(array('page' => 'content/edit', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang_id, 'ctype' => $item['ctype_id']));
+                        $path = '/'.implode('/', $path);
+                        $url = Watson::getUrl(['page' => 'content/edit', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang_id, 'ctype' => $item['ctype_id']]);
 
                         $suffix = [];
                         $suffix[] = $article->getId();
@@ -191,9 +187,9 @@ class ModuleSearch extends Workflow
                             $suffix[] = \rex_clang::get($clang_id)->getName();
                         }
                         $suffix = implode(', ', $suffix);
-                        $suffix = $suffix != '' ? '(' . $suffix . ')' : '';
+                        $suffix = $suffix != '' ? '('.$suffix.')' : '';
 
-                        $counter++;
+                        ++$counter;
                         $entry = new ResultEntry();
                         if ($counter == 1) {
                             $entry->setLegend(str_replace('{0}', $item['module_name'], Watson::translate('watson_module_inuse_legend')));
@@ -202,11 +198,10 @@ class ModuleSearch extends Workflow
                         $entry->setDescription($path);
                         $entry->setIcon('watson-icon-article');
                         $entry->setUrl($url);
-                        $entry->setQuickLookUrl('../index.php?article_id=' . $article->getId() . '&clang=' . $article->getClang());
+                        $entry->setQuickLookUrl('../index.php?article_id='.$article->getId().'&clang='.$article->getClang());
 
                         $result->addEntry($entry);
                     }
-
                 }
             }
         }

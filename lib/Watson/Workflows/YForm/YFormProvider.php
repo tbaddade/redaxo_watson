@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\YForm;
 
 use Watson\Foundation\SupportProvider;
@@ -15,7 +16,6 @@ use Watson\Foundation\Workflow;
 
 class YFormProvider extends SupportProvider
 {
-
     /**
      * Register the directory to search a translation file.
      *
@@ -48,5 +48,4 @@ class YFormProvider extends SupportProvider
     {
         return new YFormSearch();
     }
-
 }

@@ -8,14 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\YForm;
 
-use \Watson\Foundation\Documentation;
-use \Watson\Foundation\Command;
-use \Watson\Foundation\Result;
-use \Watson\Foundation\ResultEntry;
-use \Watson\Foundation\Watson;
-use \Watson\Foundation\Workflow;
+use Watson\Foundation\Command;
+use Watson\Foundation\Documentation;
+use Watson\Foundation\Result;
+use Watson\Foundation\ResultEntry;
+use Watson\Foundation\Watson;
+use Watson\Foundation\Workflow;
 
 class YFormSearch extends Workflow
 {
@@ -26,11 +27,10 @@ class YFormSearch extends Workflow
      */
     public function commands()
     {
-        return array('yf');
+        return ['yf'];
     }
 
     /**
-     *
      * @return Documentation
      */
     public function documentation()
@@ -44,7 +44,7 @@ class YFormSearch extends Workflow
     }
 
     /**
-     * Return array of registered page params
+     * Return array of registered page params.
      *
      * @return array
      */
@@ -54,9 +54,10 @@ class YFormSearch extends Workflow
     }
 
     /**
-     * Execute the command for the given Command
+     * Execute the command for the given Command.
      *
-     * @param  Command $command
+     * @param Command $command
+     *
      * @return Result
      */
     public function fire(Command $command)
@@ -83,18 +84,18 @@ class YFormSearch extends Workflow
                         $selectFields = 'id';
                         foreach ($viewFields as $viewField) {
                             if (isset($fields[$viewField])) {
-                                $selectFields .= ', ' . $viewField . ' AS name';
+                                $selectFields .= ', '.$viewField.' AS name';
                                 break;
                             }
                         }
                         $searchFields = array_keys($fields);
                         $orderByField = $table->getSortFieldName();
 
-                        $query  = '
-                                SELECT      ' . $selectFields .'
-                                FROM        ' . $table . '
-                                WHERE       ' . $command->getSqlWhere($searchFields) . '
-                                ORDER BY    ' . $orderByField;
+                        $query = '
+                                SELECT      '.$selectFields.'
+                                FROM        '.$table.'
+                                WHERE       '.$command->getSqlWhere($searchFields).'
+                                ORDER BY    '.$orderByField;
 
                         $results[$table->getTableName()] = $this->getDatabaseResults($query);
                     }
@@ -106,15 +107,15 @@ class YFormSearch extends Workflow
                     $counter = 0;
 
                     foreach ($items as $item) {
-                        $url = Watson::getUrl(array('page' => 'yform/manager/data_edit', 'table_name' => $tableName, 'data_id' => $item['id'], 'func' => 'edit'));
-                        $counter++;
+                        $url = Watson::getUrl(['page' => 'yform/manager/data_edit', 'table_name' => $tableName, 'data_id' => $item['id'], 'func' => 'edit']);
+                        ++$counter;
                         $entry = new ResultEntry();
                         if ($counter == 1) {
-                            $entry->setLegend(Watson::translate('watson_yform_legend') . ' :: ' . $tableName);
+                            $entry->setLegend(Watson::translate('watson_yform_legend').' :: '.$tableName);
                         }
 
                         if (isset($item['name'])) {
-                            $entry->setValue($item['name'], '(' . $item['id'] . ')');
+                            $entry->setValue($item['name'], '('.$item['id'].')');
                         } else {
                             $entry->setValue($item['id']);
                         }
@@ -124,7 +125,6 @@ class YFormSearch extends Workflow
                         $entry->setQuickLookUrl($url);
 
                         $result->addEntry($entry);
-
                     }
                 }
             }

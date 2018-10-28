@@ -50,5 +50,4 @@ class CategoryData
         }
         echo json_encode(['url' => \rex_url::backendPage('structure', ['category_id' => $this->categoryId, 'clang' => $this->clangId], false)]);
     }
-
 }

@@ -11,9 +11,6 @@
 
 namespace Watson\Foundation;
 
-use Watson\Foundation\Command;
-use Watson\Foundation\Watson;
-
 abstract class Workflow
 {
     /**
@@ -44,7 +41,6 @@ abstract class Workflow
      */
     abstract public function fire(Command $command);
 
-
     protected function getDatabaseResults($query)
     {
         $query = str_replace(["\r\n", "\r", "\n"], '', $query);
@@ -55,8 +51,7 @@ abstract class Workflow
             $query = substr($query, 0, $limit);
         }
 
-        $query .= ' LIMIT ' . Watson::getResultLimit();
-
+        $query .= ' LIMIT '.Watson::getResultLimit();
 
         $sql = \rex_sql::factory();
         //$sql->setDebug();

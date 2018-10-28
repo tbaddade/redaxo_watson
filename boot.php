@@ -10,7 +10,6 @@
  */
 
 if (rex::isBackend() && rex::getUser()) {
-
     $providers = \Watson\Foundation\Watson::loadProviders();
 
     if (count($providers)) {

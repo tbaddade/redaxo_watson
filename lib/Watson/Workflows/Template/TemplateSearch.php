@@ -8,14 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\Template;
 
-use \Watson\Foundation\Documentation;
-use \Watson\Foundation\Command;
-use \Watson\Foundation\Result;
-use \Watson\Foundation\ResultEntry;
-use \Watson\Foundation\Watson;
-use \Watson\Foundation\Workflow;
+use Watson\Foundation\Command;
+use Watson\Foundation\Documentation;
+use Watson\Foundation\Result;
+use Watson\Foundation\ResultEntry;
+use Watson\Foundation\Watson;
+use Watson\Foundation\Workflow;
 
 class TemplateSearch extends Workflow
 {
@@ -26,11 +27,10 @@ class TemplateSearch extends Workflow
      */
     public function commands()
     {
-        return array('t');
+        return ['t'];
     }
 
     /**
-     *
      * @return Documentation
      */
     public function documentation()
@@ -45,7 +45,7 @@ class TemplateSearch extends Workflow
     }
 
     /**
-     * Return array of registered page params
+     * Return array of registered page params.
      *
      * @return array
      */
@@ -55,37 +55,36 @@ class TemplateSearch extends Workflow
     }
 
     /**
-     * Execute the command for the given Command
+     * Execute the command for the given Command.
      *
-     * @param  Command $command
+     * @param Command $command
+     *
      * @return Result
      */
     public function fire(Command $command)
     {
         $result = new Result();
 
-        $fields = array(
+        $fields = [
             'name',
             'content',
-        );
+        ];
 
-        $sql_query  = ' SELECT      id,
+        $sql_query = ' SELECT      id,
                                     name
-                        FROM        ' . Watson::getTable('template') . '
-                        WHERE       ' . $command->getSqlWhere($fields) . '
+                        FROM        '.Watson::getTable('template').'
+                        WHERE       '.$command->getSqlWhere($fields).'
                         ORDER BY    name';
 
         $items = $this->getDatabaseResults($sql_query);
 
         if (count($items)) {
-
             $counter = 0;
 
             foreach ($items as $item) {
+                $url = Watson::getUrl(['page' => 'templates', 'template_id' => $item['id'], 'function' => 'edit']);
 
-                $url = Watson::getUrl(array('page' => 'templates', 'template_id' => $item['id'], 'function' => 'edit'));
-
-                $counter++;
+                ++$counter;
 
                 $entry = new ResultEntry();
                 if ($counter == 1) {
@@ -98,12 +97,9 @@ class TemplateSearch extends Workflow
                 $entry->setQuickLookUrl($url);
 
                 $result->addEntry($entry);
-
             }
         }
 
-
         return $result;
     }
-
 }

@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\Structure;
 
 use Watson\Foundation\GeneratorWorkflow;
@@ -16,7 +17,6 @@ use Watson\Foundation\Workflow;
 
 class StructureProvider extends SupportProvider
 {
-
     /**
      * Register the directory to search a translation file.
      *
@@ -34,7 +34,7 @@ class StructureProvider extends SupportProvider
      */
     public function register()
     {
-        $register = array();
+        $register = [];
         $register[] = $this->registerArticleSearch();
 
         if (\rex::getUser()->isAdmin()) {
@@ -43,7 +43,6 @@ class StructureProvider extends SupportProvider
 
         return $register;
     }
-
 
     /**
      * Register article search.
@@ -54,7 +53,6 @@ class StructureProvider extends SupportProvider
     {
         return new ArticleSearch();
     }
-
 
     /**
      * Register category generator.

@@ -8,14 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\Module;
 
-use \Watson\Foundation\Documentation;
-use \Watson\Foundation\Command;
-use \Watson\Foundation\Result;
-use \Watson\Foundation\ResultEntry;
-use \Watson\Foundation\Watson;
-use \Watson\Foundation\GeneratorWorkflow;
+use Watson\Foundation\Command;
+use Watson\Foundation\Documentation;
+use Watson\Foundation\GeneratorWorkflow;
+use Watson\Foundation\Result;
+use Watson\Foundation\ResultEntry;
+use Watson\Foundation\Watson;
 
 class ModuleGenerator extends GeneratorWorkflow
 {
@@ -26,11 +27,10 @@ class ModuleGenerator extends GeneratorWorkflow
      */
     public function commands()
     {
-        return array('m:make', 'module:make');
+        return ['m:make', 'module:make'];
     }
 
     /**
-     *
      * @return Documentation
      */
     public function documentation()
@@ -46,18 +46,17 @@ class ModuleGenerator extends GeneratorWorkflow
     }
 
     /**
-     *
      * @return array of registered page params
      */
     public function registerPageParams()
     {
-
     }
 
     /**
-     * Execute the command for the given Command
+     * Execute the command for the given Command.
      *
-     * @param  Command $command
+     * @param Command $command
+     *
      * @return Result
      */
     public function fire(Command $command)
@@ -70,7 +69,7 @@ class ModuleGenerator extends GeneratorWorkflow
         $moduleFields = isset($commandOptions['fields']) ? $commandOptions['fields'] : [];
         $moduleInputTabs = isset($commandOptions['tabs']) ? $commandOptions['tabs'] : 0;
 
-        $url = Watson::getUrl(array('page' => 'modules/modules', 'function' => 'add'));
+        $url = Watson::getUrl(['page' => 'modules/modules', 'function' => 'add']);
 
         $entry = new ResultEntry();
         $entry->setLegend(Watson::translate('watson_module_legend'));
@@ -80,7 +79,7 @@ class ModuleGenerator extends GeneratorWorkflow
         //$entry->setUrl($url);
         //$entry->setQuickLookUrl($url);
 
-        $ajax = array();
+        $ajax = [];
         $ajax['class'] = '\Watson\Workflows\Module\ModuleGenerator';
         $ajax['method'] = 'call';
         $ajax['params']['name'] = $moduleName;
@@ -109,6 +108,6 @@ class ModuleGenerator extends GeneratorWorkflow
      */
     protected function getTemplatePath()
     {
-        return __DIR__ . '/templates/';
+        return __DIR__.'/templates/';
     }
 }

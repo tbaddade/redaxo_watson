@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\Template;
 
-use \Watson\Foundation\SupportProvider;
+use Watson\Foundation\SupportProvider;
 use Watson\Foundation\Workflow;
 
 class TemplateProvider extends SupportProvider
 {
-
     /**
      * Register the directory to search a translation file.
      *
@@ -39,7 +39,6 @@ class TemplateProvider extends SupportProvider
         return [];
     }
 
-
     /**
      * Register template search.
      *
@@ -49,6 +48,4 @@ class TemplateProvider extends SupportProvider
     {
         return new TemplateSearch();
     }
-
-
 }

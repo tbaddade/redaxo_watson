@@ -60,7 +60,7 @@ class Watson
     {
         global $REX;
 
-        return realpath($REX['HTDOCS_PATH'] . 'redaxo') . '/index.php?watson_console=1';
+        return realpath($REX['HTDOCS_PATH'].'redaxo').'/index.php?watson_console=1';
     }
 
     public static function getAssetsDir()
@@ -68,9 +68,9 @@ class Watson
         return \rex_path::addonAssets('watson');
     }
 
-    public static function translate($key,...$params)
+    public static function translate($key, ...$params)
     {
-        return \rex_i18n::msg($key,...$params);
+        return \rex_i18n::msg($key, ...$params);
     }
 
     public static function loadProviders()
@@ -116,7 +116,6 @@ class Watson
         return $default;
     }
 
-
     public static function saveRegisteredPageParams(array $providerParams)
     {
         $watsonParams = \rex_request::session('watson_params', []);
@@ -140,14 +139,13 @@ class Watson
     {
         $query = [];
         $func = function (array $params, $fullkey = null) use (&$query, &$func) {
-
             foreach ($params as $key => $value) {
-                $key = $fullkey ? $fullkey . '[' . urlencode($key) . ']' : urlencode($key);
+                $key = $fullkey ? $fullkey.'['.urlencode($key).']' : urlencode($key);
 
                 if (is_array($value)) {
                     $func($value, $key);
                 } else {
-                    $query[] = $key . '=' . str_replace('%2F', '/', urlencode($value));
+                    $query[] = $key.'='.str_replace('%2F', '/', urlencode($value));
                 }
             }
         };
@@ -170,9 +168,8 @@ class Watson
 
         if ($backend) {
             return htmlspecialchars(\rex_url::backendController($params));
-        } else {
-            return \rex_url::backendController($params);
         }
+        return \rex_url::backendController($params);
     }
 
     /**

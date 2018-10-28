@@ -8,14 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\Sprog;
 
-use \Watson\Foundation\Documentation;
-use \Watson\Foundation\Command;
-use \Watson\Foundation\Result;
-use \Watson\Foundation\ResultEntry;
-use \Watson\Foundation\Watson;
-use \Watson\Foundation\Workflow;
+use Watson\Foundation\Command;
+use Watson\Foundation\Documentation;
+use Watson\Foundation\Result;
+use Watson\Foundation\ResultEntry;
+use Watson\Foundation\Watson;
+use Watson\Foundation\Workflow;
 
 class WildcardSearch extends Workflow
 {
@@ -26,11 +27,10 @@ class WildcardSearch extends Workflow
      */
     public function commands()
     {
-        return array('sp');
+        return ['sp'];
     }
 
     /**
-     *
      * @return Documentation
      */
     public function documentation()
@@ -45,7 +45,7 @@ class WildcardSearch extends Workflow
     }
 
     /**
-     * Return array of registered page params
+     * Return array of registered page params.
      *
      * @return array
      */
@@ -55,42 +55,40 @@ class WildcardSearch extends Workflow
     }
 
     /**
-     * Execute the command for the given Command
+     * Execute the command for the given Command.
      *
-     * @param  Command $command
+     * @param Command $command
+     *
      * @return Result
      */
     public function fire(Command $command)
     {
-
         $result = new Result();
 
-        $fields = array(
+        $fields = [
             '`wildcard`',
             '`replace`',
-        );
+        ];
 
-        $sql_query  = ' SELECT      id,
+        $sql_query = ' SELECT      id,
                                     clang_id,
                                     wildcard,
                                     `replace`
-                        FROM        ' . Watson::getTable('sprog_wildcard') . '
-                        WHERE       ' . $command->getSqlWhere($fields) . '
+                        FROM        '.Watson::getTable('sprog_wildcard').'
+                        WHERE       '.$command->getSqlWhere($fields).'
                         ORDER BY    wildcard';
 
         $items = $this->getDatabaseResults($sql_query);
 
         if (count($items)) {
-
             $counter = 0;
 
             $clangs = \rex_clang::getAll();
 
             foreach ($items as $item) {
+                $url = Watson::getUrl(['page' => 'sprog/wildcard', 'wildcard_id' => $item['id'], 'func' => 'edit']);
 
-                $url = Watson::getUrl(array('page' => 'sprog/wildcard', 'wildcard_id' => $item['id'], 'func' => 'edit'));
-
-                $counter++;
+                ++$counter;
 
                 $entry = new ResultEntry();
                 if ($counter == 1) {
@@ -99,14 +97,14 @@ class WildcardSearch extends Workflow
 
                 $value = $item['wildcard'];
                 $value_suffix = '';
-                if (isset($clangs[ $item['clang_id'] ])) {
-                    $value_suffix .= ' › ' . $clangs[ $item['clang_id'] ]->getCode();
+                if (isset($clangs[$item['clang_id']])) {
+                    $value_suffix .= ' › '.$clangs[$item['clang_id']]->getCode();
                 }
                 if ($item['replace'] != '') {
-                    $value_suffix .= ' › ' . $item['replace'];
+                    $value_suffix .= ' › '.$item['replace'];
                 }
 
-                $entry->setValue( $value );
+                $entry->setValue($value);
                 $entry->setValueSuffix($value_suffix);
                 $entry->setDescription(Watson::translate('watson_open_wildcard'));
                 $entry->setIcon('watson-icon-wildcard');
@@ -114,11 +112,9 @@ class WildcardSearch extends Workflow
                 $entry->setQuickLookUrl($url);
 
                 $result->addEntry($entry);
-
             }
         }
 
         return $result;
     }
-
 }

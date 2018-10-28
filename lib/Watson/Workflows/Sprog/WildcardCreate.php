@@ -8,14 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\Sprog;
 
-use \Watson\Foundation\Documentation;
-use \Watson\Foundation\Command;
-use \Watson\Foundation\Result;
-use \Watson\Foundation\ResultEntry;
-use \Watson\Foundation\Watson;
-use \Watson\Foundation\Workflow;
+use Watson\Foundation\Command;
+use Watson\Foundation\Documentation;
+use Watson\Foundation\Result;
+use Watson\Foundation\ResultEntry;
+use Watson\Foundation\Watson;
+use Watson\Foundation\Workflow;
 
 class WildcardCreate extends Workflow
 {
@@ -26,11 +27,10 @@ class WildcardCreate extends Workflow
      */
     public function commands()
     {
-        return array('sp:make', 'sp:miss');
+        return ['sp:make', 'sp:miss'];
     }
 
     /**
-     *
      * @return Documentation
      */
     public function documentation()
@@ -45,7 +45,7 @@ class WildcardCreate extends Workflow
     }
 
     /**
-     * Return array of registered page params
+     * Return array of registered page params.
      *
      * @return array
      */
@@ -55,18 +55,18 @@ class WildcardCreate extends Workflow
     }
 
     /**
-     * Execute the command for the given Command
+     * Execute the command for the given Command.
      *
-     * @param  Command $command
+     * @param Command $command
+     *
      * @return Result
      */
     public function fire(Command $command)
     {
         if ($command->getCommand() == 'sp:miss' && \rex_addon::get('structure')->isAvailable() && \rex_plugin::get('structure', 'content')->isAvailable()) {
             return $this->createMissingWildcard($command);
-        } else {
-            return $this->createWildcard($command);
         }
+        return $this->createWildcard($command);
     }
 
     public function createMissingWildcard(Command $command)
@@ -80,7 +80,7 @@ class WildcardCreate extends Workflow
 
             $urlParams = [
                 'page' => 'sprog/wildcard',
-                'func' => 'add'
+                'func' => 'add',
             ];
             if (\Sprog\Wildcard::isClangSwitchMode()) {
                 $urlParams['page'] = 'sprog/wildcard/clang1';
@@ -89,12 +89,12 @@ class WildcardCreate extends Workflow
                 $urlParams['wildcard_name'] = $params['wildcard'];
                 $url = Watson::getUrl($urlParams);
 
-                $counter++;
+                ++$counter;
                 $entry = new ResultEntry();
                 if ($counter == 1) {
                     $entry->setLegend(Watson::translate('watson_wildcard_legend_missing'));
                 }
-                $entry->setValue( $params['wildcard'] );
+                $entry->setValue($params['wildcard']);
                 $entry->setDescription(Watson::translate('watson_wildcard_create_description'));
                 $entry->setIcon('watson-icon-wildcard');
                 $entry->setUrl($url);
@@ -106,20 +106,18 @@ class WildcardCreate extends Workflow
         return $result;
     }
 
-
     public function createWildcard(Command $command)
     {
         $result = new Result();
 
         $sql = \rex_sql::factory();
-        $sql->setQuery('SELECT pid FROM ' . Watson::getTable('sprog_wildcard') . ' WHERE wildcard = "' . $command->getCommandPartsAsString() . '"');
+        $sql->setQuery('SELECT pid FROM '.Watson::getTable('sprog_wildcard').' WHERE wildcard = "'.$command->getCommandPartsAsString().'"');
 
-        if ($sql->getRows() == 0 && count($command->getOptions()) == 0 && in_array($command->getCommand(), $this->commands() )) {
-
+        if ($sql->getRows() == 0 && count($command->getOptions()) == 0 && in_array($command->getCommand(), $this->commands())) {
             $urlParams = [
                 'page' => 'sprog/wildcard',
                 'func' => 'add',
-                'wildcard_name' =>  $command->getCommandPartsAsString(),
+                'wildcard_name' => $command->getCommandPartsAsString(),
             ];
             if (\Sprog\Wildcard::isClangSwitchMode()) {
                 $urlParams['page'] = 'sprog/wildcard/clang1';
@@ -129,7 +127,7 @@ class WildcardCreate extends Workflow
 
             $entry = new ResultEntry();
             $entry->setLegend(Watson::translate('watson_wildcard_legend_create'));
-            $entry->setValue( $command->getCommandPartsAsString() );
+            $entry->setValue($command->getCommandPartsAsString());
             $entry->setDescription(Watson::translate('watson_wildcard_create_description'));
             $entry->setIcon('watson-icon-wildcard');
             $entry->setUrl($url);
@@ -139,5 +137,4 @@ class WildcardCreate extends Workflow
         }
         return $result;
     }
-
 }

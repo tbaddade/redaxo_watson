@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Watson\Workflows\Sprog;
 
 use Watson\Foundation\SupportProvider;
@@ -15,7 +16,6 @@ use Watson\Foundation\Workflow;
 
 class SprogProvider extends SupportProvider
 {
-
     /**
      * Register the directory to search a translation file.
      *
@@ -23,9 +23,7 @@ class SprogProvider extends SupportProvider
      */
     public function i18n()
     {
-
         return __DIR__;
-
     }
 
     /**
@@ -35,7 +33,7 @@ class SprogProvider extends SupportProvider
      */
     public function register()
     {
-        $register = array();
+        $register = [];
 
         if (\rex_addon::get('sprog')->isAvailable() && \rex::getUser()->hasPerm('sprog[wildcard]')) {
             $register[] = $this->registerWildcardCreate();
@@ -44,7 +42,6 @@ class SprogProvider extends SupportProvider
 
         return $register;
     }
-
 
     /**
      * Register wildcard create.
@@ -55,7 +52,6 @@ class SprogProvider extends SupportProvider
     {
         return new WildcardCreate();
     }
-
 
     /**
      * Register wildcard search.

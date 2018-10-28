@@ -8,9 +8,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Watson\Foundation;
 
-use \Watson\Foundation\Watson;
+namespace Watson\Foundation;
 
 class ResultEntry
 {
@@ -25,17 +24,12 @@ class ResultEntry
     private $html_fields;
     private $ajax;
 
-
-
     public function __construct()
     {
-
     }
 
-
-
     /**
-     * Sets a value
+     * Sets a value.
      *
      * @param string $value
      */
@@ -49,7 +43,7 @@ class ResultEntry
     }
 
     /**
-     * Returns the value
+     * Returns the value.
      *
      * @return string
      */
@@ -59,7 +53,7 @@ class ResultEntry
     }
 
     /**
-     * Returns whether a value is set
+     * Returns whether a value is set.
      *
      * @return bool
      */
@@ -68,10 +62,8 @@ class ResultEntry
         return !empty($this->value);
     }
 
-
-
     /**
-     * Sets a value_suffix
+     * Sets a value_suffix.
      *
      * @param string $value
      */
@@ -81,7 +73,7 @@ class ResultEntry
     }
 
     /**
-     * Returns the value_suffix
+     * Returns the value_suffix.
      *
      * @return string
      */
@@ -91,7 +83,7 @@ class ResultEntry
     }
 
     /**
-     * Returns whether a value_suffix is set
+     * Returns whether a value_suffix is set.
      *
      * @return bool
      */
@@ -100,10 +92,8 @@ class ResultEntry
         return !empty($this->value_suffix);
     }
 
-
-
     /**
-     * Sets a legend
+     * Sets a legend.
      *
      * @param string $value
      */
@@ -113,7 +103,7 @@ class ResultEntry
     }
 
     /**
-     * Returns the legend
+     * Returns the legend.
      *
      * @return string
      */
@@ -123,7 +113,7 @@ class ResultEntry
     }
 
     /**
-     * Returns whether a legend is set
+     * Returns whether a legend is set.
      *
      * @return bool
      */
@@ -132,10 +122,8 @@ class ResultEntry
         return !empty($this->legend);
     }
 
-
-
     /**
-     * Sets a icon
+     * Sets a icon.
      *
      * @param string $value
      */
@@ -145,7 +133,7 @@ class ResultEntry
     }
 
     /**
-     * Returns the icon
+     * Returns the icon.
      *
      * @return string
      */
@@ -155,7 +143,7 @@ class ResultEntry
     }
 
     /**
-     * Returns whether a icon is set
+     * Returns whether a icon is set.
      *
      * @return bool
      */
@@ -164,10 +152,8 @@ class ResultEntry
         return !empty($this->icon);
     }
 
-
-
     /**
-     * Sets a description
+     * Sets a description.
      *
      * @param string $value
      */
@@ -177,7 +163,7 @@ class ResultEntry
     }
 
     /**
-     * Returns the icon
+     * Returns the icon.
      *
      * @return string
      */
@@ -187,7 +173,7 @@ class ResultEntry
     }
 
     /**
-     * Returns whether a icon is set
+     * Returns whether a icon is set.
      *
      * @return bool
      */
@@ -196,22 +182,20 @@ class ResultEntry
         return !empty($this->description);
     }
 
-
-
     /**
-     * Sets a url
+     * Sets a url.
      *
      * @param string $url
      * @param bool   $new_window
      */
     public function setUrl($url, $open_window = false)
     {
-        $this->url             = htmlspecialchars_decode($url);
+        $this->url = htmlspecialchars_decode($url);
         $this->url_open_window = $open_window;
     }
 
     /**
-     * Returns the url class
+     * Returns the url class.
      *
      * @return string
      */
@@ -221,7 +205,7 @@ class ResultEntry
     }
 
     /**
-     * Returns whether a url is set
+     * Returns whether a url is set.
      *
      * @return string
      */
@@ -231,7 +215,7 @@ class ResultEntry
     }
 
     /**
-     * Returns the url open window class
+     * Returns the url open window class.
      *
      * @return bool
      */
@@ -240,10 +224,8 @@ class ResultEntry
         return $this->url_open_window;
     }
 
-
-
     /**
-     * Sets a quick look url
+     * Sets a quick look url.
      *
      * @param string $value
      */
@@ -254,7 +236,7 @@ class ResultEntry
     }
 
     /**
-     * Returns the quick look url class
+     * Returns the quick look url class.
      *
      * @return string
      */
@@ -264,7 +246,7 @@ class ResultEntry
     }
 
     /**
-     * Returns whether a quick look url is set
+     * Returns whether a quick look url is set.
      *
      * @return bool
      */
@@ -273,10 +255,8 @@ class ResultEntry
         return !empty($this->quick_look_url);
     }
 
-
-
     /**
-     * Sets html fields
+     * Sets html fields.
      *
      * @param string $value
      */
@@ -286,7 +266,7 @@ class ResultEntry
     }
 
     /**
-     * Returns the html fields
+     * Returns the html fields.
      *
      * @return string
      */
@@ -296,7 +276,7 @@ class ResultEntry
     }
 
     /**
-     * Returns whether html fields are set
+     * Returns whether html fields are set.
      *
      * @return bool
      */
@@ -306,7 +286,7 @@ class ResultEntry
     }
 
     /**
-     * Sets a ajax
+     * Sets a ajax.
      *
      * @param string $value
      */
@@ -316,7 +296,7 @@ class ResultEntry
     }
 
     /**
-     * Returns the ajax
+     * Returns the ajax.
      *
      * @return string
      */
@@ -326,7 +306,7 @@ class ResultEntry
     }
 
     /**
-     * Returns whether a ajax is set
+     * Returns whether a ajax is set.
      *
      * @return bool
      */
