@@ -10,28 +10,27 @@
  */
 
 if (rex::isBackend() && rex::getUser()) {
-    $providers = \Watson\Foundation\Watson::loadProviders();
+    if (\Watson\Foundation\Watson::hasProviders()) {
+        if (rex_get('watson_query')) {
+            $providers = \Watson\Foundation\Watson::loadProviders();
 
-    if (count($providers)) {
-        $workflows = [];
-
-        foreach ($providers as $provider) {
-            if ($provider instanceof \Watson\Foundation\Workflow) {
-                $workflows[] = $provider;
+            $workflows = [];
+            foreach ($providers as $provider) {
+                if ($provider instanceof \Watson\Foundation\Workflow) {
+                    $workflows[] = $provider;
+                }
             }
-        }
-
-        if (count($workflows)) {
-            rex_extension::register('PAGE_HEADER', '\Watson\Foundation\Extension::head');
-
-            rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::agent');
 
             rex_extension::register('PACKAGES_INCLUDED', '\Watson\Foundation\Extension::run', rex_extension::LATE, ['workflows' => $workflows]);
             rex_extension::register('PACKAGES_INCLUDED', '\Watson\Foundation\Extension::callWatsonFunc', rex_extension::LATE);
+        }
 
-            if (\Watson\Foundation\Watson::getToggleButtonStatus()) {
-                rex_extension::register('META_NAVI', '\Watson\Foundation\Extension::toggleButton');
-            }
+        rex_extension::register('PAGE_HEADER', '\Watson\Foundation\Extension::head');
+
+        rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::agent');
+
+        if (\Watson\Foundation\Watson::getToggleButtonStatus()) {
+            rex_extension::register('META_NAVI', '\Watson\Foundation\Extension::toggleButton');
         }
     }
 
