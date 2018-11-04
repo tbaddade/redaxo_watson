@@ -72,6 +72,13 @@ class Watson
     {
         return \rex_i18n::msg($key, ...$params);
     }
+    
+    public static function hasProviders() {
+        $providers = \rex_addon::get('watson')->getProperty('providers');
+        $providers = \rex_extension::registerPoint(new \rex_extension_point('WATSON_PROVIDER', $providers));
+
+        return count($providers) > 0;
+    }
 
     public static function loadProviders()
     {
