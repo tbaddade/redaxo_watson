@@ -1,19 +1,7 @@
 
-Watson
-================================================================================
-### Inhalt
-1. [Beschreibung](#beschreibung)
-1. [Voraussetzungen](#voraussetzungen)
-1. [Installation](#installation)
-1. [Benutzung](#benutzung)
-1. [Workflows](#workflows)
-1. [Bugtracker](#bugtracker)
-1. [Changelog](#changelog)
-1. [Lizenz](#lizenz)
-1. [Autor](#autor)
+# Watson
 
-
-### Beschreibung
+## Beschreibung
 
 Ein Suchagent für REDAXO 5+
 
@@ -21,26 +9,20 @@ Watson spart Zeit bei der Suche nach Artikeln, Modulen, Templates, Benutzer, Dat
 
 Eine ausführlichere Beschreibung und die Benutzung findet man auf [tbaddade.github.io/redaxo_watson/](http://tbaddade.github.io/redaxo_watson/)
 
-
-
-### Voraussetzungen
+## Voraussetzungen
 
 * REDAXO 5.4
 
-
-
-### Installation
+## Installation
 
 Im REDAXO via Backend ...
 
 1. über den Installer die letzte Version vom Watson herunterladen
 1. AddOn installieren und aktivieren
 
+## Benutzung
 
-
-### Benutzung
-
-#### Watson
+### Watson
 
 * **öffnen**
     * ctrl + space <br /><small>(um im Firefox das Contextmenü zu vermeiden, "ctrl + alt + space" drücken)</small>
@@ -52,7 +34,7 @@ Im REDAXO via Backend ...
     * ctrl + alt + space
     * ctrl + cmd + space
 
-#### Quick look
+### Quick look
 
 * **öffnen**
     * Cursortaste rechts
@@ -61,9 +43,9 @@ Im REDAXO via Backend ...
     * Cursortaste oben
     * Cursortaste unten
 
-### Workflows
+## Workflows
 
-#### Suchen
+### Suchen
 
 Werden Keywords verwendet, wird die Suche entsprechend eingegrenzt.
 
@@ -85,7 +67,7 @@ Werden Keywords verwendet, wird die Suche entsprechend eingegrenzt.
 | sp:miss             | Sucht nach nicht angelegten Platzhalter innerhalb der Struktur | `sp:miss`    | Platzhalter wird angelegt      |
 
 
-#### Generatoren
+### Generatoren
 
 | Keyword               | Optionen                             | Beschreibung          | Beispiel                         |
 | --------------------- | ------------------------------------ | --------------------- | -------------------------------- |
@@ -252,24 +234,21 @@ echo $auswahl;
 ```
 
 
-
-
-
-### Bugtracker
+## Bugtracker
 
 Du hast einen Fehler gefunden oder ein nettes Feature parat? [Lege ein Issue an](https://github.com/tbaddade/redaxo_watson/issues). Bevor du ein neues Issue erstellts, suche bitte ob bereits eines mit deinem Anliegen existiert und lese die [Issue Guidelines (englisch)](https://github.com/necolas/issue-guidelines) von [Nicolas Gallagher](https://github.com/necolas/).
 
 
-### Changelog
+## Changelog
 
 siehe [CHANGELOG.md](https://github.com/tbaddade/redaxo_watson/blob/master/CHANGELOG.md)
 
-### Lizenz
+## Lizenz
 
 siehe [LICENSE.md](https://github.com/tbaddade/redaxo_watson/blob/master/LICENSE.md)
 
 
-### Autor
+## Autor
 
 **Thomas Blum**
 
