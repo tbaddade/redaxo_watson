@@ -70,11 +70,11 @@ class TemplateSearch extends Workflow
             'content',
         ];
 
-        $sql_query = ' SELECT      id,
-                                    name
+        $sql_query = ' SELECT       `id`,
+                                    `name`
                         FROM        '.Watson::getTable('template').'
                         WHERE       '.$command->getSqlWhere($fields).'
-                        ORDER BY    name';
+                        ORDER BY    `name`';
 
         $items = $this->getDatabaseResults($sql_query);
 

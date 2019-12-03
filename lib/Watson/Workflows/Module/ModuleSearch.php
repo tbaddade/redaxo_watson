@@ -87,11 +87,11 @@ class ModuleSearch extends Workflow
             'output',
         ];
 
-        $sql_query = ' SELECT      id,
-                                    name
+        $sql_query = ' SELECT       `id`,
+                                    `name`
                         FROM        '.Watson::getTable('module').'
                         WHERE       '.$command->getSqlWhere($fields).'
-                        ORDER BY    name';
+                        ORDER BY    `name`';
 
         $items = $this->getDatabaseResults($sql_query);
 

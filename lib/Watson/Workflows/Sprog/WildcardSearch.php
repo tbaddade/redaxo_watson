@@ -66,17 +66,17 @@ class WildcardSearch extends Workflow
         $result = new Result();
 
         $fields = [
-            '`wildcard`',
-            '`replace`',
+            'wildcard',
+            'replace',
         ];
 
-        $sql_query = ' SELECT      id,
-                                    clang_id,
-                                    wildcard,
+        $sql_query = ' SELECT       `id`,
+                                    `clang_id`,
+                                    `wildcard`,
                                     `replace`
                         FROM        '.Watson::getTable('sprog_wildcard').'
                         WHERE       '.$command->getSqlWhere($fields).'
-                        ORDER BY    wildcard';
+                        ORDER BY    `wildcard`';
 
         $items = $this->getDatabaseResults($sql_query);
 

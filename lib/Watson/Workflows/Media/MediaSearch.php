@@ -79,12 +79,12 @@ class MediaSearch extends Workflow
             }
         }
 
-        $sql_query = ' SELECT      id, 
-                                    filename,
-                                    title
+        $sql_query = ' SELECT       `id`, 
+                                    `filename`,
+                                    `title`
                         FROM        '.Watson::getTable('media').'
                         WHERE       '.$command->getSqlWhere($fields).'
-                        ORDER BY    filename';
+                        ORDER BY    `filename`';
 
         $items = $this->getDatabaseResults($sql_query);
 
