@@ -121,7 +121,12 @@ class Command
 
         foreach ($fields as $field) {
             $w = [];
-
+            if (strpos($field, '.') !== false) {
+			    $field = '`' .str_replace('.', '`.`', $field). '`';
+			}
+            else {
+			    $field = '`'. $field .'`';
+            }
             foreach ($this->getCommandParts() as $command_part) {
                 $w[] = $field.' LIKE "%'.$command_part.'%"';
             }
