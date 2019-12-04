@@ -30,7 +30,8 @@
 #watson-agent .watson-logo > svg .fill-1 {
     fill: #324050;
 }
-.watson-btn {
+.watson-btn,
+.watson-btn:active {
     margin-right: 20px;
     padding: 16px;
     background-image: url(watson-logo.svg);
