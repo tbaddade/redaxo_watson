@@ -69,6 +69,7 @@ class Extension
 
     public static function run(\rex_extension_point $ep)
     {
+        /** @var Workflow[] $workflows */
         $workflows = $ep->getParam('workflows');
 
         if (rex_request('watson_query', 'string', '') == '') {
@@ -95,7 +96,8 @@ class Extension
                         break;
                     }
                     unset($workflows[$key]); // Workflow aus dem Sammelarray löschen. Wird ansonsten verwendet, wenn kein Commando gefunden wurde
-                } elseif (in_array($command->getCommand(), $workflow->commands())) {
+                } elseif (in_array($command->getCommand(), $workflow->commands()) && count($command->getCommandParts()) >= 2) {
+                    // getCommandParts enthält hier noch das Command, sodass mind. 2 Parts enthalten sein müssen. Ansonsten whoops, da keine Suchphrase vorhanden ist
                     $saveWorkflows[] = $workflow;
                 }
             }
