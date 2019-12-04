@@ -78,7 +78,7 @@ class ArticleSearch extends Workflow
 
         $where = $command->getSqlWhere($fields);
 
-        if (count($command_parts) == 1 && (int) $command_parts[0] >= 1) {
+        if (isset($command_parts[0]) && count($command_parts) == 1 && (int) $command_parts[0] >= 1) {
             $where = 'a.id = "'.(int) $command_parts[0].'"';
         }
 
