@@ -82,7 +82,7 @@ class ArticleSearch extends Workflow
             $where = 'a.id = "'.(int) $command_parts[0].'"';
         }
 
-        $sql_query = ' SELECT      a.id,
+        $sql_query = ' SELECT       a.id,
                                     a.clang_id,
                                     CONCAT(a.id, "|", a.clang_id) as bulldog
                         FROM        '.Watson::getTable('article').' AS a
@@ -185,7 +185,7 @@ class ArticleSearch extends Workflow
                     $entry->setDescription($path);
                     $entry->setIcon('watson-icon-article');
                     $entry->setUrl($url);
-                    $entry->setQuickLookUrl('../index.php?article_id='.$article->getId().'&clang='.$article->getClang());
+                    $entry->setQuickLookUrl('../index.php?article_id='.$article->getId().'&clang='.$article->getClangId());
 
                     $result->addEntry($entry);
                 }
