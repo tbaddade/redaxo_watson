@@ -185,7 +185,7 @@ class ArticleSearch extends Workflow
                     $entry->setDescription($path);
                     $entry->setIcon('watson-icon-article');
                     $entry->setUrl($url);
-                    $entry->setQuickLookUrl('../index.php?article_id='.$article->getId().'&clang='.$article->getClangId());
+                    $entry->setQuickLookUrl($article->getUrl());
 
                     $result->addEntry($entry);
                 }
