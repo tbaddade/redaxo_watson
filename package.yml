@@ -11,6 +11,10 @@ page:
     subpages:
         settings: { title: 'translate:config' }
 
+requires:
+    php:
+        version: '^7.1.3'
+
 providers:
     - 'Watson\Workflows\Structure\StructureProvider'
     - 'Watson\Workflows\Media\MediaProvider'
