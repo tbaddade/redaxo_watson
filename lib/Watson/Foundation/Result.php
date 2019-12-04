@@ -13,7 +13,7 @@ namespace Watson\Foundation;
 
 class Result
 {
-    private $entries;
+    private $entries = [];
     private $header;
     private $footer;
 
