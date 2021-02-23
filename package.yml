@@ -13,7 +13,7 @@ page:
 
 requires:
     php:
-        version: '^7.1.3'
+        version: '>7.1.3, <9'
 
 providers:
     - 'Watson\Workflows\Structure\StructureProvider'
