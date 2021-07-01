@@ -112,7 +112,6 @@ class YFormSearch extends Workflow
 
                     foreach ($items as $item) {
 
-                        $table = \rex::getTable($tableName);
                         $_csrf_params = \rex_csrf_token::factory('table_field-' . $tableName)->getUrlParams();
                         
                         $url = Watson::getUrl(['page' => 'yform/manager/data_edit', 'table_name' => $tableName, 'data_id' => $item['id'], 'func' => 'edit', '_csrf_token' => $_csrf_params['_csrf_token']]);
