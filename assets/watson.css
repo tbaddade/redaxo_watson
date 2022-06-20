@@ -30,6 +30,9 @@
 #watson-agent .watson-logo > svg .fill-1 {
     fill: #324050;
 }
+body.rex-theme-dark #watson-agent .watson-logo > svg .fill-1 {
+    fill: rgba(255, 255, 255, 0.75);
+}
 .watson-btn,
 .watson-btn:active {
     margin-right: 20px;
@@ -70,7 +73,9 @@
             mask-size: cover;
 */
 }
-
+body.rex-theme-dark #watson-agent{
+    background-color: #242f3c;
+}
 #watson-agent form {
     margin-right: 60px;
 }
@@ -80,6 +85,10 @@
     background-color: #d0d0d0;
     border: 0;
     font-size: 36px;
+}
+body.rex-theme-dark #watson-agent input[type="text"] {
+    background-color: rgba(27, 35, 44, 0.8);
+    border-color: rgba(21, 28, 34, 0.8);
 }
 #watson-agent-overlay {
     display: none;
@@ -202,6 +211,9 @@
     background-color: #F0F0F0;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+body.rex-theme-dark #watson-agent .tt-menu {
+    background-color: #242f3c;
 }
 #watson-agent .tt-menu .tt-dataset {
     padding: 10px;
