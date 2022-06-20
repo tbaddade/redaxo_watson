@@ -65,16 +65,13 @@ class YFormSearch extends Workflow
         $result = new Result();
         $tables = \rex_yform_manager_table::getAll();
         $yform = \rex_addon::get('yform');
-        $yperm_suffix = '';
-        if (version_compare($yform->getVersion(), '4.0.0-beta1', '>=')) {
-            $yperm_suffix = '_edit';
-        }
 
         if (count($tables)) {
             $results = [];
-            $viewFields = ['title', 'titel', 'name', 'lastname', 'last_name', 'surname'];
+            $viewFields = ['title', 'title_1', 'name', 'lastname', 'last_name', 'surname'];
+            $complexPerm = version_compare($yform->getVersion(), '4.0.0-beta1', '>=') ? 'yform_manager_table_edit' :  'yform_manager_table';
             foreach ($tables as $table) {
-                if ($table->isActive() && \rex::getUser()->getComplexPerm('yform_manager_table' . $yperm_suffix)->hasPerm($table->getTableName())) {
+                if ($table->isActive() && \rex::getUser()->getComplexPerm($complexPerm)->hasPerm($table->getTableName())) {
                     $fields = $table->getValueFields();
 
                     foreach ($fields as $fieldName => $field) {
@@ -88,7 +85,7 @@ class YFormSearch extends Workflow
                         $selectFields = 'id';
                         foreach ($viewFields as $viewField) {
                             if (isset($fields[$viewField])) {
-                                $selectFields .= ', ' . $viewField . ' AS name';
+                                $selectFields .= ', '.$viewField.' AS name';
                                 break;
                             }
                         }
@@ -96,10 +93,10 @@ class YFormSearch extends Workflow
                         $orderByField = $table->getSortFieldName();
 
                         $query = '
-                                SELECT      ' . $selectFields . '
-                                FROM        ' . $table . '
-                                WHERE       ' . $command->getSqlWhere($searchFields) . '
-                                ORDER BY    ' . $orderByField;
+                                SELECT      '.$selectFields.'
+                                FROM        '.$table.'
+                                WHERE       '.$command->getSqlWhere($searchFields).'
+                                ORDER BY    '.$orderByField;
 
                         $results[$table->getTableName()] = $this->getDatabaseResults($query);
                     }
@@ -112,9 +109,18 @@ class YFormSearch extends Workflow
 
                     foreach ($items as $item) {
 
-                        $_csrf_params = \rex_csrf_token::factory('table_field-' . $tableName)->getUrlParams();
-                        
-                        $url = Watson::getUrl(['page' => 'yform/manager/data_edit', 'table_name' => $tableName, 'data_id' => $item['id'], 'func' => 'edit', '_csrf_token' => $_csrf_params['_csrf_token']]);
+                        $csrfTokenParams = \rex_csrf_token::factory('table_field-' . $tableName)->getUrlParams();
+                        if (!isset($csrfTokenParams['_csrf_token'])) {
+                            continue;
+                        }
+
+                        $url = Watson::getUrl([
+                            'page' => 'yform/manager/data_edit',
+                            'table_name' => $tableName,
+                            'data_id' => $item['id'],
+                            'func' => 'edit',
+                            '_csrf_token' => $csrfTokenParams['_csrf_token'],
+                        ]);
 
                         ++$counter;
                         $entry = new ResultEntry();
