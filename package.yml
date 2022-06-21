@@ -7,7 +7,7 @@ page:
     title: 'translate:watson'
     perm: watson[]
     pjax: false
-    icon: watson-icon-logo
+    icon: watson-navigation-icon
     subpages:
         settings: { title: 'translate:config' }
 

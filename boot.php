@@ -25,7 +25,7 @@ if (rex::isBackend() && rex::getUser() && \Watson\Foundation\Watson::hasProvider
     }
 
     rex_extension::register('PAGE_HEADER', '\Watson\Foundation\Extension::head');
-
+    rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::navigation');
     rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::agent');
 
     if (\Watson\Foundation\Watson::getToggleButtonStatus()) {

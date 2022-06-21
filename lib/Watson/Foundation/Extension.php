@@ -41,10 +41,15 @@ class Extension
         }
     }
 
+    public static function navigation(\rex_extension_point $ep)
+    {
+        $ep->setSubject(str_replace('<i class="watson-navigation-icon"></i>', '<span class="watson-navigation-icon">'.\rex_file::get(\rex_path::addonAssets('watson', 'watson-logo.svg')).'</span>', $ep->getSubject()));
+    }
+
     public static function toggleButton(\rex_extension_point $ep)
     {
         $subject = $ep->getSubject();
-        array_unshift($subject, '<li class="navbar-btn"><button class="btn btn-default watson-btn">Watson</button></li>');
+        array_unshift($subject, '<li><button class="watson-btn">'.\rex_file::get(\rex_path::addonAssets('watson', 'watson-logo.svg')).'</button></li>');
 
         $ep->setSubject($subject);
     }
@@ -59,7 +64,7 @@ class Extension
                         <input class="typeahead" type="text" name="q" value="" />
                     </fieldset>
                 </form>
-                <div class="watson-logo"><img class="rex-js-svg" src="'.\rex_addon::get('watson')->getAssetsUrl('watson-logo.svg').'" /></div>
+                <div class="watson-logo">'.\rex_file::get(\rex_path::addonAssets('watson', 'watson-logo.svg')).'</div>
             </div>';
 
         $panel .= '<div id="watson-agent-overlay"></div>';
