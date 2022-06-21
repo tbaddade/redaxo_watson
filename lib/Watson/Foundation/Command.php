@@ -97,7 +97,7 @@ class Command
 
     public function getArgument($position)
     {
-        return isset($this->arguments[$position]) ? $this->arguments[$position] : null;
+        return $this->arguments[$position] ?? null;
     }
 
     public function getArguments()
@@ -107,7 +107,7 @@ class Command
 
     public function getOption($option)
     {
-        return isset($this->options[$option]) ? $this->options[$option] : null;
+        return $this->options[$option] ?? null;
     }
 
     public function getOptions()
@@ -122,7 +122,7 @@ class Command
         foreach ($fields as $field) {
             $w = [];
 
-            if (strpos($field, '.') !== false) {
+            if (str_contains($field, '.')) {
                 $field = '`'.str_replace('.', '`.`', $field). '`';
             } else {
                 $field = '`'. $field .'`';
