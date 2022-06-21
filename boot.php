@@ -30,7 +30,7 @@ if (rex::isBackend() && rex::getUser() && \Watson\Foundation\Watson::hasProvider
 
 
     rex_extension::register('PAGES_PREPARED', static function() {
-        if (rex_be_controller::getCurrentPageObject()->hasLayout() && !rex_be_controller::getCurrentPageObject()->isPopup()) {
+        if (rex_be_controller::getCurrentPageObject() && rex_be_controller::getCurrentPageObject()->hasLayout() && !rex_be_controller::getCurrentPageObject()->isPopup()) {
             rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::agent');
         }
     });
