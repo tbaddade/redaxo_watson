@@ -35,7 +35,7 @@ class YFormSearch extends Workflow
      */
     public function documentation()
     {
-        $documentation = new Documentation();
+        $documentation = new Documentation($this->commands());
         $documentation->setDescription(Watson::translate('watson_yform_documentation_description'));
         $documentation->setUsage('yf keyword');
         $documentation->setExample('yf Phrase');

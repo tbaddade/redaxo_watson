@@ -22,6 +22,7 @@ if (rex::isBackend() && rex::getUser() && \Watson\Foundation\Watson::hasProvider
 
         rex_extension::register('PACKAGES_INCLUDED', '\Watson\Foundation\Extension::run', rex_extension::LATE, ['workflows' => $workflows]);
         rex_extension::register('PACKAGES_INCLUDED', '\Watson\Foundation\Extension::callWatsonFunc', rex_extension::LATE);
+        //rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::legend', rex_extension::LATE, ['workflows' => $workflows]);
     }
 
     rex_extension::register('PAGE_HEADER', '\Watson\Foundation\Extension::head');

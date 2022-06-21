@@ -35,8 +35,8 @@ class WildcardSearch extends Workflow
      */
     public function documentation()
     {
-        $documentation = new Documentation();
-        $documentation->setDescription(Watson::translate('watson_wildcard_documentation_description'));
+        $documentation = new Documentation($this->commands());
+        $documentation->setDescription(Watson::translate('watson_wildcard_search_documentation_description'));
         $documentation->setUsage('sp wildcard');
         $documentation->setExample('wildcard');
         $documentation->setExample('sp wildcard');

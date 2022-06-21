@@ -35,7 +35,7 @@ class ModuleGenerator extends GeneratorWorkflow
      */
     public function documentation()
     {
-        $documentation = new Documentation();
+        $documentation = new Documentation($this->commands());
         $documentation->setDescription(Watson::translate('watson_module_documentation_description'));
         $documentation->setUsage('m keyword');
         $documentation->setExample('$headline');

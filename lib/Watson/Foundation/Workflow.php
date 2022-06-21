@@ -21,7 +21,7 @@ abstract class Workflow
     abstract public function commands();
 
     /**
-     * @return Documention
+     * @return Documentation
      */
     abstract public function documentation();
 

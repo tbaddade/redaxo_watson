@@ -35,7 +35,7 @@ class ArticleSearch extends Workflow
      */
     public function documentation()
     {
-        $documentation = new Documentation();
+        $documentation = new Documentation($this->commands());
         $documentation->setDescription(Watson::translate(''));
         $documentation->setUsage('a keyword');
         $documentation->setExample('article content');

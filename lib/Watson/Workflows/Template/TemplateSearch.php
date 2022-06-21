@@ -35,7 +35,7 @@ class TemplateSearch extends Workflow
      */
     public function documentation()
     {
-        $documentation = new Documentation();
+        $documentation = new Documentation($this->commands());
         $documentation->setDescription(Watson::translate('watson_template_documentation_description'));
         $documentation->setUsage('t keyword');
         $documentation->setExample('$navi');

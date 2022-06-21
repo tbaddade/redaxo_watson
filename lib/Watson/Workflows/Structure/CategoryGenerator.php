@@ -35,7 +35,7 @@ class CategoryGenerator extends GeneratorWorkflow
      */
     public function documentation()
     {
-        $documentation = new Documentation();
+        $documentation = new Documentation($this->commands());
 
         return $documentation;
     }

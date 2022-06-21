@@ -56,8 +56,7 @@ class Extension
 
     public static function agent(\rex_extension_point $ep)
     {
-        $panel = '';
-        $panel .= '
+        $panel = '
             <div id="watson-agent">
                 <form action="">
                     <fieldset>
@@ -70,7 +69,33 @@ class Extension
         $panel .= '<div id="watson-agent-overlay"></div>';
 
         $ep->setSubject(str_replace('</body>', $panel.'</body>', $ep->getSubject()));
+
+        /*
+                <div class="watson-legend">
+                    <!-- WATSON_LEGEND //-->
+                </div>
+        */
     }
+
+    /*
+    public static function legend(\rex_extension_point $ep)
+    {
+        $replace = [];
+        /** @var Workflow[] $workflows * /
+        $workflows = $ep->getParam('workflows');
+        foreach ($workflows as $workflow) {
+            $documentation = $workflow->documentation();
+            $replace[] = sprintf('<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>',
+                implode(', ', $documentation->getCommand()),
+                $documentation->getDescription(),
+                $documentation->getUsage(),
+                implode('', $documentation->getOptions()),
+            );
+        }
+
+        $ep->setSubject(str_replace('<!-- WATSON_LEGEND //-->', '<table><tbody>'.implode('', $replace).'</tbody></table>', $ep->getSubject()));
+    }
+    */
 
     public static function run(\rex_extension_point $ep)
     {
