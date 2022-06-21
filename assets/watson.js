@@ -1,12 +1,8 @@
 jQuery(function($){
-
-
     /*
     |--------------------------------------------------------------------------
     | Allgemeines
     |--------------------------------------------------------------------------
-    |
-    |
     */
 
     var $watson_id   = getUrlParameter('watson_id');
@@ -83,8 +79,6 @@ jQuery(function($){
     |--------------------------------------------------------------------------
     | Watson
     |--------------------------------------------------------------------------
-    |
-    |
     */
 
     // instantiate the typeahead UI
@@ -102,13 +96,13 @@ jQuery(function($){
     });
 
     $(document).keydown(function(e) {
-        if (($watsonSettings.agentHotkey == '16-32' && e.shiftKey && e.keyCode == 32) ||
-            ($watsonSettings.agentHotkey == '16-17-32' && e.shiftKey && e.ctrlKey && e.keyCode == 32) ||
-            ($watsonSettings.agentHotkey == '16-18-32' && e.shiftKey && e.altKey && e.keyCode == 32) ||
-            ($watsonSettings.agentHotkey == '17-32' && e.ctrlKey && e.keyCode == 32) ||
-            ($watsonSettings.agentHotkey == '17-18-32' && e.ctrlKey && e.altKey && e.keyCode == 32) ||
-            ($watsonSettings.agentHotkey == '17-91-32' && e.ctrlKey && e.metaKey && e.keyCode == 32) ||
-            ($watsonSettings.agentHotkey == '18-32' && e.altKey && e.keyCode == 32)) {
+        if (($watsonSettings.agentHotkey === '16-32' && e.shiftKey && e.keyCode === 32) ||
+            ($watsonSettings.agentHotkey === '16-17-32' && e.shiftKey && e.ctrlKey && e.keyCode === 32) ||
+            ($watsonSettings.agentHotkey === '16-18-32' && e.shiftKey && e.altKey && e.keyCode === 32) ||
+            ($watsonSettings.agentHotkey === '17-32' && e.ctrlKey && e.keyCode === 32) ||
+            ($watsonSettings.agentHotkey === '17-18-32' && e.ctrlKey && e.altKey && e.keyCode === 32) ||
+            ($watsonSettings.agentHotkey === '17-91-32' && e.ctrlKey && e.metaKey && e.keyCode === 32) ||
+            ($watsonSettings.agentHotkey === '18-32' && e.altKey && e.keyCode === 32)) {
 
             checkWatsonAgent();
         }
@@ -116,7 +110,7 @@ jQuery(function($){
 
     $(document).keyup(function(e) {
         // Escape
-        if (e.keyCode == 27) {
+        if (e.keyCode === 27) {
             hideWatsonAgent();
         }
     });
@@ -176,7 +170,7 @@ jQuery(function($){
                 templates: {
                     empty: [
                         '<div class="empty-message">',
-                        'Please sign in.',
+                        'The request failed.',
                         '</div>'
                     ].join('\n'),
                     suggestion: function (data) {
@@ -210,10 +204,10 @@ jQuery(function($){
 
 
         $watsonTypeahead.keydown(function(e) {
-            if (($watsonSettings.quicklookHotkey == '16' && e.shiftKey) ||
-                ($watsonSettings.quicklookHotkey == '17' && e.ctrlKey) ||
-                ($watsonSettings.quicklookHotkey == '18' && e.altKey) ||
-                ($watsonSettings.quicklookHotkey == '91' && e.metaKey)
+            if (($watsonSettings.quicklookHotkey === '16' && e.shiftKey) ||
+                ($watsonSettings.quicklookHotkey === '17' && e.ctrlKey) ||
+                ($watsonSettings.quicklookHotkey === '18' && e.altKey) ||
+                ($watsonSettings.quicklookHotkey === '91' && e.metaKey)
                 ) {
                 if (typeof($curTypeaheadItem) !== 'undefined' && typeof($curTypeaheadItem.quick_look_url) !== 'undefined') {
                     quicklook($curTypeaheadItem.quick_look_url);
