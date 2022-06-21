@@ -90,12 +90,12 @@ jQuery(function($){
     // instantiate the typeahead UI
     var $watsonAgent     = $('#watson-agent');
     var $watsonTypeahead = $('#watson-agent .typeahead');
-    var $watsonOverlay   = $('#watson-overlay');
+    var $watsonOverlay   = $('#watson-agent-overlay');
 
     $watsonOverlay.click(function(){
         hideWatsonAgent();
     });
-    
+
     // support buttons created dynamically
     $(document).on('click', '.watson-btn', function(){
         checkWatsonAgent();
