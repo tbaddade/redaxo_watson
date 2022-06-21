@@ -69,9 +69,15 @@ class YFormSearch extends Workflow
         if (count($tables)) {
             $results = [];
             $viewFields = ['title', 'title_1', 'name', 'lastname', 'last_name', 'surname'];
-            $complexPerm = version_compare($yform->getVersion(), '4.0.0-beta1', '>=') ? 'yform_manager_table_edit' :  'yform_manager_table';
+            $yForm4 = (bool) version_compare($yform->getVersion(), '4.0.0-beta1', '>=');
+            $rexUser = \rex::getUser();
             foreach ($tables as $table) {
-                if ($table->isActive() && \rex::getUser()->getComplexPerm($complexPerm)->hasPerm($table->getTableName())) {
+                if (!$table->isActive()) {
+                    continue;
+                }
+
+                if (($yForm4 && ($rexUser->getComplexPerm('yform_manager_table_edit')->hasPerm($table->getTableName()) || $rexUser->getComplexPerm('yform_manager_table_view')->hasPerm($table->getTableName())))
+                    || (!$yForm4 && $rexUser->getComplexPerm('yform_manager_table')->hasPerm($table->getTableName()))) {
                     $fields = $table->getValueFields();
 
                     foreach ($fields as $fieldName => $field) {
