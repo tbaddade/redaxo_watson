@@ -26,7 +26,13 @@ if (rex::isBackend() && rex::getUser() && \Watson\Foundation\Watson::hasProvider
 
     rex_extension::register('PAGE_HEADER', '\Watson\Foundation\Extension::head');
     rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::navigation');
-    rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::agent');
+
+
+    rex_extension::register('PAGES_PREPARED', static function() {
+        if (rex_be_controller::getCurrentPageObject()->hasLayout() && !rex_be_controller::getCurrentPageObject()->isPopup()) {
+            rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::agent');
+        }
+    });
 
     if (\Watson\Foundation\Watson::getToggleButtonStatus()) {
         rex_extension::register('META_NAVI', '\Watson\Foundation\Extension::toggleButton');
