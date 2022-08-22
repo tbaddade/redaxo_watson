@@ -102,7 +102,7 @@ class YFormSearch extends Workflow
                                 SELECT      '.$selectFields.'
                                 FROM        `'.$table.'`
                                 WHERE       '.$command->getSqlWhere($searchFields).'
-                                ORDER BY    '.$orderByField;
+                                ORDER BY    `'.$orderByField.'`';
 
                         $results[$table->getTableName()] = $this->getDatabaseResults($query);
                     }
