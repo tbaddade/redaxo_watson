@@ -8,6 +8,7 @@
  */
 
 :root {
+    --color-a-lightest: 255, 255, 255; /* #fff */
     --color-a-lighter: 243, 246, 251; /* #f3f6fb */
     --color-a-light: 223, 227, 233; /* #dfe3e9 */
     --color-a: 156, 165, 178; /* #9ca5b2 */
@@ -30,21 +31,41 @@
 
 .watson-btn {
     display: inline-block;
-    margin-right: 10px;
-    padding: 5px 14px;
     background-color: transparent;
     border: 0;
-    vertical-align: middle;
+    line-height: 0;
+}
+.rex-nav-top .watson-btn {
+    margin-right: 10px;
+    padding: 14px 14px;
+    color: rgba(var(--color-a-lightest));
+    transition: color .2s ease-in-out;
+}
+.rex-nav-top .watson-btn:hover {
+    color: rgba(var(--color-a-darker));
+}
+body.rex-theme-dark .rex-nav-top .watson-btn {
+    color: rgba(var(--color-a-lightest), .75);
+}
+body.rex-theme-dark .rex-nav-top .watson-btn:hover {
+    color: rgba(var(--color-a-lightest));
+}
+@media (prefers-color-scheme: dark) {
+    body:not(.rex-theme-light) .rex-nav-top .watson-btn {
+        color: rgba(var(--color-a-lightest), .75);
+    }
+    body:not(.rex-theme-light) .rex-nav-top .watson-btn:hover {
+        color: rgba(var(--color-a-lightest));
+    }
 }
 .watson-btn svg {
-    width: 20px;
+    width: 22px;
+    height: 22px;
     fill: currentColor;
-}
-.watson-btn:hover svg {
-    fill: rgba(var(--color-a-darker));
+    vertical-align: -0.15em;
 }
 @media (max-width: 991px) {
-    .watson-btn {
+    .rex-nav-top .watson-btn {
         padding: 0;
     }
     .watson-btn svg {
@@ -71,6 +92,11 @@
 body.rex-theme-dark #watson-agent {
     background-color: rgba(var(--color-a-darker));
 }
+@media (prefers-color-scheme: dark) {
+    body:not(.rex-theme-light) #watson-agent {
+        background-color: rgba(var(--color-a-darker));
+    }
+}
 @media (max-width: 767px) {
     #watson-agent {
         padding: 4px;
@@ -95,6 +121,11 @@ body.rex-theme-dark #watson-agent {
 }
 body.rex-theme-dark #watson-agent input[type="text"] {
     background-color: rgba(var(--color-a-dark));
+}
+@media (prefers-color-scheme: dark) {
+    body:not(.rex-theme-light) #watson-agent input[type="text"] {
+        background-color: rgba(var(--color-a-dark));
+    }
 }
 @media (max-width: 767px) {
     #watson-agent input[type="text"] {
@@ -121,6 +152,11 @@ body.rex-theme-dark #watson-agent input[type="text"] {
 body.rex-theme-dark #watson-agent .watson-logo > svg {
     fill: rgba(var(--color-a));
 }
+@media (prefers-color-scheme: dark) {
+    body:not(.rex-theme-light) #watson-agent .watson-logo > svg {
+        fill: rgba(var(--color-a));
+    }
+}
 #watson-agent-overlay {
     display: none;
     position: fixed;
@@ -145,6 +181,11 @@ body.rex-theme-dark #watson-agent .watson-logo > svg {
 }
 body.rex-theme-dark .watson-result[data-legend]:not([data-legend=""])::before {
     background-color: rgba(var(--color-a-darker));
+}
+@media (prefers-color-scheme: dark) {
+    body:not(.rex-theme-light) .watson-result[data-legend]:not([data-legend=""])::before {
+        background-color: rgba(var(--color-a-darker));
+    }
 }
 
 .watson-value {
@@ -291,6 +332,11 @@ body.rex-theme-dark .tt-suggestion.tt-cursor {
 }
 body.rex-theme-dark .watson-quick-look-frame {
     background-color: rgba(var(--color-a-dark));
+}
+@media (prefers-color-scheme: dark) {
+    body:not(.rex-theme-light) .watson-quick-look-frame {
+        background-color: rgba(var(--color-a-dark));
+    }
 }
 .watson-quick-look-frame iframe {
     width: 1200px;

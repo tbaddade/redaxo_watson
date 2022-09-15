@@ -16,26 +16,24 @@ class Extension
     public static function head(\rex_extension_point $ep)
     {
         $js_properties = json_encode(
-                            [
-                                'resultLimit' => Watson::getResultLimit(),
-                                'agentHotkey' => Watson::getAgentHotkey(),
-                                'quicklookHotkey' => Watson::getQuicklookHotkey(),
-                                'backend' => true,
-                                'backendUrl' => \rex_url::backendPage('watson', [], false),
-                                'backendRemoteUrl' => \rex_url::backendPage('watson', ['watson_query' => ''], false).'%QUERY',
-                                'wildcard' => '%QUERY',
-                            ]
-                        );
+            [
+                'resultLimit' => Watson::getResultLimit(),
+                'agentHotkey' => Watson::getAgentHotkey(),
+                'quicklookHotkey' => Watson::getQuicklookHotkey(),
+                'backend' => true,
+                'backendUrl' => \rex_url::backendPage('watson', [], false),
+                'backendRemoteUrl' => \rex_url::backendPage('watson', ['watson_query' => ''], false).'%QUERY',
+                'wildcard' => '%QUERY',
+            ]
+        );
 
         if ($js_properties) {
             $ep->setSubject($ep->getSubject()."\n".'
 
                 <script type="text/javascript">
-                    <!--
                     if (typeof($watsonSettings) == "undefined") {
                         var $watsonSettings = '.$js_properties.';
                     }
-                    //-->
                 </script>'
             );
         }
@@ -43,13 +41,13 @@ class Extension
 
     public static function navigation(\rex_extension_point $ep)
     {
-        $ep->setSubject(str_replace('<i class="watson-navigation-icon"></i>', '<span class="watson-navigation-icon">'.\rex_file::get(\rex_path::addonAssets('watson', 'watson-logo.svg')).'</span>', $ep->getSubject()));
+        $ep->setSubject(str_replace('<i class="watson-navigation-icon"></i>', '<span class="watson-navigation-icon">'.Watson::getIcon().'</span>', $ep->getSubject()));
     }
 
     public static function toggleButton(\rex_extension_point $ep)
     {
         $subject = $ep->getSubject();
-        array_unshift($subject, '<li><button class="watson-btn">'.\rex_file::get(\rex_path::addonAssets('watson', 'watson-logo.svg')).'</button></li>');
+        array_unshift($subject, '<li><button class="watson-btn" data-watson-toggle="agent">'.Watson::getIcon().'</button></li>');
 
         $ep->setSubject($subject);
     }

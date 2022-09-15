@@ -68,11 +68,22 @@ class Watson
         return \rex_path::addonAssets('watson');
     }
 
+    public static function getIcon()
+    {
+        return \rex_file::get(\rex_path::addonAssets('watson', 'watson-logo.svg'));
+    }
+
+    public static function getToggleButton(array $attributes = [])
+    {
+        $attributes = array_merge(['class' => 'watson-btn', 'data-watson-toggle' => 'agent'], $attributes);
+        return sprintf('<button%s>%s</button>', \rex_string::buildAttributes($attributes), self::getIcon());
+    }
+
     public static function translate($key, ...$params)
     {
         return \rex_i18n::msg($key, ...$params);
     }
-    
+
     public static function hasProviders() {
         $providers = \rex_addon::get('watson')->getProperty('providers');
         $providers = \rex_extension::registerPoint(new \rex_extension_point('WATSON_PROVIDER', $providers));

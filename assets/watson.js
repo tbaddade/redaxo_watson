@@ -91,7 +91,7 @@ jQuery(function($){
     });
 
     // support buttons created dynamically
-    $(document).on('click', '.watson-btn', function(){
+    $(document).on('click', '[data-watson-toggle="agent"]', function(){
         checkWatsonAgent();
     });
 
