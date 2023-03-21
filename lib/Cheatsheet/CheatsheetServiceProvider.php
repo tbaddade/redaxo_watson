@@ -13,13 +13,14 @@ namespace Watson\Cheatsheet;
 
 use Cheatsheet\Page;
 use Cheatsheet\Support\ServiceProvider;
+use rex_be_page;
 
 class CheatsheetServiceProvider extends ServiceProvider
 {
     /**
      * {@inheritdoc}
      */
-    public function i18n()
+    public function i18n(): string
     {
         return __DIR__.'/lang';
     }
@@ -27,7 +28,7 @@ class CheatsheetServiceProvider extends ServiceProvider
     /**
      * {@inheritdoc}
      */
-    public function page()
+    public function page(): rex_be_page
     {
         $page = \rex_be_controller::getPageObject('cheatsheet/addoff');
         if (!$page) {
