@@ -11,7 +11,7 @@
 
 namespace Watson\Workflows\Module;
 
-use Watson\Foundation\Watson;
+use rex;
 use Watson\Parsers\OptionFieldsParser;
 
 class ModuleData
@@ -137,7 +137,7 @@ class ModuleData
         }
 
         $sql = \rex_sql::factory();
-        $sql->setTable(Watson::getTable('module'));
+        $sql->setTable(rex::getTable('module'));
         $sql->setValue('name', $this->name);
         $sql->setValue('input', $this->input);
         $sql->setValue('output', $this->output);

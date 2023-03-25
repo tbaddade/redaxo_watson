@@ -11,6 +11,7 @@
 
 namespace Watson\Workflows\Sprog;
 
+use rex;
 use Watson\Foundation\Command;
 use Watson\Foundation\Documentation;
 use Watson\Foundation\Result;
@@ -111,7 +112,7 @@ class WildcardCreate extends Workflow
         $result = new Result();
 
         $sql = \rex_sql::factory();
-        $sql->setQuery('SELECT pid FROM '.Watson::getTable('sprog_wildcard').' WHERE wildcard = "'.$command->getCommandPartsAsString().'"');
+        $sql->setQuery('SELECT pid FROM '.rex::getTable('sprog_wildcard').' WHERE wildcard = "'.$command->getCommandPartsAsString().'"');
 
         if ($sql->getRows() == 0 && count($command->getOptions()) == 0 && in_array($command->getCommand(), $this->commands())) {
             $urlParams = [

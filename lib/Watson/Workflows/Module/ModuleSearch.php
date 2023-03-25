@@ -11,6 +11,7 @@
 
 namespace Watson\Workflows\Module;
 
+use rex;
 use Watson\Foundation\Command;
 use Watson\Foundation\Documentation;
 use Watson\Foundation\Result;
@@ -89,7 +90,7 @@ class ModuleSearch extends Workflow
 
         $sql_query = ' SELECT       `id`,
                                     `name`
-                        FROM        '.Watson::getTable('module').'
+                        FROM        '.rex::getTable('module').'
                         WHERE       '.$command->getSqlWhere($fields).'
                         ORDER BY    `name`';
 
@@ -138,12 +139,12 @@ class ModuleSearch extends Workflow
                                 s.ctype_id,
                                 m.name AS module_name,
                                 CONCAT(s.article_id, "|", s.clang_id) as bulldog
-                        FROM    '.Watson::getTable('article_slice').' AS s
+                        FROM    '.rex::getTable('article_slice').' AS s
                             LEFT JOIN
-                                '.Watson::getTable('article').' AS a
+                                '.rex::getTable('article').' AS a
                                 ON  (s.article_id = a.id AND s.clang_id = a.clang_id)
                             LEFT JOIN
-                                '.Watson::getTable('module').' AS m
+                                '.rex::getTable('module').' AS m
                                 ON s.module_id = m.id
                         WHERE   s.module_id = "'.$moduleId.'"
                         GROUP BY bulldog';

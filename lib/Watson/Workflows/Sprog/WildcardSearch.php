@@ -11,6 +11,7 @@
 
 namespace Watson\Workflows\Sprog;
 
+use rex;
 use Watson\Foundation\Command;
 use Watson\Foundation\Documentation;
 use Watson\Foundation\Result;
@@ -74,7 +75,7 @@ class WildcardSearch extends Workflow
                                     `clang_id`,
                                     `wildcard`,
                                     `replace`
-                        FROM        '.Watson::getTable('sprog_wildcard').'
+                        FROM        '.rex::getTable('sprog_wildcard').'
                         WHERE       '.$command->getSqlWhere($fields).'
                         ORDER BY    `wildcard`';
 

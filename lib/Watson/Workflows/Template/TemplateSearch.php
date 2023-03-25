@@ -11,6 +11,7 @@
 
 namespace Watson\Workflows\Template;
 
+use rex;
 use Watson\Foundation\Command;
 use Watson\Foundation\Documentation;
 use Watson\Foundation\Result;
@@ -72,7 +73,7 @@ class TemplateSearch extends Workflow
 
         $sql_query = ' SELECT       `id`,
                                     `name`
-                        FROM        '.Watson::getTable('template').'
+                        FROM        '.rex::getTable('template').'
                         WHERE       '.$command->getSqlWhere($fields).'
                         ORDER BY    `name`';
 

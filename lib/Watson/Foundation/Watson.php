@@ -196,6 +196,8 @@ class Watson
      * @param string $table Table name
      *
      * @return string
+     *
+     * @deprecated since 2.3.0, use rex::getTable instead
      */
     public static function getTable($table)
     {

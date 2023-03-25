@@ -11,6 +11,7 @@
 
 namespace Watson\Workflows\Media;
 
+use rex;
 use Watson\Foundation\Command;
 use Watson\Foundation\Documentation;
 use Watson\Foundation\Result;
@@ -70,7 +71,7 @@ class MediaSearch extends Workflow
         ];
 
         $s = \rex_sql::factory();
-        $s->setQuery('SELECT * FROM '.Watson::getTable('media').' LIMIT 0');
+        $s->setQuery('SELECT * FROM '.rex::getTable('media').' LIMIT 0');
         $fieldnames = $s->getFieldnames();
 
         foreach ($fieldnames as $fieldname) {
@@ -82,7 +83,7 @@ class MediaSearch extends Workflow
         $sql_query = ' SELECT       `id`, 
                                     `filename`,
                                     `title`
-                        FROM        '.Watson::getTable('media').'
+                        FROM        '.rex::getTable('media').'
                         WHERE       '.$command->getSqlWhere($fields).'
                         ORDER BY    `filename`';
 

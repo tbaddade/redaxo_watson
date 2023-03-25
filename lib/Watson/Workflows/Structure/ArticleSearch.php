@@ -11,6 +11,7 @@
 
 namespace Watson\Workflows\Structure;
 
+use rex;
 use Watson\Foundation\Command;
 use Watson\Foundation\Documentation;
 use Watson\Foundation\Result;
@@ -85,7 +86,7 @@ class ArticleSearch extends Workflow
         $sql_query = ' SELECT       a.id,
                                     a.clang_id,
                                     CONCAT(a.id, "|", a.clang_id) as bulldog
-                        FROM        '.Watson::getTable('article').' AS a
+                        FROM        '.rex::getTable('article').' AS a
                         WHERE       '.$where.'
                         GROUP BY    bulldog
                         ';
@@ -120,9 +121,9 @@ class ArticleSearch extends Workflow
                                     s.clang_id,
                                     s.ctype_id,
                                     CONCAT(s.article_id, "|", s.clang_id) as bulldog
-                        FROM        '.Watson::getTable('article_slice').' AS s
+                        FROM        '.rex::getTable('article_slice').' AS s
                             LEFT JOIN
-                                    '.Watson::getTable('article').' AS a
+                                    '.rex::getTable('article').' AS a
                                 ON  (s.article_id = a.id AND s.clang_id = a.clang_id)
                         WHERE       '.$command->getSqlWhere($fields).'
                         GROUP BY    bulldog';
