@@ -41,7 +41,15 @@ class Extension
 
     public static function navigation(\rex_extension_point $ep)
     {
-        $ep->setSubject(str_replace('<i class="watson-navigation-icon"></i>', '<span class="watson-navigation-icon">'.Watson::getIcon().'</span>', $ep->getSubject()));
+        $icon = Watson::getIcon();
+        $icon = str_replace('<svg ', '<svg style="fill: currentColor;" ', $icon);
+        $ep->setSubject(
+            str_replace(
+                '<i class="watson-navigation-icon"></i>',
+                '<span class="watson-navigation-icon" style="display: inline-block; width: 20px; height: 20px; margin-left: -28px; margin-right: 3px; vertical-align: top;">'.$icon.'</span>',
+                $ep->getSubject()
+            )
+        );
     }
 
     public static function toggleButton(\rex_extension_point $ep)
