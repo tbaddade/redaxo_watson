@@ -30,7 +30,7 @@ class Extension
         if ($js_properties) {
             $ep->setSubject($ep->getSubject()."\n".'
 
-                <script type="text/javascript">
+                <script type="text/javascript" nonce="'.\rex_response::getNonce().'">
                     if (typeof($watsonSettings) == "undefined") {
                         var $watsonSettings = '.$js_properties.';
                     }
