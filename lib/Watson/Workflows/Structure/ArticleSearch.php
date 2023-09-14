@@ -170,11 +170,12 @@ class ArticleSearch extends Workflow
                     $suffix = [];
                     $suffix[] = $article->getId();
 
-                    if (count(\rex_clang::getAll()) > 1) {
-                        $suffix[] = \rex_clang::get($clang_id)->getName();
+                    if ($clang = \rex_clang::get($clang_id)) {
+                        $suffix[] = $clang->getName();
                     }
+
                     $suffix = implode(', ', $suffix);
-                    $suffix = $suffix != '' ? '('.$suffix.')' : '';
+                    $suffix = $suffix !== '' ? '('.$suffix.')' : '';
 
                     ++$counter;
 
