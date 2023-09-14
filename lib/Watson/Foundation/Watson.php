@@ -11,69 +11,66 @@
 
 namespace Watson\Foundation;
 
+use rex_addon;
+use rex_config;
+use rex_extension;
+use rex_extension_point;
+use rex_file;
+use rex_i18n;
+use rex_path;
+use rex_url;
+
 class Watson
 {
-    public static function getResultLimit()
+    public static function showToggleButton(): bool
     {
-        return \rex_config::get('watson', 'resultLimit', 20);
+        return rex_config::get('watson', 'toggleButton', 0);
     }
 
-    public static function getToggleButtonStatus()
+    public static function getResultLimit(): int
     {
-        return \rex_config::get('watson', 'toggleButton', 0);
+        return (int) rex_config::get('watson', 'resultLimit', 20);
     }
 
-    public static function getAgentHotkeys()
-    {
-        return [
-                     '16-32' => 'shift - space',
-                     '16-17-32' => 'shift - ctrl - space',
-                     '16-18-32' => 'shift - alt - space',
-                     '17-32' => 'ctrl - space',
-                     '17-18-32' => 'ctrl - alt - space',
-                     '17-91-32' => 'ctrl - cmd - space',
-                     '18-32' => 'alt - space',
-                ];
-    }
-
-    public static function getAgentHotkey()
-    {
-        return \rex_config::get('watson', 'agentHotkey', '17-32');
-    }
-
-    public static function getQuicklookHotkeys()
+    public static function getAgentHotkeys(): array
     {
         return [
-                     '16' => 'shift',
-                     '17' => 'ctrl',
-                     '18' => 'alt',
-                     '91' => 'cmd',
-                ];
+            '16-32' => 'shift - space',
+            '16-17-32' => 'shift - ctrl - space',
+            '16-18-32' => 'shift - alt - space',
+            '17-32' => 'ctrl - space',
+            '17-18-32' => 'ctrl - alt - space',
+            '17-91-32' => 'ctrl - cmd - space',
+            '18-32' => 'alt - space',
+        ];
     }
 
-    public static function getQuicklookHotkey()
+    public static function getAgentHotkey(): string
     {
-        return \rex_config::get('watson', 'quicklookHotkey', '91');
+        return rex_config::get('watson', 'agentHotkey', '17-32');
     }
 
-    public static function getConsoleInterpreterUrl()
+    public static function getQuicklookHotkeys(): array
     {
-        global $REX;
-
-        return realpath($REX['HTDOCS_PATH'].'redaxo').'/index.php?watson_console=1';
+        return [
+            '16' => 'shift',
+            '17' => 'ctrl',
+            '18' => 'alt',
+            '91' => 'cmd',
+        ];
     }
 
-    public static function getAssetsDir()
+    public static function getQuicklookHotkey(): string
     {
-        return \rex_path::addonAssets('watson');
+        return rex_config::get('watson', 'quicklookHotkey', '91');
     }
 
-    public static function getIcon()
+    public static function getIcon(): string
     {
-        return \rex_file::get(\rex_path::addonAssets('watson', 'watson-logo.svg'));
+        return rex_file::get(rex_path::addonAssets('watson', 'watson-logo.svg'));
     }
 
-    public static function getToggleButton(array $attributes = [])
+    public static function getToggleButton(array $attributes = []): string
     {
         $attributes = array_merge(['class' => 'watson-btn', 'data-watson-toggle' => 'agent'], $attributes);
         return sprintf('<button%s>%s</button>', \rex_string::buildAttributes($attributes), self::getIcon());
@@ -84,39 +81,42 @@ class Watson
         return \rex_i18n::msg($key, ...$params);
     }
 
-    public static function hasProviders() {
-        $providers = \rex_addon::get('watson')->getProperty('providers');
-        $providers = \rex_extension::registerPoint(new \rex_extension_point('WATSON_PROVIDER', $providers));
+    public static function hasProviders(): bool
+    {
+        $providers = rex_addon::get('watson')->getProperty('providers');
+        $providers = rex_extension::registerPoint(new rex_extension_point('WATSON_PROVIDER', $providers));
 
         return count($providers) > 0;
     }
 
-    public static function loadProviders()
+    public static function loadProviders(): array
     {
-        $providers = \rex_addon::get('watson')->getProperty('providers');
+        $providers = rex_addon::get('watson')->getProperty('providers');
+        $providers = rex_extension::registerPoint(new rex_extension_point('WATSON_PROVIDER', $providers));
 
-        $providers = \rex_extension::registerPoint(new \rex_extension_point('WATSON_PROVIDER', $providers));
+        $loadedProviders = [];
 
-        $loaded_providers = [];
+        if (count($providers) < 1) {
+            return $loadedProviders;
+        }
 
-        if (count($providers) > 0) {
-            foreach ($providers as $provider) {
-                $instance = new $provider();
+        foreach ($providers as $provider) {
+            /** @var SupportProvider $instance */
+            $instance = new $provider();
 
-                if (is_dir($instance->i18n())) {
-                    \rex_i18n::addDirectory($instance->i18n());
-                }
+            if (is_dir($instance->i18n())) {
+                rex_i18n::addDirectory($instance->i18n());
+            }
 
-                $register = $instance->register();
-                if (is_array($register)) {
-                    $loaded_providers = array_merge($loaded_providers, $register);
-                } else {
-                    $loaded_providers[] = $register;
-                }
+            $register = $instance->register();
+            if (is_array($register)) {
+                $loadedProviders = array_merge($loadedProviders, $register);
+            } else {
+                $loadedProviders[] = $register;
             }
         }
 
-        return $loaded_providers;
+        return $loadedProviders;
     }
 
     public static function deleteRegisteredPageParams()
@@ -146,76 +146,14 @@ class Watson
     }
 
     /**
-     * Generates URL-encoded query string.
-     *
-     * @param array  $params
-     * @param string $argSeparator
-     *
-     * @return string
-     */
-    public static function buildQuery(array $params, $argSeparator = '&')
-    {
-        $query = [];
-        $func = function (array $params, $fullkey = null) use (&$query, &$func) {
-            foreach ($params as $key => $value) {
-                $key = $fullkey ? $fullkey.'['.urlencode($key).']' : urlencode($key);
-
-                if (is_array($value)) {
-                    $func($value, $key);
-                } else {
-                    $query[] = $key.'='.str_replace('%2F', '/', urlencode($value));
-                }
-            }
-        };
-
-        $func($params);
-
-        return implode($argSeparator, $query);
-    }
-
-    /**
      * Returns the url to the backend-controller (index.php from backend).
      *
      * @param array $params
      *
      * @return string
      */
-    public static function getUrl(array $params = [], $backend = true)
+    public static function getUrl(array $params = []): string
     {
-        return \rex_url::backendController($params);
-
-        if ($backend) {
-            return htmlspecialchars(\rex_url::backendController($params));
-        }
-        return \rex_url::backendController($params);
-    }
-
-    /**
-     * Adds the table prefix to the table name.
-     *
-     * @param string $table Table name
-     *
-     * @return string
-     *
-     * @deprecated since 2.3.0, use rex::getTable instead
-     */
-    public static function getTable($table)
-    {
-        return \rex::getTable($table);
-    }
-
-    /**
-     * Call REDAXO Function.
-     *
-     * Durchsucht das Array $haystack nach dem Schlüssel $needle.
-     *
-     * Falls ein Wert gefunden wurde wird dieser nach
-     * $vartype gecastet und anschließend zurückgegeben.
-     *
-     * Falls die Suche erfolglos endet, wird $default zurückgegeben
-     */
-    public static function arrayCastVar($haystack, $needle, $vartype, $default = '')
-    {
-        return _rex_array_key_cast($haystack, $needle, $vartype, $default = '');
+        return rex_url::backendController($params);
     }
 }

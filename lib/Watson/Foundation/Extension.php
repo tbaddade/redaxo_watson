@@ -11,35 +11,36 @@
 
 namespace Watson\Foundation;
 
+use rex_extension_point;
+use rex_response;
+use rex_url;
+
 class Extension
 {
-    public static function head(\rex_extension_point $ep)
+    public static function head(rex_extension_point $ep): void
     {
-        $js_properties = json_encode(
+        $jsProperties = json_encode(
             [
                 'resultLimit' => Watson::getResultLimit(),
                 'agentHotkey' => Watson::getAgentHotkey(),
                 'quicklookHotkey' => Watson::getQuicklookHotkey(),
                 'backend' => true,
-                'backendUrl' => \rex_url::backendPage('watson', [], false),
-                'backendRemoteUrl' => \rex_url::backendPage('watson', ['watson_query' => ''], false).'%QUERY',
+                'backendUrl' => rex_url::backendPage('watson', [], false),
+                'backendRemoteUrl' => rex_url::backendPage('watson', ['watson_query' => ''], false).'%QUERY',
                 'wildcard' => '%QUERY',
             ]
         );
 
-        if ($js_properties) {
-            $ep->setSubject($ep->getSubject()."\n".'
-
-                <script type="text/javascript" nonce="'.\rex_response::getNonce().'">
-                    if (typeof($watsonSettings) == "undefined") {
-                        var $watsonSettings = '.$js_properties.';
-                    }
-                </script>'
-            );
-        }
+        $ep->setSubject($ep->getSubject()."\n".'
+            <script type="text/javascript" nonce="'.rex_response::getNonce().'">
+                if (typeof(watsonSettings) === "undefined") {
+                    let watsonSettings = '.$jsProperties.';
+                }
+            </script>'
+        );
     }
 
-    public static function navigation(\rex_extension_point $ep)
+    public static function navigation(rex_extension_point $ep)
     {
         $icon = Watson::getIcon();
         $icon = str_replace('<svg ', '<svg style="fill: currentColor;" ', $icon);
@@ -52,7 +53,7 @@ class Extension
         );
     }
 
-    public static function toggleButton(\rex_extension_point $ep)
+    public static function toggleButton(rex_extension_point $ep)
     {
         $subject = $ep->getSubject();
         array_unshift($subject, '<li><button class="watson-btn" data-watson-toggle="agent">'.Watson::getIcon().'</button></li>');
@@ -60,8 +61,12 @@ class Extension
         $ep->setSubject($subject);
     }
 
-    public static function agent(\rex_extension_point $ep)
+    public static function agent(rex_extension_point $ep)
     {
+
+        $panel = '<watson-agent value="Test"></watson-agent>';
+        $ep->setSubject(str_replace('<header class="rex-page-header">', $panel.'<header class="rex-page-header">', $ep->getSubject()));
+
         $panel = '
             <div id="watson-agent">
                 <form action="">
@@ -75,33 +80,7 @@ class Extension
         $panel .= '<div id="watson-agent-overlay"></div>';
 
         $ep->setSubject(str_replace('</body>', $panel.'</body>', $ep->getSubject()));
-
-        /*
-                <div class="watson-legend">
-                    <!-- WATSON_LEGEND //-->
-                </div>
-        */
     }
-
-    /*
-    public static function legend(\rex_extension_point $ep)
-    {
-        $replace = [];
-        /** @var Workflow[] $workflows * /
-        $workflows = $ep->getParam('workflows');
-        foreach ($workflows as $workflow) {
-            $documentation = $workflow->documentation();
-            $replace[] = sprintf('<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>',
-                implode(', ', $documentation->getCommand()),
-                $documentation->getDescription(),
-                $documentation->getUsage(),
-                implode('', $documentation->getOptions()),
-            );
-        }
-
-        $ep->setSubject(str_replace('<!-- WATSON_LEGEND //-->', '<table><tbody>'.implode('', $replace).'</tbody></table>', $ep->getSubject()));
-    }
-    */
 
     public static function run(\rex_extension_point $ep)
     {

@@ -9,33 +9,47 @@
  * file that was distributed with this source code.
  */
 
-if (rex::isBackend() && rex::getUser() && \Watson\Foundation\Watson::hasProviders()) {
+use Watson\Foundation\Watson;
+use Watson\Foundation\Workflow;
+
+if (rex::isBackend() && rex::getUser() && Watson::hasProviders()) {
     if (rex_get('watson_query')) {
-        $providers = \Watson\Foundation\Watson::loadProviders();
+        $providers = Watson::loadProviders();
 
         $workflows = [];
         foreach ($providers as $provider) {
-            if ($provider instanceof \Watson\Foundation\Workflow) {
+            if ($provider instanceof Workflow) {
                 $workflows[] = $provider;
             }
         }
 
         rex_extension::register('PACKAGES_INCLUDED', '\Watson\Foundation\Extension::run', rex_extension::LATE, ['workflows' => $workflows]);
         rex_extension::register('PACKAGES_INCLUDED', '\Watson\Foundation\Extension::callWatsonFunc', rex_extension::LATE);
-        //rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::legend', rex_extension::LATE, ['workflows' => $workflows]);
     }
 
-    rex_extension::register('PAGE_HEADER', '\Watson\Foundation\Extension::head');
+    //rex_extension::register('PAGE_HEADER', '\Watson\Foundation\Extension::head');
+
+    rex_view::setJsProperty('watson', [
+        'resultLimit' => Watson::getResultLimit(),
+        'agentHotkey' => Watson::getAgentHotkey(),
+        'quicklookHotkey' => Watson::getQuicklookHotkey(),
+        'backend' => true,
+        'backendUrl' => rex_url::backendPage('watson', [], false),
+        'backendRemoteUrl' => rex_url::backendPage('watson', ['watson_query' => ''], false).'%QUERY',
+        'wildcard' => '%QUERY',
+        'version' => rex_addon::get('watson')->getVersion(),
+    ]);
+
     rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::navigation');
 
-
     rex_extension::register('PAGES_PREPARED', static function() {
-        if (rex_be_controller::getCurrentPageObject() && rex_be_controller::getCurrentPageObject()->hasLayout() && !rex_be_controller::getCurrentPageObject()->isPopup()) {
+        $currentPage = rex_be_controller::getCurrentPageObject();
+        if ($currentPage && $currentPage->hasLayout() && !$currentPage->isPopup()) {
             rex_extension::register('OUTPUT_FILTER', '\Watson\Foundation\Extension::agent');
         }
     });
 
-    if (\Watson\Foundation\Watson::getToggleButtonStatus()) {
+    if (Watson::showToggleButton()) {
         rex_extension::register('META_NAVI', '\Watson\Foundation\Extension::toggleButton');
     }
 
@@ -44,6 +58,6 @@ if (rex::isBackend() && rex::getUser() && \Watson\Foundation\Watson::hasProvider
     }
 
     foreach ($this->getProperty('javascripts', []) as $javascript) {
-        rex_view::addJsFile($this->getAssetsUrl($javascript));
+        rex_view::addJsFile($this->getAssetsUrl($javascript), [rex_view::JS_DEFERED => true]);
     }
 }
