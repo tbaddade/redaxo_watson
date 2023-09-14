@@ -7,13 +7,80 @@
  * file that was distributed with this source code.
  */
 
-:root {
-    --color-a-lightest: 255, 255, 255; /* #fff */
-    --color-a-lighter: 243, 246, 251; /* #f3f6fb */
-    --color-a-light: 223, 227, 233; /* #dfe3e9 */
-    --color-a: 156, 165, 178; /* #9ca5b2 */
-    --color-a-dark: 50, 64, 80; /* #324050 */
-    --color-a-darker: 40, 53, 66 /* #283542 */
+:host, :root {
+    --watson-color-50: rgb(249 249 250);
+    --watson-color-100: rgb(234 236 240);
+    --watson-color-200: rgb(218 222 228);
+    --watson-color-300: rgb(201 207 215);
+    --watson-color-400: rgb(179 187 196);
+    --watson-color-500: rgb(154 160 169);
+    --watson-color-600: rgb(127 132 139);
+    --watson-color-700: rgb(104 109 114);
+    --watson-color-800: rgb(86 89 94);
+    --watson-color-900: rgb(61 63 67);
+    --watson-color-950: rgb(37 39 41);
+
+    --watson-border-radius: .25rem;
+    --watson-spacing-0: 0;
+    --watson-spacing-1: .25rem;
+    --watson-spacing-2: .5rem;
+    --watson-spacing-3: 1rem;
+    --watson-spacing-4: 1.5rem;
+
+    --watson-dialog-spacing-x: var(--watson-spacing-3);
+    --watson-dialog-spacing-y: var(--watson-spacing-3);
+
+    --watson-dialog-width: 30vw;
+    --watson-dialog-input-background-color: var(--watson-color-200);
+    --watson-dialog-panel-background-color: var(--watson-color-100);
+    --watson-dialog-overlay-background-color: var(--watson-color-900);
+    --watson-dialog-overlay-opacity: .35;
+    --watson-dialog-z-index: 2000;
+
+    --watson-list-group-header-padding-x: var(--watson-spacing-3);
+    --watson-list-group-header-padding-y: var(--watson-spacing-2);
+    --watson-list-group-header-background-color: var(--watson-color-200);
+    --watson-list-group-header-border-width: 1px;
+    --watson-list-group-header-border-color: var(--watson-color-300);
+    --watson-list-group-header-color: var(--watson-color-900);
+
+    --watson-list-group-item-padding-x: var(--watson-spacing-3);
+    --watson-list-group-item-padding-y: var(--watson-spacing-2);
+    --watson-list-group-item-background-color: var(--watson-color-50);
+    --watson-list-group-item-border-width: 1px;
+    --watson-list-group-item-border-color: var(--watson-color-300);
+    --watson-list-group-item-color: var(--watson-color-300);
+
+    --watson-selected-background-color: var(--watson-color-200);
+}
+
+body.rex-theme-dark {
+    --watson-dialog-input-background-color: var(--watson-color-800);
+    --watson-dialog-panel-background-color: var(--watson-color-900);
+
+    --watson-list-group-header-background-color: var(--watson-color-800);
+    --watson-list-group-header-border-color: var(--watson-color-700);
+    --watson-list-group-header-color: var(--watson-color-100);
+    --watson-list-group-item-background-color: var(--watson-color-950);
+    --watson-list-group-item-border-color: var(--watson-color-700);
+    --watson-list-group-item-color: var(--watson-color-700);
+
+    --watson-selected-background-color: var(--watson-color-800);
+}
+@media (prefers-color-scheme: dark) {
+    body:not(.rex-theme-light) {
+        --watson-dialog-input-background-color: var(--watson-color-800);
+        --watson-dialog-panel-background-color: var(--watson-color-900);
+
+        --watson-list-group-header-background-color: var(--watson-color-800);
+        --watson-list-group-header-border-color: var(--watson-color-700);
+        --watson-list-group-header-color: var(--watson-color-100);
+        --watson-list-group-item-background-color: var(--watson-color-950);
+        --watson-list-group-item-border-color: var(--watson-color-700);
+        --watson-list-group-item-color: var(--watson-color-700);
+
+        --watson-selected-background-color: var(--watson-color-800);
+    }
 }
 
 /* Main Navigation */
@@ -71,340 +138,4 @@ body.rex-theme-dark .rex-nav-top .watson-btn:hover {
     .watson-btn svg {
         width: 18px;
     }
-}
-
-#watson-agent {
-    display: none;
-    position: absolute;
-    top: 150px;
-    left: 50%;
-    overflow: hidden;
-    width: 75vw;
-    max-width: 960px;
-    padding: 10px;
-    background-color: rgba(var(--color-a-light));
-    border: 10px solid rgba(var(--color-a-dark));
-    border-radius: 5px;
-    box-shadow: 0 0 8px 0 rgba(var(--color-a-dark), .5);
-    z-index: 2000;
-    transform: translateX(-50%);
-}
-body.rex-theme-dark #watson-agent {
-    background-color: rgba(var(--color-a-darker));
-}
-@media (prefers-color-scheme: dark) {
-    body:not(.rex-theme-light) #watson-agent {
-        background-color: rgba(var(--color-a-darker));
-    }
-}
-@media (max-width: 767px) {
-    #watson-agent {
-        padding: 4px;
-        border-width: 4px;
-    }
-}
-#watson-agent form {
-    margin: 0 70px 0 0;
-}
-@media (max-width: 767px) {
-    #watson-agent input[type="text"] {
-        margin-right: 44px;
-    }
-}
-#watson-agent input[type="text"] {
-    width: 100%;
-    padding: 5px 10px;
-    background-color: rgba(var(--color-a-lighter));
-    border: 0;
-    font-size: 36px;
-    outline: none;
-}
-body.rex-theme-dark #watson-agent input[type="text"] {
-    background-color: rgba(var(--color-a-dark));
-}
-@media (prefers-color-scheme: dark) {
-    body:not(.rex-theme-light) #watson-agent input[type="text"] {
-        background-color: rgba(var(--color-a-dark));
-    }
-}
-@media (max-width: 767px) {
-    #watson-agent input[type="text"] {
-        padding-left: 4px;
-        padding-right: 4px;
-        font-size: 18px;
-    }
-}
-
-#watson-agent .watson-logo {
-    position: absolute;
-    right: 10px;
-    top: 6px;
-    width: 60px;
-}
-@media (max-width: 767px) {
-    #watson-agent .watson-logo {
-        width: 30px;
-    }
-}
-#watson-agent .watson-logo > svg {
-    fill: currentColor;
-}
-body.rex-theme-dark #watson-agent .watson-logo > svg {
-    fill: rgba(var(--color-a));
-}
-@media (prefers-color-scheme: dark) {
-    body:not(.rex-theme-light) #watson-agent .watson-logo > svg {
-        fill: rgba(var(--color-a));
-    }
-}
-#watson-agent-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(var(--color-a-darker), .5);
-    z-index: 1990;
-}
-
-
-
-.watson-result[data-legend]:not([data-legend=""])::before {
-    content: attr(data-legend);
-    display: block;
-    margin: 0 -10px;
-    padding: 2px 10px;
-    background-color: rgba(var(--color-a-light));
-    font-size: 85%;
-    font-weight: 700;
-}
-body.rex-theme-dark .watson-result[data-legend]:not([data-legend=""])::before {
-    background-color: rgba(var(--color-a-darker));
-}
-@media (prefers-color-scheme: dark) {
-    body:not(.rex-theme-light) .watson-result[data-legend]:not([data-legend=""])::before {
-        background-color: rgba(var(--color-a-darker));
-    }
-}
-
-.watson-value {
-    position: relative;
-    display: block;
-    padding: 13px 5px 12px 5px;
-    font-size: 14px;
-    line-height: 1.2;
-}
-.watson-value em {
-    display: none;
-    font-size: 85%;
-    font-style: normal;
-    font-weight: 400;
-}
-.watson-value em.watson-value-suffix {
-    margin-left: 5px;
-    display: inline-block;
-}
-.watson-value em.watson-description {
-    display: block;
-    padding-top: 5px;
-    color: rgba(var(--color-a));
-}
-.watson-value.watson-has-description {
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-.watson-value.watson-has-icon {
-    padding-left: 30px;
-}
-.watson-value.watson-no-results {
-    background-color: rgba(var(--color-a-lighter));
-}
-
-
-.watson-icon {
-    display: none;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    transform: translate(0, 0);
-}
-.watson-value.watson-has-icon .watson-icon {
-    display: inline-block;
-    float: left;
-    margin-left: -30px;
-    margin-top: 3px;
-}
-.watson-icon-article:before {
-    content: '\f0f6';
-}
-.watson-icon-category:before {
-    content: '\f07b';
-}
-.watson-icon-media:before {
-    content: '\f03e';
-}
-.watson-icon-module:before {
-    content: '\f1c0';
-}
-.watson-icon-template:before {
-    content: '\f1ea';
-}
-.watson-icon-wildcard:before {
-    content: '\f021';
-}
-.watson-icon-yform:before {
-    content: '\f259';
-}
-
-
-
-#watson-agent .twitter-typeahead {
-    display: block !important;
-    width: 100%;
-}
-
-#watson-agent .twitter-typeahead .tt-query,
-#watson-agent .twitter-typeahead .tt-hint {
-    margin-bottom: 0;
-}
-#watson-agent .twitter-typeahead .tt-hint,
-#watson-agent .twitter-typeahead .tt-input {
-    max-height: 60px;
-}
-
-#watson-agent .tt-menu {
-    position: relative !important;
-    width: 455px;
-    height: 480px;
-    margin: 10px 0 -10px 0;
-    background-color: rgba(var(--color-a-lighter));
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-body.rex-theme-dark #watson-agent .tt-menu {
-    background-color: rgba(var(--color-a-dark));
-}
-#watson-agent .tt-menu .tt-dataset {
-    padding: 10px;
-}
-.tt-suggestion {
-    display: block;
-    padding: 0 10px;
-    border-bottom: 1px solid rgba(var(--color-a-light));
-    vertical-align: middle;
-}
-body.rex-theme-dark .tt-suggestion {
-    border-bottom-color: rgba(var(--color-a-darker));
-}
-.tt-suggestion.tt-is-under-cursor,
-.tt-suggestion.tt-cursor {
-    background-color: rgba(var(--color-a-light));
-}
-body.rex-theme-dark .tt-suggestion.tt-is-under-cursor,
-body.rex-theme-dark .tt-suggestion.tt-cursor {
-    background-color: rgba(var(--color-a-darker));
-}
-
-.tt-suggestion.tt-is-under-cursor a,
-.tt-suggestion.tt-cursor a {
-    color: rgba(var(--color-a-darker));
-}
-
-.tt-suggestion p {
-    margin: 0 0 0 600px;
-    font-size: 0;
-    line-height: 0;
-}
-
-.watson-quick-look-frame {
-    display: none;
-    position: absolute;
-    top: 70px;
-    left: 465px;
-    width: 455px;
-    height: 480px;
-    overflow: hidden;
-    z-index: 2100;
-    background-color: rgba(var(--color-a-lighter));
-}
-body.rex-theme-dark .watson-quick-look-frame {
-    background-color: rgba(var(--color-a-dark));
-}
-@media (prefers-color-scheme: dark) {
-    body:not(.rex-theme-light) .watson-quick-look-frame {
-        background-color: rgba(var(--color-a-dark));
-    }
-}
-.watson-quick-look-frame iframe {
-    width: 1200px;
-    height: 800px;
-    border: none;
-    transform: scale(0.38);
-    transform-origin: 0 0;
-}
-
-
-
-#watson-console {
-    display: none;
-    position: fixed;
-    left: 972px;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    overflow-y: auto;
-    /*
-    width: 964px;
-    margin-left: 8px;
-    background-color: #E0E0E0;
-    background-position: 512px 50%;
-    background-size: 64px 64px;
-    border: 10px solid rgba(0, 0, 0, .5);
-       -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-    */
-}
-#watson-console .terminal-output,
-#watson-console .terminal-output *,
-#watson-console .cmd,
-#watson-console .cmd * {
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-    font-size: 14px !important;
-    line-height: 1.5;
-    height: auto;
-    min-height: 0;
-}
-
-#watson-console table {
-    width: 100%;
-    margin: .5em 0;
-}
-#watson-console table th,
-#watson-console table td {
-    padding: 5px;
-    background: #E9D763;
-    border: 1px solid #000;
-    color: #000;
-}
-
-#watson-console .documentation {
-    margin: .5em 0;
-    padding: 5px;
-    background: #E9D763;
-    color: #000;
-}
-
-
-#facebox {
-    z-index: 2200;
-}
-#facebox .close {
-    display: none !important;
-}
-.facebox_overlayBG {
-    z-index: 2100;
 }
