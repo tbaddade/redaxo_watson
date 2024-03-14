@@ -136,7 +136,7 @@ class Watson
 
     public static function saveRegisteredPageParams(array $providerParams)
     {
-        $watsonParams = \rex_request::session('watson_params', []);
+        $watsonParams = \rex_request::session('watson_params', 'array', []);
         foreach ($providerParams as $providerParam) {
             if (isset($_REQUEST[$providerParam])) {
                 $watsonParams[$providerParam] = $_REQUEST[$providerParam];
