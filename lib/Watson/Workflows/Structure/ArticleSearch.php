@@ -119,7 +119,6 @@ class ArticleSearch extends Workflow
 
         $sql_query = ' SELECT      s.article_id AS id,
                                     s.clang_id,
-                                    s.ctype_id,
                                     CONCAT(s.article_id, "|", s.clang_id) as bulldog
                         FROM        '.rex::getTable('article_slice').' AS s
                             LEFT JOIN
@@ -161,11 +160,7 @@ class ArticleSearch extends Workflow
 
                     $path = '/'.implode('/', $path);
 
-                    $url = Watson::getUrl(['page' => 'structure', 'category_id' => $article->getCategoryId(), 'clang' => $clang_id]);
-
-                    if (isset($item['ctype_id'])) {
-                        $url = Watson::getUrl(['page' => 'content/edit', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang_id, 'ctype' => $item['ctype_id']]);
-                    }
+                    $url = Watson::getUrl(['page' => 'content/edit', 'article_id' => $article->getId(), 'mode' => 'edit', 'clang' => $clang_id]);
 
                     $suffix = [];
                     $suffix[] = $article->getId();
