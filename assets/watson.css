@@ -179,6 +179,11 @@ body.rex-theme-dark #watson-agent .watson-logo > svg {
     font-size: 85%;
     font-weight: 700;
 }
+.watson-result:hover{
+	background-color: rgba(var(--color-a), .1);
+	cursor:pointer;
+}
+
 body.rex-theme-dark .watson-result[data-legend]:not([data-legend=""])::before {
     background-color: rgba(var(--color-a-darker));
 }
@@ -224,8 +229,10 @@ body.rex-theme-dark .watson-result[data-legend]:not([data-legend=""])::before {
 
 .watson-icon {
     display: none;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
+    font-family: "Font Awesome 6 Free";
+    font-size: 120%;
+	font-style: normal;
+	color:#4b9ad9;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -248,6 +255,7 @@ body.rex-theme-dark .watson-result[data-legend]:not([data-legend=""])::before {
 }
 .watson-icon-module:before {
     content: '\f1c0';
+	font-weight: 900;
 }
 .watson-icon-template:before {
     content: '\f1ea';
@@ -277,7 +285,6 @@ body.rex-theme-dark .watson-result[data-legend]:not([data-legend=""])::before {
 
 #watson-agent .tt-menu {
     position: relative !important;
-    width: 455px;
     height: 480px;
     margin: 10px 0 -10px 0;
     background-color: rgba(var(--color-a-lighter));
