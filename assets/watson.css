@@ -224,8 +224,12 @@ body.rex-theme-dark .watson-result[data-legend]:not([data-legend=""])::before {
 
 .watson-icon {
     display: none;
-    font: normal normal normal 14px/1 FontAwesome;
+    font-family: "Font Awesome 6 Free";
     font-size: inherit;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 1;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -295,21 +299,25 @@ body.rex-theme-dark #watson-agent .tt-menu {
     padding: 0 10px;
     border-bottom: 1px solid rgba(var(--color-a-light));
     vertical-align: middle;
+    cursor: pointer;
 }
 body.rex-theme-dark .tt-suggestion {
     border-bottom-color: rgba(var(--color-a-darker));
 }
 .tt-suggestion.tt-is-under-cursor,
-.tt-suggestion.tt-cursor {
+.tt-suggestion.tt-cursor,
+.tt-suggestion:hover {
     background-color: rgba(var(--color-a-light));
 }
 body.rex-theme-dark .tt-suggestion.tt-is-under-cursor,
-body.rex-theme-dark .tt-suggestion.tt-cursor {
+body.rex-theme-dark .tt-suggestion.tt-cursor,
+body.rex-theme-dark .tt-suggestion:hover {
     background-color: rgba(var(--color-a-darker));
 }
 
 .tt-suggestion.tt-is-under-cursor a,
-.tt-suggestion.tt-cursor a {
+.tt-suggestion.tt-cursor a,
+.tt-suggestion:hover a {
     color: rgba(var(--color-a-darker));
 }
 
