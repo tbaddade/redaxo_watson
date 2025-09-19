@@ -252,6 +252,7 @@ body.rex-theme-dark .watson-result[data-legend]:not([data-legend=""])::before {
 }
 .watson-icon-module:before {
     content: '\f1c0';
+    font-weight:900;
 }
 .watson-icon-template:before {
     content: '\f1ea';
